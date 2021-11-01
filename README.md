@@ -4,6 +4,7 @@
 - node v16.13.0
 - npm 8.1.2
 - expo  4.12.10
+- meteor 2.5
 
 
 install watchman (macOS only) https://facebook.github.io/watchman/docs/install#buildinstall
