@@ -13,16 +13,16 @@
  `nvm install 16.13.0`  and then do `npm install -g npm`
  
 then do npm install in both folders.
+  
+  
+  (run meteor first)
  
- 
- 
+ to run meteor backend:
+- cd backend
+- meteor
+
  
 to run React-Native frontend:
 
 - cd frontend
 - expo start
-
-
-to run meteor backend:
-- cd backend
-- meteor
