@@ -6,12 +6,22 @@
 - expo  4.12.10
  
  https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+ 
  https://github.com/nvm-sh/nvm
  
  first check all versions are correct, if not install nvm (macos)
- then try do
- `nvm install 16.13.0`  and then do `npm install -g npm`
- 
+
+then try do
+
+`nvm install 16.13.0`  
+
+`nvm use 16.13.0`
+
+
+and then do `npm install -g npm`
+
+
+
 then do npm install in both folders.
   
   
