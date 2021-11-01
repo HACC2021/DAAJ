@@ -36,3 +36,7 @@ to run React-Native frontend:
 
 - cd frontend
 - expo start
+
+
+
+then run in iOS/Andriod simulator
