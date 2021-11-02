@@ -2,8 +2,15 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Meteor, { Mongo, withTracker } from '@meteorrn/core';
 
+// Colelctions:
+const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' );
+const Seals = new Mongo.Collection( 'seals' );
+const Turtles = new Mongo.Collection( 'turtles' );
+const Birds = new Mongo.Collection( 'birds' );
+const Others = new Mongo.Collection( 'others' );
 
-const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' )
+
+
 Meteor.connect('ws://localhost:3000/websocket')
 
 class App extends React.Component {
@@ -30,7 +37,7 @@ class App extends React.Component {
     if (!this.state.isUpdating) {
       Meteor.call('addPhoneNumber', data, err => {
         if( err ){
-          console.log( err )
+          console.log( err ) // possible to display like an error page?
         } else {
           this.setState({
             number: '',
@@ -154,8 +161,25 @@ const styles = StyleSheet.create({
 let AppContainer = withTracker(() => {
   Meteor.subscribe("PhoneNumbersCollection");
   let phoneNumbers = PhoneNumbers.find({}).fetch();
+
+  Meteor.subscribe("SealsCollection");
+  let seals = Seals.find({}).fetch();
+
+  Meteor.subscribe("TurtlesCollection");
+  let turtles = Turtles.find({}).fetch();
+
+  Meteor.subscribe("BirdsCollection");
+  let birds = Birds.find({}).fetch();
+
+  Meteor.subscribe("OthersCollection");
+  let others = Others.find({}).fetch();
+
   return {
-    phoneNumbers
+    phoneNumbers,
+    seals,
+    turtles,
+    birds,
+    others
   };
 })(App)
 
