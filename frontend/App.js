@@ -2,6 +2,8 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Meteor, { Mongo, withTracker } from '@meteorrn/core';
 
+
+const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' )
 Meteor.connect('ws://localhost:3000/websocket')
 
 class App extends React.Component {
@@ -18,7 +20,6 @@ class App extends React.Component {
   // }
 
   addPhoneNumber = () => {
-    console.log("In the app class's addPhoneNumber");
     const data = {
       number: this.state.number,
       name: this.state.name
@@ -28,7 +29,6 @@ class App extends React.Component {
       if( err ){
         console.log( err )
       } else {
-        console.log("Setting state after calling addPhoneNumber");
         this.setState({
           number: '',
           name: ''
@@ -87,11 +87,11 @@ const styles = StyleSheet.create({
 
 
 let AppContainer = withTracker(() => {
-  const subscription = Meteor.subscribe("phonenumbers");
+  Meteor.subscribe("getAllNumbers");
+  let phoneNumbers = PhoneNumbers.find({}).fetch();
   return {
-    phoneNumbers: subscription,
+    phoneNumbers
   };
 })(App)
-
 
 export default AppContainer;
