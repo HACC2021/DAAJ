@@ -11,7 +11,9 @@ class App extends React.Component {
     super()
     this.state = {
       name: '',
-      number: ''
+      number: '',
+      isUpdating: false,
+      id: '',
     }
   }
 
@@ -20,21 +22,48 @@ class App extends React.Component {
   // }
 
   addPhoneNumber = () => {
-    const data = {
+    let data = {
       number: this.state.number,
-      name: this.state.name
+      name: this.state.name,
     }
 
-    Meteor.call('addPhoneNumber', data, err => {
-      if( err ){
-        console.log( err )
-      } else {
-        this.setState({
-          number: '',
-          name: ''
-        })
+    if (!this.state.isUpdating) {
+      Meteor.call('addPhoneNumber', data, err => {
+        if( err ){
+          console.log( err )
+        } else {
+          this.setState({
+            number: '',
+            name: '',
+            id: '',
+            isUpdating: false,
+          })
+        }
+      })
+    } else { // isUpdating
+      let data = {
+        number: this.state.number,
+        name: this.state.name,
+        id: this.state.id,
       }
-    })
+      console.log("line49");
+      console.log(data);
+
+      Meteor.call('updatePhoneNumber', data, err => {
+        if( err ){
+          console.log( err )
+        } else {
+          this.setState({
+            number: '',
+            name: '',
+            id: '',
+            isUpdating: false,
+          })
+        }
+      })
+    }
+
+
   }
 
 
@@ -50,20 +79,15 @@ class App extends React.Component {
     })
   }
   
-  updatePhoneNumber = (id) => {
-    const data = {
-      number: this.state.number,
-      name: this.state.name,
-      id: id
-    }
+  updatePhoneNumber = (item) => {
 
-    Meteor.call('updatePhoneNumber', data, err => {
-      if( err ){
-        console.log( err )
-      } else {
-        
-      }
+    this.setState({
+      number: item.number,
+      name: item.name,
+      isUpdating: true,
+      id: item._id
     })
+
   }
 
   render() {
@@ -99,7 +123,7 @@ class App extends React.Component {
                 color="#a83e32"
               />
               <Button
-                onPress = {() => this.updatePhoneNumber(item._id)}
+                onPress = {() => this.updatePhoneNumber(item)}
                 title="EDIT"
                 color="#a83e32"
               />
