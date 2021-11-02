@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
 
 let AppContainer = withTracker(() => {
-  Meteor.subscribe("getAllNumbers");
+  Meteor.subscribe("PhoneNumbersCollection");
   let phoneNumbers = PhoneNumbers.find({}).fetch();
   return {
     phoneNumbers
