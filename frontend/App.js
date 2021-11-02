@@ -49,6 +49,7 @@ class App extends React.Component {
       }
     })
   }
+  
 
   render() {
 
@@ -80,6 +81,11 @@ class App extends React.Component {
               <Button
                 onPress = {() => this.deletePhoneNumber(item._id)}
                 title="X"
+                color="#a83e32"
+              />
+              <Button
+                // onPress = {}
+                title="EDIT"
                 color="#a83e32"
               />
             </View>
