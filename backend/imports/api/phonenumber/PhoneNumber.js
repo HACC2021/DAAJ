@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 export const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' )
 
+// Meteor methods:
 Meteor.methods({
   addPhoneNumber( data ){
     PhoneNumbers.insert({
@@ -19,6 +20,7 @@ Meteor.methods({
   }
 })
 
-Meteor.publish( 'getAllNumbers', () => {
+// Publications = will need admin and regular user later?
+Meteor.publish( 'PhoneNumbersCollection', () => {
   return PhoneNumbers.find({})
 })

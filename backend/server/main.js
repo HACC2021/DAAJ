@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { LinksCollection } from '/imports/api/links';
-import { PhoneNumbers } from '/imports/api/PhoneNumbers';
+import { LinksCollection } from '/imports/api/links/Link';
+import { PhoneNumbers } from '/imports/api/phonenumber/PhoneNumber';
 
 
 function insertLink({ title, url }) {
