@@ -37,9 +37,22 @@ class App extends React.Component {
     })
   }
 
+
+  deletePhoneNumber = (id) => {
+    const data = id;
+
+    Meteor.call('deletePhoneNumber', data, err => {
+      if( err ){
+        console.log( err )
+      } else {
+        
+      }
+    })
+  }
+
   render() {
 
-    console.log(this.props.phoneNumbers[1])
+    // console.log(this.props.phoneNumbers[1])
     return (
       <View style={styles.container}>
         <TextInput
@@ -65,7 +78,7 @@ class App extends React.Component {
             <View>
               <Text>{item.name} || {item.number}</Text> 
               <Button
-                 // ADD DELETE FUNCTION HERE onPress
+                onPress = {() => this.deletePhoneNumber(item._id)}
                 title="X"
                 color="#a83e32"
               />
