@@ -17,6 +17,18 @@ Meteor.methods({
         return null
       }
     })
+  },
+
+  deletePhoneNumber( theID ){
+    PhoneNumbers.remove({
+      _id : theID,
+    }, err => {
+      if (err){
+        return err
+      } else {
+        return null
+      }
+    })
   }
 })
 
