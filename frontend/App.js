@@ -50,6 +50,21 @@ class App extends React.Component {
     })
   }
   
+  updatePhoneNumber = (id) => {
+    const data = {
+      number: this.state.number,
+      name: this.state.name,
+      id: id
+    }
+
+    Meteor.call('updatePhoneNumber', data, err => {
+      if( err ){
+        console.log( err )
+      } else {
+        
+      }
+    })
+  }
 
   render() {
 
@@ -84,7 +99,7 @@ class App extends React.Component {
                 color="#a83e32"
               />
               <Button
-                // onPress = {}
+                onPress = {() => this.updatePhoneNumber(item._id)}
                 title="EDIT"
                 color="#a83e32"
               />

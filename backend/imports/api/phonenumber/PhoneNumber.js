@@ -29,6 +29,20 @@ Meteor.methods({
         return null
       }
     })
+  },
+
+  updatePhoneNumber( data ){ // name, number, id
+    console.log("In Meteor method updatePhoneNumber");
+    console.log(data);
+    PhoneNumbers.update({
+      _id : data.id,
+    }, {name: data.name , number: data.number }, err => {
+      if (err){
+        return err
+      } else {
+        return null
+      }
+    })
   }
 })
 
