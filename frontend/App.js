@@ -38,6 +38,8 @@ class App extends React.Component {
   }
 
   render() {
+
+    console.log(this.props.phoneNumbers[1])
     return (
       <View style={styles.container}>
         <TextInput
@@ -61,7 +63,12 @@ class App extends React.Component {
           keyExtractor={(item, index) => item._id}
           renderItem={({item}) => (
             <View>
-              <Text>{item.name} || {item.number}</Text>
+              <Text>{item.name} || {item.number}</Text> 
+              <Button
+                 // ADD DELETE FUNCTION HERE onPress
+                title="X"
+                color="#a83e32"
+              />
             </View>
           )} />
       </View>
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
 
 
 let AppContainer = withTracker(() => {
-  Meteor.subscribe("getAllNumbers");
+  Meteor.subscribe("PhoneNumbersCollection");
   let phoneNumbers = PhoneNumbers.find({}).fetch();
   return {
     phoneNumbers
