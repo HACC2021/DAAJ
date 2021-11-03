@@ -13,8 +13,8 @@ Meteor.methods({
         ObserverName: data.observerName, // String
         ObserverPhone: data.observerPhone, // Number
         Sector: data.sector, // North, East, West, South, Molokai
-        BeachLocation: data.beachLocation, // Look at spreadhseet
-        LocationNotes: data.locationNotes, // Free text?
+        BeachLocation: data.beachLocation, // Look at spreadsheet
+        LocationNotes: data.locationNotes, // won't have anything cuz already haveBeachPosition
         Latitude: data.latitude, // Floating number
         Longitude: data.longitude, // Floating number
         NumHundredFt: data.numHundredFt,
@@ -25,6 +25,9 @@ Meteor.methods({
         BleachMark: data.bleachMark, // Yes or No
         Scars: data.scars, // Yes or No
         Images: data.images, // array of links to images in cloud (?)
+        Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
+        MainIdentification: data.identification, // Tag, band, bleach markings, scars
+        OtherNotes: data.otherNotes, // String
 
         // Seal specific
         SealType: data.SealType, // Check spreadsheet
@@ -33,6 +36,11 @@ Meteor.methods({
         Size: data.size, // String (?)
         Sex: data.sex, // Male/Female
         BeachPosition: data.beachPosition,
+        MomPup: data.momPup, // yes or blank
+        SealDepart: data.dealDepart, // Yes or no
+        SealDepartDate: data.departDate, 
+        SealDepartTime: data.departTime, 
+
     }, err => {
       if (err){
         return err
@@ -57,6 +65,8 @@ Meteor.methods({
 })
 
 // Publications = will need admin and regular user later?
-Meteor.publish( 'SealsCollection', () => {
-  return Seals.find({})
-})
+if (Meteor.isServer) {
+  Meteor.publish( 'SealsCollection', () => {
+    return Seals.find({})
+  })
+}

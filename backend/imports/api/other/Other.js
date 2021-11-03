@@ -13,7 +13,7 @@ Meteor.methods({
         ObserverName: data.observerName, // String
         ObserverPhone: data.observerPhone, // Number
         Sector: data.sector, // North, East, West, South, Molokai
-        BeachLocation: data.beachLocation, // Look at spreadhseet
+        BeachLocation: data.beachLocation, // Look at spreadsheet
         LocationNotes: data.locationNotes, // Free text?
         Latitude: data.latitude, // Floating number
         Longitude: data.longitude, // Floating number
@@ -25,6 +25,9 @@ Meteor.methods({
         BleachMark: data.bleachMark, // Yes or No
         Scars: data.scars, // Yes or No
         Images: data.images, // array of links to images in cloud (?)
+        Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
+        MainIdentification: data.identification, // Tag, band, bleach markings, scars
+        OtherNotes: data.otherNotes, // String
 
         // Other specific
         Animal: data.animal, // user given
@@ -53,6 +56,8 @@ Meteor.methods({
 })
 
 // Publications = will need admin and regular user later?
-Meteor.publish( 'OthersCollection', () => {
-  return Others.find({})
-})
+if (Meteor.isServer) {
+  Meteor.publish( 'OthersCollection', () => {
+    return Others.find({})
+  })
+}
