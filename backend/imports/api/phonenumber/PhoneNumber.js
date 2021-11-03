@@ -79,6 +79,8 @@ Meteor.methods({
 })
 
 // Publications = will need admin and regular user later?
-Meteor.publish( 'PhoneNumbersCollection', () => {
-  return PhoneNumbers.find({})
-})
+if (Meteor.isServer) {
+  Meteor.publish( 'PhoneNumbersCollection', () => {
+    return PhoneNumbers.find({})
+  })
+}
