@@ -29,7 +29,7 @@ and then do `npm install -g npm`
 
 
 
-then do npm install in both folders.
+then do `npm install` in both folders. (frontend and backend)
   
   
   (run meteor first)

@@ -1,5 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-import { LinksCollection } from '/imports/api/links';
+import { LinksCollection } from '/imports/api/links/Link';
+import { PhoneNumbers } from '/imports/api/phonenumber/PhoneNumber';
+import { Seals } from '/imports/api/seal/Seal';
+import { Turtles } from '/imports/api/turtle/Turtle';
+import { Birds } from '/imports/api/bird/Bird';
+import { Others } from '/imports/api/other/Other';
+
+
 
 function insertLink({ title, url }) {
   LinksCollection.insert({title, url, createdAt: new Date()});
