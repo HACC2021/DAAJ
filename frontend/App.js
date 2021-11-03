@@ -103,7 +103,8 @@ export default App = () => (
     </ApplicationProvider>
   </>
 );
-/* 
+
+/* import React from 'react';
 import { FlatList, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Meteor, { Mongo, withTracker } from '@meteorrn/core';
 
