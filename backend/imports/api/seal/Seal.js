@@ -10,36 +10,52 @@ Meteor.methods({
     Seals.insert({
         // Common to all animals
         DateObserved: data.date, // Date object w date and time
+        TimeObserved: data.timeObserved,
+        TicketNumber: "", // Not implemented by us
+        HotlineOpInitials: "", // Not implemented by us
+        TicketType: "", // Not implemented by us
         ObserverName: data.observerName, // String
         ObserverPhone: data.observerPhone, // Number
+        ObserverInitials: data.observerInitials, 
+        ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
-        BeachLocation: data.beachLocation, // Look at spreadsheet
+        Location: data.location, // Look at spreadsheet
         LocationNotes: data.locationNotes, // won't have anything cuz already haveBeachPosition
-        Latitude: data.latitude, // Floating number
-        Longitude: data.longitude, // Floating number
-        NumHundredFt: data.numHundredFt,
-        AnimalBehavior: data.animalBehavior, // Free text?
-        TagNumber: data.tagNumber, // String
-        TagColor: data.tagColor, // String
-        BandColor: data.bandColor, // String
-        BleachMark: data.bleachMark, // Yes or No
-        Scars: data.scars, // Yes or No
-        Images: data.images, // array of links to images in cloud (?)
-        Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
-        MainIdentification: data.identification, // Tag, band, bleach markings, scars
-        OtherNotes: data.otherNotes, // String
-
-        // Seal specific
-        SealType: data.SealType, // Check spreadsheet
-        Sightings: data.sightings, // used for related sightings, default at one
-        Related: data.related, // Another id for relating related sightings together
+        SealPresent: data.sealPresent,
         Size: data.size, // String (?)
         Sex: data.sex, // Male/Female
         BeachPosition: data.beachPosition,
-        MomPup: data.momPup, // yes or blank
+        MainIdentification: data.mainIdentification, // Tag, natural, applied bleach, scars
+        BleachNumber: data.bleachNumber, // aka ID Temp
+        TagNumber: data.tagNumber,
+        TagSide: data.tagSide, // L, R, U
+        TagColor: data.tagColor, // R or N
+        IDPerm: "", // Not implemented by us
+        Molt: "", // Not implemented by us
+        AdditionalNotesOnID: "", // Not implemented by us
+        IDVerifiedBy: "", // Not implemented by us
+        SealLogging: "", // Not implemented by us
+        MomPup: data.momPup,
+        SRASetBy: "", // Not implemented by us
+        NumVolunteers: "", // Not implemented by us
         SealDepart: data.dealDepart, // Yes or no
         SealDepartDate: data.departDate, 
-        SealDepartTime: data.departTime, 
+        SealDepartTime: data.departTime,
+        NumCalls: "", // May be sightings
+        OtherNotes: data.otherNotes, // String
+
+        xLatitude: data.xlatitude, // Floating number
+        xLongitude: data.xlongitude, // Floating number
+        xNumHundredFt: data.xnumHundredFt,
+        xAnimalBehavior: data.xanimalBehavior, // Free text?
+        xBandYN: data.xBandYN,
+        xBandColor: data.xbandColor, // String
+        xBleachMarkYN: data.xbleachMarkYN, // Yes or No
+        xScars: data.xscars, // Yes or No
+        xImages: data.ximages, // array of links to images in cloud (?)
+        xIsland: data.xisland, // Oahu, Maui, Hawaii, Kauai, Molokai
+        xSightings: data.xsightings, // used for related sightings, default at one
+        xRelated: data.xrelated, // Another id for relating related sightings together
 
     }, err => {
       if (err){
