@@ -54,9 +54,9 @@ Meteor.methods({
         xScars: data.xscars, // Yes or No
         xImages: data.ximages, // array of links to images in cloud (?)
         xIsland: data.xisland, // Oahu, Maui, Hawaii, Kauai, Molokai
-        xSightings: data.xsightings, // used for related sightings, default at one
-        xRelated: data.xrelated, // Another id for relating related sightings together
-        xConfirmRelated: data.xconfirmRelated, // Default at 1 and then after insertion, related algorithm changes this to 0 if needed
+        xSightings: 1, // used for related sightings, default at one
+        xRelated: "", // Another id for relating related sightings together
+        xConfirmRelated: "", // Default at empty and then after insertion, related algorithm changes this to 0 if needed and then after volunteer confirms, this changes to 1
 
     }, err => {
       if (err){

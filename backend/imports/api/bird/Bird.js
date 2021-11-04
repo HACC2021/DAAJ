@@ -45,8 +45,8 @@ Meteor.methods({
         xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes
         xImages: data.ximages, // array of links to images in cloud (?)
         xMainIdentification: data.xmainIdentification, // Tag, band, bleach markings, scars
-        xSightings: data.xsightings, // used for related sightings, default at one
-        xRelated: data.xrelated, // Another id for relating related sightings together
+        xSightings: 1, // used for related sightings, default at one
+        xRelated: "", // Another id for relating related sightings together
         xImages: data.ximages, // array of links to images in cloud (?)
         xIsland: data.xIsland, // Oahu, Maui, Hawaii, Kauai, Molokai
         xMainIdentification: data.xMainIdentification, // Tag, band, bleach markings, scars
@@ -54,7 +54,7 @@ Meteor.methods({
         // Bird specific
         Sightings: data.sightings, // used for related sightings, default at one
         xRelated: data.xrelated, // Another id for relating related sightings together
-        xConfirmRelated: data.xconfirmRelated, // Default at 1 and then after insertion, related algorithm changes this to 0 if needed
+        xConfirmRelated: "", // Default at empty and then after insertion, related algorithm changes this to 0 if needed and then after volunteer confirms, this changes to 1
 
     }, err => {
       if (err){
