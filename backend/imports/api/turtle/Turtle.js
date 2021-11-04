@@ -38,9 +38,13 @@ Meteor.methods({
         xLongitude: data.xlongitude, // Floating number
         xNumHundredFt: data.xnumHundredFt,
         xAnimalBehavior: data.xanimalBehavior, // Free text?
+        xTagNumber: data.xtagNumber,
+        xTagSide: data.xtagSide, // L, R, U
+        xTagColor: data.xtagColor, // R or N
         xBandYN: data.xBandYN,
         xBandColor: data.xbandColor, // String
         xBleachMarkYN: data.xbleachMarkYN, // Yes or No
+        xBleachMarkNum: data.xBleachMarkNum, // String
         xScars: data.xscars, // Yes or No
         xAmpFlipper: data.xampFlipper, // Yes or No; export into other notes
         xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes

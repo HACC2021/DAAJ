@@ -8,10 +8,16 @@ export const Others = new Mongo.Collection( 'others' )
 Meteor.methods({
   addOther( data ){
     Others.insert({
-        // Common to all animals
+        // Common to all animals      
         DateObserved: data.date, // Date object w date and time
+        TimeObserved: data.timeObserved,
+        TicketNumber: "", // Not implemented by us
+        HotlineOpInitials: "", // Not implemented by us
+        TicketType: "", // Not implemented by us
         ObserverName: data.observerName, // String
         ObserverPhone: data.observerPhone, // Number
+        ObserverInitials: data.observerInitials,
+        ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
         BeachLocation: data.beachLocation, // Look at spreadsheet
         LocationNotes: data.locationNotes, // Free text?
@@ -31,7 +37,6 @@ Meteor.methods({
 
         // Other specific
         Animal: data.animal, // user given
-        Size: data.size, // String (?)
     }, err => {
       if (err){
         return err
