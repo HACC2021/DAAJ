@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as eva from '@eva-design/eva';
 import { StyleSheet, TouchableOpacity, ImageBackground, View } from 'react-native';
 import { Text } from '@ui-kitten/components';
 

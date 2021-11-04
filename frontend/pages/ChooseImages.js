@@ -1,7 +1,7 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
 import {  Layout, Text, Button } from '@ui-kitten/components';
-import { View, ScrollView  } from 'react-native';
+import { View, ScrollView, Image, FlatList } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 export class ChooseImages extends React.Component {
@@ -39,12 +39,11 @@ export class ChooseImages extends React.Component {
     if (!result.cancelled) {
       this.setState( {image: result.uri} );
     }
-
-
-
     console.log('state images');
     console.log(this.state.images);
   };
+
+
 
 
   // TODO: Add code to have multiple select images instead of one by one
@@ -60,9 +59,41 @@ export class ChooseImages extends React.Component {
         <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
         <Button style={{marginTop: 10}} onPress={this.pickImage} appearance='outline'>Choose Images</Button>
         
-        
-        
-        
+
+        <FlatList
+        horizontal={true}
+        data={this.state.images}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 5
+        }}
+        keyExtractor={item => item.uri}
+        renderItem={ ({item, index}) => (
+          <Image
+            style={{
+              width: 100, height: 100,
+              marginTop: 20,
+              marginRight: 10,
+              borderRadius: 12, }}
+             source={{uri: item.uri}}
+          />
+        )}>
+        </FlatList>
+
+
+{/* 
+          {this.state.images.map((item, index) => {
+        return (
+          <Image
+            style={{
+              width: 75, height: 75,
+              marginRight: 10,
+              borderRadius: 12, }}
+             source={{uri: item.uri}}
+          />)})}
+ */}
+
+
         <Button style={{marginTop: 10}}  status='info'>Next</Button>
         </View>
         </ScrollView>

@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, ScrollView  } from 'react-native';
+import {Linking} from 'react-native'
 import { SpeciesCard } from './components/SpeciesCard';
 import { SpeciesGuide } from './pages/SpeciesGuide'
 import { ChooseImages } from './pages/ChooseImages'
@@ -33,12 +34,12 @@ const HomeScreen = ({navigation}) => {
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text category='h1'>Welcome</Text>
       <Text style={{marginTop: 10}} category='h6'>If you need help identifing a species:</Text>
-      <Button style={{marginTop: 10}} size='large' status='info' onPress={navigateSpeciesGuide} >Species Guide (HMAR)</Button>
+      <Button style={{marginTop: 10}} size='large' appearance='outline' status='info' onPress={navigateSpeciesGuide} >Species Guide (HMAR)</Button>
       <Divider style={{paddingTop: 50}}/>
       <Text category='h6'>Help us out:</Text>
-      <Button style={{marginTop: 10}}  size='large' status='danger' onPress={navigateChooseSpecies}>Report a Sighting</Button>
+      <Button style={{marginTop: 10}}  size='large' status='info' onPress={navigateChooseSpecies}>Report a Sighting</Button>
       <Text style={{marginTop: 10}} category='h6'>OR</Text>
-      <Button style={{marginTop: 10}}  size='large' status='danger' onPress={navigateReportDistressed}>Report Distressed Animal</Button>
+      <Button style={{marginTop: 10}}  size='large' status='info' onPress={navigateReportDistressed}>Report Distressed Animal</Button>
       <Divider style={{paddingTop: 90}}/>
       
     </Layout>
@@ -53,15 +54,13 @@ const Disclaimer = ({navigation}) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-    <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    
-      {/* <Text category='h6'>Disclaimer:</Text> */}
-      <Text category='h6'>Please try to keep your distance from the animal, if you don't know the answer to a question on the form, just press unknown.</Text>
-      <Button style={{marginTop: 10}} size='large' status='success' onPress={navigateChooseSpecies}>I understand, Continue</Button>
- 
+    <View style={{ flex: 1, flexDirection:'column'  }}>
+    <Layout style={{flex: 1, padding:20, alignItems: 'center'}}>
+      <Text category='h5'>Please try to keep your distance from the animal, if you don't know the answer to a question on the form, just press unknown.</Text>
+      <Button style={{marginTop: 20}} size='large' status='info' onPress={navigateChooseSpecies}>I understand, Continue</Button>
     </Layout>
     </View>
+
   );
 }
 
@@ -116,12 +115,13 @@ function ChooseSpecies({navigation}) {
 
 
 function ReportDistressed ({navigation}) {
+
   return (
   <View style={{ flex: 1 }}>
-    <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    <Text category='h6'>Does the animal appear injured or in distress? i.e. is there any evidence of a hook or fishing line, an open wound, or any unusual behavior?</Text>
-    <Text style={{marginTop: 20}} category='h3'>Please Call the statewide hotline:</Text>
-    <Button size='large' style={{marginTop: 10}}>888-256-9840</Button>
+    <Layout style={{flex: 1, padding:15, alignItems: 'center'}}>
+    <Text style={{marginTop: 20}} category='h6'>Please Call the statewide hotline:</Text>
+    <Button size='large' style={{marginTop: 10}} onPress={() => Linking.openURL('tel:888-256-9840')}>888-256-9840</Button>
+    <Text category='s1'style={{marginTop: 20}} >Does the animal appear injured or in distress? i.e. is there any evidence of a hook or fishing line, an open wound, or any unusual behavior?</Text>
     </Layout>
     </View>
     );
