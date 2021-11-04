@@ -20,7 +20,7 @@ export class SG3 extends React.Component {
       <Layout style={{flex: 1,}}>
       <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
           alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
-        <Text  style={{marginTop: 10}} category='h5'>Learn more about...</Text>
+        <Text style={{marginTop: 10}} category='h5'>Learn more about...</Text>
         <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
          {speciesList.map( (item, index) => {
            return (<SpeciesCard key={index}
@@ -29,7 +29,10 @@ export class SG3 extends React.Component {
               />
          )})}
 
-         {/* add description and guide here */}
+         <Text style={{marginTop: 10}} category='s1'>
+          Hawaii’s seabirds travel widely throughout the Pacific and are therefore very important sentinel species. 
+          Like “canaries in a coal mine," seabirds can help us understand ecosystem changes that not only affect the birds themselves but pose serious risks to humans.
+        </Text>
         </View>
         </ScrollView>
       </Layout>

@@ -12,8 +12,6 @@ let speciesList = [
   },
 ]
 
-let des = 'Of all marine mammals, the Hawaiian monk seal (ʻilio holo ika ua ua) is the most endangered in the pinniped family (seals, sea lions and walrus) in the western hemisphere and is listed as endangered under the Endangered Species Act.'
-
 export class SG1 extends React.Component {
   
   render() {
@@ -22,6 +20,7 @@ export class SG1 extends React.Component {
       <Layout style={{flex: 1,}}>
       <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
           alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
+        <Text style={{marginTop: 10}} category='h5'>Learn more about...</Text>
         <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
          {speciesList.map( (item, index) => {
            return (<SpeciesCard key={index}
@@ -30,8 +29,10 @@ export class SG1 extends React.Component {
               />
          )})}
 
-{/* add description and guide here */}
-        <Text  style={{marginTop: 10}} category='s1'>{des}</Text>
+        <Text style={{marginTop: 10}} category='s1'>
+          Of all marine mammals, the Hawaiian monk seal (ʻilio holo ika ua ua) is the most endangered in the pinniped family (seals, sea lions and walrus) 
+          in the western hemisphere and is listed as endangered under the Endangered Species Act.
+        </Text>
         </View>
         </ScrollView>
       </Layout>
