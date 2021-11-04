@@ -40,13 +40,14 @@ export class ChooseImages extends React.Component {
       this.setState( {image: result.uri} );
     }
 
-    
+
 
     console.log('state images');
     console.log(this.state.images);
   };
 
 
+  // TODO: Add code to have multiple select images instead of one by one
   //https://docs.expo.dev/versions/v43.0.0/sdk/imagepicker/
 
   render() {
@@ -55,7 +56,7 @@ export class ChooseImages extends React.Component {
       <Layout style={{flex: 1, padding: 10}}>
       <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
           alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
-        <Text  style={{marginTop: 10}} category='h6'>Please select up to 10 images</Text>
+        <Text  style={{marginTop: 10}} category='h6'>Please take photos of the animal and its surroundings so we may be better prepared for any needed field response.</Text>
         <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
         <Button style={{marginTop: 10}} onPress={this.pickImage} appearance='outline'>Choose Images</Button>
         
