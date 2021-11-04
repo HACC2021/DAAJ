@@ -10,33 +10,49 @@ Meteor.methods({
     Turtles.insert({
         // Common to all animals
         DateObserved: data.date, // Date object w date and time
+        TimeObserved: data.timeObserved,
+        TicketNumber: "", // Not implemented by us
+        HotlineOpInitials: "", // Not implemented by us
+        TicketType: "", // Not implemented by us
         ObserverName: data.observerName, // String
         ObserverPhone: data.observerPhone, // Number
+        ObserverInitials: data.observerInitials,
+        ObserverType: data.observerType, // P, V, or A
+        Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
         Sector: data.sector, // North, East, West, South, Molokai
         BeachLocation: data.beachLocation, // Look at spreadsheet
-        LocationNotes: data.locationNotes, // On sand or in water
-        Latitude: data.latitude, // Floating number
-        Longitude: data.longitude, // Floating number
-        NumHundredFt: data.numHundredFt,
-        AnimalBehavior: data.animalBehavior, // Free text?
-        TagNumber: data.tagNumber, // String
-        TagColor: data.tagColor, // String
-        BandColor: data.bandColor, // String
-        BleachMark: data.bleachMark, // Yes or No
-        Scars: data.scars, // Yes or No
-        Images: data.images, // array of links to images in cloud (?)
-        Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
-        MainIdentification: data.identification, // Tag, band, bleach markings, scars
+        LocationNotes: data.locationNotes,
+        TurtleType: data.turtleType, // Check spreadsheet
+        Size: data.size, // String like 2ft
+        Status: data.status, // deceased, alive, unknown
+        PrimaryIssue: "", // Not implemented by us
+        Response: "", // Not implemented by us
+        TimeResponderLeft: "", // Not implemented by us
+        ResponderArrivalTime: "", // Not implemented by us
+        OutreachProvided: "", // Not implemented by us
+        FAST: "", // Not implemented by us
+        NumCallsReceived: "", // Might just be Sightings
         OtherNotes: data.otherNotes, // String
 
-        // Turtle specific
-        TurtleType: data.TurtleType, // Check spreadsheet
-        Sightings: data.sightings, // used for related sightings, default at one
-        Related: data.related, // Another id for relating related sightings together
-        Size: data.size, // String like 2ft
-        AmpFlipper: data.ampFlipper, // Yes or No; export into other notes
-        WhichFlipper: data.whichFlipper, //string that'll be exported into other notes
-        Status: data.status, // deceased, alive, unknown
+        xLatitude: data.xlatitude, // Floating number
+        xLongitude: data.xlongitude, // Floating number
+        xNumHundredFt: data.xnumHundredFt,
+        xAnimalBehavior: data.xanimalBehavior, // Free text?
+        xTagNumber: data.xtagNumber,
+        xTagSide: data.xtagSide, // L, R, U
+        xTagColor: data.xtagColor, // R or N
+        xBandYN: data.xBandYN,
+        xBandColor: data.xbandColor, // String
+        xBleachMarkYN: data.xbleachMarkYN, // Yes or No
+        xBleachMarkNum: data.xBleachMarkNum, // String
+        xScars: data.xscars, // Yes or No
+        xAmpFlipper: data.xampFlipper, // Yes or No; export into other notes
+        xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes
+        xImages: data.ximages, // array of links to images in cloud (?)
+        xMainIdentification: data.xmainIdentification, // Tag, band, bleach markings, scars
+        xSightings: 1, // used for related sightings, default at one
+        xRelated: "", // Another id for relating related sightings together
+        xConfirmRelated: "", // Default at empty and then after insertion, related algorithm changes this to 0 if needed and then after volunteer confirms, this changes to 1
 
 
     }, err => {

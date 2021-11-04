@@ -1,7 +1,7 @@
 import React from 'react';
-import { Hello } from './Hello.jsx';
-import { Info } from './Info.jsx';
-import { Phone } from './Phone.jsx';
+import { Hello } from '../components/Hello.jsx';
+import { Info } from '../components/Info.jsx';
+import { Phone } from '../components/Phone.jsx';
 
 
 export const App = () => (
