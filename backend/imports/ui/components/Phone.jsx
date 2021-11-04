@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
-import { PhoneNumbers } from '../api/phonenumber/PhoneNumber';
+import { PhoneNumbers } from '../../api/phonenumber/PhoneNumber';
 
 export const Phone = () => {
   const phonenumbers = useTracker(() => {
