@@ -159,6 +159,7 @@ export default App = () => (
 //  import React from 'react';
 // import { FlatList, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 // import Meteor, { Mongo, withTracker } from '@meteorrn/core';
+// import { AsyncStorage } from 'react-native';
 
 // // Colelctions:
 // const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' );
@@ -168,8 +169,8 @@ export default App = () => (
 // const Others = new Mongo.Collection( 'others' );
 
 
-
-// Meteor.connect('ws://localhost:3000/websocket')
+// Meteor.connect("ws://localhost:3000/websocket", { AsyncStorage });
+// Meteor.connect("wss://daaj.meteorapp.com/websocket", { AsyncStorage });
 
 // class App extends React.Component {
 //   constructor(){
