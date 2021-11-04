@@ -16,6 +16,7 @@
     "@ui-kitten/components": "^5.1.1",
     "ejson": "^2.2.2",
     "expo": "~43.0.0",
+    "expo-image-picker": "~11.0.3",
     "expo-status-bar": "~1.1.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",

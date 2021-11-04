@@ -56,9 +56,9 @@ const Disclaimer = ({navigation}) => {
     <View style={{ flex: 1 }}>
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
     
-      <Text category='h6'>Disclaimer:</Text>
+      {/* <Text category='h6'>Disclaimer:</Text> */}
       <Text category='h6'>Please try to keep your distance from the animal, if you don't know the answer to a question on the form, just press unknown.</Text>
-      <Button style={{marginTop: 10}}  size='large' status='success' onPress={navigateChooseSpecies}>I understand, Continue</Button>
+      <Button style={{marginTop: 10}} size='large' status='success' onPress={navigateChooseSpecies}>I understand, Continue</Button>
  
     </Layout>
     </View>
@@ -104,7 +104,7 @@ function ChooseSpecies({navigation}) {
         <SpeciesCard key={index}
         speciesName={item.name}
         image={item.image}
-        onClick={() => navigation.navigate(item.form)}
+        onClick={() => navigation.navigate('Choose Images', {item})}
         />
        ))}
       </View>
