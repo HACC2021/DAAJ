@@ -120,8 +120,8 @@ function ReportDistressed ({navigation}) {
   <View style={{ flex: 1 }}>
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
     <Text category='h6'>Does the animal appear injured or in distress? i.e. is there any evidence of a hook or fishing line, an open wound, or any unusual behavior?</Text>
-    <Text style={{marginTop: 20}} category='h3'>Please Call</Text>
-    <Button size='large' style={{marginTop: 10}} >555-5555</Button>
+    <Text style={{marginTop: 20}} category='h3'>Please Call the statewide hotline:</Text>
+    <Button size='large' style={{marginTop: 10}}>888-256-9840</Button>
     </Layout>
     </View>
     );
