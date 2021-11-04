@@ -39,9 +39,7 @@ const HomeScreen = ({navigation}) => {
       <Text style={{marginTop: 10}} category='h6'>OR</Text>
       <Button style={{marginTop: 10}}  size='large' status='danger' onPress={navigateReportDistressed}>Report Distressed Animal</Button>
       <Divider style={{paddingTop: 90}}/>
-      <Text category='h6'>If you are staff or volunteer:</Text>
-      <Button style={{marginTop: 10}}  size='small' status='primary'>Sign In or Sign Up</Button>
-
+      
     </Layout>
     </View>
   );
