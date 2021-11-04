@@ -39,7 +39,6 @@ export class ChooseImages extends React.Component {
     if (!result.cancelled) {
       this.setState( {image: result.uri} );
     }
-    console.log(this.state.item.name)
 
   };
 
@@ -55,6 +54,7 @@ export class ChooseImages extends React.Component {
         <Text  style={{marginTop: 10}} category='h6'>Please select up to 10 images</Text>
         <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
         <Button style={{marginTop: 10}} onPress={this.pickImage} appearance='outline'>Choose Images</Button>
+        <Button style={{marginTop: 10}}  status='info'>Next</Button>
         </View>
         </ScrollView>
       </Layout>
