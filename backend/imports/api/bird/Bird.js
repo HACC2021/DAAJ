@@ -52,8 +52,6 @@ Meteor.methods({
         xMainIdentification: data.xMainIdentification, // Tag, band, bleach markings, scars
 
         // Bird specific
-        Latitude: data.latitude, // Floating number
-        Longitude: data.longitude, // Floating number
         Sightings: data.sightings, // used for related sightings, default at one
         Related: data.related, // Another id for relating related sightings together
     }, err => {

@@ -25,10 +25,13 @@ Meteor.methods({
         Longitude: data.longitude, // Floating number
         NumHundredFt: data.numHundredFt,
         AnimalBehavior: data.animalBehavior, // Free text?
-        TagNumber: data.tagNumber, // String
-        TagColor: data.tagColor, // String
+        BandYN: data.BandYN,
         BandColor: data.bandColor, // String
-        BleachMark: data.bleachMark, // Yes or No
+        BleachMarkYN: data.bleachMarkYN, // Yes or No
+        BleachMarkNum: data.BleachMarkNum, // String
+        TagNumber: data.tagNumber,
+        TagSide: data.tagSide, // L, R, U
+        TagColor: data.tagColor, // R or N
         Scars: data.scars, // Yes or No
         Images: data.images, // array of links to images in cloud (?)
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
