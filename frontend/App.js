@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, ScrollView  } from 'react-native';
 import { SpeciesCard } from './components/SpeciesCard';
 import { SpeciesGuide } from './pages/SpeciesGuide'
+import { ChooseImages } from './pages/ChooseImages'
 import { SG1 } from './pages/SpeciesGuides/SG1'
 import { SG2 } from './pages/SpeciesGuides/SG2'
 import { SG3 } from './pages/SpeciesGuides/SG3'
@@ -66,19 +67,24 @@ const Disclaimer = ({navigation}) => {
 
 
 let speciesList = [
-  { 'name': 'Hawaiian Monk Seals',
+  { 'id': 'SG1', 'form': 'MonkForm1',
+    'name': 'Hawaiian Monk Seals',
     'image': 'https://npr.brightspotcdn.com/dims4/default/940647a/2147483647/strip/true/crop/750x500+0+0/resize/880x587!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F51%2F0d%2F56122b7c41769dc7ecc20570170e%2F750x500-rm90-mele-exploring-behind-naupaka-hmar.jpg'
   },
-  { 'name':"Hawaii's Sea Turtles",
+  { 'id': 'SG2', 'form': 'TurtleForm1',
+    'name':"Hawaii's Sea Turtles",
     'image':'https://mauikayakadventures.com/wp-content/uploads/P8290054Sunomen--1030x773.jpg'
   },
-  { 'name': "Hawaii's Sea Birds",
+  { 'id': 'SG3', 'form': 'BirdForm1',
+    'name': "Hawaii's Sea Birds",
     'image':'https://h-mar.org/wp-content/uploads/2019/06/BoninPetrel.jpg'
   },
-  { 'name': "Spinner Dolphins",
+  { 'id': 'SG4', 'form': 'OtherForm1',
+    'name': "Spinner Dolphins",
     'image':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpV4UFufqXdt4zABZWRIPucyiAIi32iau4cg&usqp=CAU'
   },
-  { 'name': "Humpback Whales",
+  { 'id': 'SG5', 'form': 'OtherForm1',
+    'name': "Humpback Whales",
   'image':'https://www.scubadiving.com/sites/scubadiving.com/files/styles/opengraph_1_91x1/public/images/2021/03/humpback-whale-shutterstock-craig-lambert-photography.jpg?itok=UkKURyI3'
   }
 
@@ -98,7 +104,7 @@ function ChooseSpecies({navigation}) {
         <SpeciesCard key={index}
         speciesName={item.name}
         image={item.image}
-        
+        onClick={() => navigation.navigate(item.form)}
         />
        ))}
       </View>
@@ -135,6 +141,7 @@ export default App = () => (
           <Stack.Screen name="Report Distressed" component={ReportDistressed} />
           <Stack.Screen name="Species Guide" component={SpeciesGuide} />
           <Stack.Screen name="Disclaimer" component={Disclaimer} />
+          <Stack.Screen name="Choose Images" component={ChooseImages} />
           <Stack.Screen name="SG1" component={SG1} />
           <Stack.Screen name="SG2" component={SG2} />
           <Stack.Screen name="SG3" component={SG3} />
