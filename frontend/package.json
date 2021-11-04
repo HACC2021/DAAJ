@@ -10,7 +10,7 @@
   "dependencies": {
     "@eva-design/eva": "^2.1.1",
     "@meteorrn/core": "^2.3.0",
-    "@react-native-community/netinfo": "^6.0.4",
+    "@react-native-community/netinfo": "^6.0.5",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@ui-kitten/components": "^5.1.1",

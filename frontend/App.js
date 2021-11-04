@@ -6,17 +6,25 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, ScrollView  } from 'react-native';
 import { SpeciesCard } from './components/SpeciesCard';
-
-
-
+import { SpeciesGuide } from './pages/SpeciesGuide'
+import { SG1 } from './pages/SpeciesGuides/SG1'
+import { SG2 } from './pages/SpeciesGuides/SG2'
+import { SG3 } from './pages/SpeciesGuides/SG3'
+import { SG4 } from './pages/SpeciesGuides/SG4'
+import { SG5 } from './pages/SpeciesGuides/SG5'
 
 const HomeScreen = ({navigation}) => {
-  const navigateChooseSpecies = () => {
-    navigation.navigate('Choose Species');
-  };
 
   const navigateReportDistressed = () => {
     navigation.navigate('Report Distressed');
+  };
+
+  const navigateSpeciesGuide = () => {
+    navigation.navigate('Species Guide');
+  };
+
+  const navigateChooseSpecies = () => {
+    navigation.navigate('Disclaimer');
   };
 
   return (
@@ -24,7 +32,7 @@ const HomeScreen = ({navigation}) => {
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text category='h1'>Welcome</Text>
       <Text style={{marginTop: 10}} category='h6'>If you need help identifing a species:</Text>
-      <Button style={{marginTop: 10}} size='large' status='info'>Species Guide (HMAR)</Button>
+      <Button style={{marginTop: 10}} size='large' status='info' onPress={navigateSpeciesGuide} >Species Guide (HMAR)</Button>
       <Divider style={{paddingTop: 50}}/>
       <Text category='h6'>Help us out:</Text>
       <Button style={{marginTop: 10}}  size='large' status='danger' onPress={navigateChooseSpecies}>Report a Sighting</Button>
@@ -39,19 +47,48 @@ const HomeScreen = ({navigation}) => {
   );
 }
 
+const Disclaimer = ({navigation}) => {
+
+  const navigateChooseSpecies = () => {
+    navigation.navigate('Choose Species');
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+    <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    
+      <Text category='h6'>Disclaimer:</Text>
+      <Text category='h6'>Please try to keep your distance from the animal, if you don't know the answer to a question on the form, just press unknown.</Text>
+      <Button style={{marginTop: 10}}  size='large' status='success' onPress={navigateChooseSpecies}>I understand, Continue</Button>
+ 
+    </Layout>
+    </View>
+  );
+}
+
+
 let speciesList = [
   { 'name': 'Hawaiian Monk Seals',
-    'image': 'https://hawaiioceanproject.com/wp-content/uploads/2018/03/MonkSeal_1000.jpg'
+    'image': 'https://npr.brightspotcdn.com/dims4/default/940647a/2147483647/strip/true/crop/750x500+0+0/resize/880x587!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F51%2F0d%2F56122b7c41769dc7ecc20570170e%2F750x500-rm90-mele-exploring-behind-naupaka-hmar.jpg'
   },
   { 'name':"Hawaii's Sea Turtles",
     'image':'https://mauikayakadventures.com/wp-content/uploads/P8290054Sunomen--1030x773.jpg'
   },
   { 'name': "Hawaii's Sea Birds",
     'image':'https://h-mar.org/wp-content/uploads/2019/06/BoninPetrel.jpg'
+  },
+  { 'name': "Spinner Dolphins",
+    'image':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpV4UFufqXdt4zABZWRIPucyiAIi32iau4cg&usqp=CAU'
+  },
+  { 'name': "Humpback Whales",
+  'image':'https://www.scubadiving.com/sites/scubadiving.com/files/styles/opengraph_1_91x1/public/images/2021/03/humpback-whale-shutterstock-craig-lambert-photography.jpg?itok=UkKURyI3'
   }
+
 ]
 
-function ChooseSpecies() {
+function ChooseSpecies({navigation}) {
+
+  
   return (
     <View style={{ flex: 1, flexDirection:'column' }}>
     <Layout style={{flex: 1,}}>
@@ -74,7 +111,7 @@ function ChooseSpecies() {
 }
 
 
-function ReportDistressed () {
+function ReportDistressed ({navigation}) {
   return (
   <View style={{ flex: 1 }}>
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -98,196 +135,205 @@ export default App = () => (
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Choose Species" component={ChooseSpecies} />
           <Stack.Screen name="Report Distressed" component={ReportDistressed} />
+          <Stack.Screen name="Species Guide" component={SpeciesGuide} />
+          <Stack.Screen name="Disclaimer" component={Disclaimer} />
+          <Stack.Screen name="SG1" component={SG1} />
+          <Stack.Screen name="SG2" component={SG2} />
+          <Stack.Screen name="SG3" component={SG3} />
+          <Stack.Screen name="SG4" component={SG4} />
+          <Stack.Screen name="SG5" component={SG5} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
   </>
 );
 
-/* import React from 'react';
-import { FlatList, StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import Meteor, { Mongo, withTracker } from '@meteorrn/core';
 
-// Colelctions:
-const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' );
-const Seals = new Mongo.Collection( 'seals' );
-const Turtles = new Mongo.Collection( 'turtles' );
-const Birds = new Mongo.Collection( 'birds' );
-const Others = new Mongo.Collection( 'others' );
+//////////////////////////////////////////////////////
 
+//  import React from 'react';
+// import { FlatList, StyleSheet, Text, View, TextInput, Button } from 'react-native';
+// import Meteor, { Mongo, withTracker } from '@meteorrn/core';
 
-
-Meteor.connect('ws://localhost:3000/websocket')
-
-class App extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      name: '',
-      number: '',
-      isUpdating: false,
-      id: '',
-    }
-  }
-
-  // componentDidMount(){
-  //   Meteor.connect('ws://localhost:3000/websocket')
-  // }
-
-  addPhoneNumber = () => {
-    let data = {
-      number: this.state.number,
-      name: this.state.name,
-    }
-
-    if (!this.state.isUpdating) {
-      Meteor.call('addPhoneNumber', data, err => {
-        if( err ){
-          console.log( err ) // possible to display like an error page?
-        } else {
-          this.setState({
-            number: '',
-            name: '',
-            id: '',
-            isUpdating: false,
-          })
-        }
-      })
-    } else { // isUpdating
-      let data = {
-        number: this.state.number,
-        name: this.state.name,
-        id: this.state.id,
-      }
-      console.log("line49");
-      console.log(data);
-
-      Meteor.call('updatePhoneNumber', data, err => {
-        if( err ){
-          console.log( err )
-        } else {
-          this.setState({
-            number: '',
-            name: '',
-            id: '',
-            isUpdating: false,
-          })
-        }
-      })
-    }
+// // Colelctions:
+// const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' );
+// const Seals = new Mongo.Collection( 'seals' );
+// const Turtles = new Mongo.Collection( 'turtles' );
+// const Birds = new Mongo.Collection( 'birds' );
+// const Others = new Mongo.Collection( 'others' );
 
 
-  }
+
+// Meteor.connect('ws://localhost:3000/websocket')
+
+// class App extends React.Component {
+//   constructor(){
+//     super()
+//     this.state = {
+//       name: '',
+//       number: '',
+//       isUpdating: false,
+//       id: '',
+//     }
+//   }
+
+//   // componentDidMount(){
+//   //   Meteor.connect('ws://localhost:3000/websocket')
+//   // }
+
+//   addPhoneNumber = () => {
+//     let data = {
+//       number: this.state.number,
+//       name: this.state.name,
+//     }
+
+//     if (!this.state.isUpdating) {
+//       Meteor.call('addPhoneNumber', data, err => {
+//         if( err ){
+//           console.log( err ) // possible to display like an error page?
+//         } else {
+//           this.setState({
+//             number: '',
+//             name: '',
+//             id: '',
+//             isUpdating: false,
+//           })
+//         }
+//       })
+//     } else { // isUpdating
+//       let data = {
+//         number: this.state.number,
+//         name: this.state.name,
+//         id: this.state.id,
+//       }
+//       console.log("line49");
+//       console.log(data);
+
+//       Meteor.call('updatePhoneNumber', data, err => {
+//         if( err ){
+//           console.log( err )
+//         } else {
+//           this.setState({
+//             number: '',
+//             name: '',
+//             id: '',
+//             isUpdating: false,
+//           })
+//         }
+//       })
+//     }
 
 
-  deletePhoneNumber = (id) => {
-    const data = id;
+//   }
 
-    Meteor.call('deletePhoneNumber', data, err => {
-      if( err ){
-        console.log( err )
-      } else {
+
+//   deletePhoneNumber = (id) => {
+//     const data = id;
+
+//     Meteor.call('deletePhoneNumber', data, err => {
+//       if( err ){
+//         console.log( err )
+//       } else {
         
-      }
-    })
-  }
+//       }
+//     })
+//   }
   
-  updatePhoneNumber = (item) => {
+//   updatePhoneNumber = (item) => {
 
-    this.setState({
-      number: item.number,
-      name: item.name,
-      isUpdating: true,
-      id: item._id
-    })
+//     this.setState({
+//       number: item.number,
+//       name: item.name,
+//       isUpdating: true,
+//       id: item._id
+//     })
 
-  }
+//   }
 
-  render() {
+//   render() {
 
-    // console.log(this.props.phoneNumbers[1])
-    return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder='Enter a name'
-          onChangeText={name => this.setState( {name} )}
-          value={this.state.name}/>
-        <TextInput
-          style={styles.input}
-          keyboardType='numeric'
-          placeholder='Enter a phone number'
-          onChangeText={number => this.setState( {number} )}
-          value={this.state.number}/>
+//     // console.log(this.props.phoneNumbers[1])
+//     return (
+//       <View style={styles.container}>
+//         <TextInput
+//           style={styles.input}
+//           placeholder='Enter a name'
+//           onChangeText={name => this.setState( {name} )}
+//           value={this.state.name}/>
+//         <TextInput
+//           style={styles.input}
+//           keyboardType='numeric'
+//           placeholder='Enter a phone number'
+//           onChangeText={number => this.setState( {number} )}
+//           value={this.state.number}/>
 
-        <Button
-          onPress={this.addPhoneNumber}
-          title='Save Phone Number'/>
+//         <Button
+//           onPress={this.addPhoneNumber}
+//           title='Save Phone Number'/>
   
-        <FlatList
-          data={this.props.phoneNumbers}
-          keyExtractor={(item, index) => item._id}
-          renderItem={({item}) => (
-            <View>
-              <Text>{item.name} || {item.number}</Text> 
-              <Button
-                onPress = {() => this.deletePhoneNumber(item._id)}
-                title="X"
-                color="#a83e32"
-              />
-              <Button
-                onPress = {() => this.updatePhoneNumber(item)}
-                title="EDIT"
-                color="#a83e32"
-              />
-            </View>
-          )} />
-      </View>
-    );
-  }
+//         <FlatList
+//           data={this.props.phoneNumbers}
+//           keyExtractor={(item, index) => item._id}
+//           renderItem={({item}) => (
+//             <View>
+//               <Text>{item.name} || {item.number}</Text> 
+//               <Button
+//                 onPress = {() => this.deletePhoneNumber(item._id)}
+//                 title="X"
+//                 color="#a83e32"
+//               />
+//               <Button
+//                 onPress = {() => this.updatePhoneNumber(item)}
+//                 title="EDIT"
+//                 color="#a83e32"
+//               />
+//             </View>
+//           )} />
+//       </View>
+//     );
+//   }
 
-}
+// }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 20
-  },
-  input: {
-    borderWidth: 2,
-    borderColor: 'gray',
-    height: 50,
-    margin: 10
-  }
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     marginTop: 20
+//   },
+//   input: {
+//     borderWidth: 2,
+//     borderColor: 'gray',
+//     height: 50,
+//     margin: 10
+//   }
+// });
 
 
 
-let AppContainer = withTracker(() => {
-  Meteor.subscribe("PhoneNumbersCollection");
-  let phoneNumbers = PhoneNumbers.find({}).fetch();
+// let AppContainer = withTracker(() => {
+//   Meteor.subscribe("PhoneNumbersCollection");
+//   let phoneNumbers = PhoneNumbers.find({}).fetch();
 
-  Meteor.subscribe("SealsCollection");
-  let seals = Seals.find({}).fetch();
+//   Meteor.subscribe("SealsCollection");
+//   let seals = Seals.find({}).fetch();
 
-  Meteor.subscribe("TurtlesCollection");
-  let turtles = Turtles.find({}).fetch();
+//   Meteor.subscribe("TurtlesCollection");
+//   let turtles = Turtles.find({}).fetch();
 
-  Meteor.subscribe("BirdsCollection");
-  let birds = Birds.find({}).fetch();
+//   Meteor.subscribe("BirdsCollection");
+//   let birds = Birds.find({}).fetch();
 
-  Meteor.subscribe("OthersCollection");
-  let others = Others.find({}).fetch();
+//   Meteor.subscribe("OthersCollection");
+//   let others = Others.find({}).fetch();
 
-  return {
-    phoneNumbers,
-    seals,
-    turtles,
-    birds,
-    others
-  };
-})(App)
+//   return {
+//     phoneNumbers,
+//     seals,
+//     turtles,
+//     birds,
+//     others
+//   };
+// })(App)
 
-export default AppContainer;
- */
+// export default AppContainer;

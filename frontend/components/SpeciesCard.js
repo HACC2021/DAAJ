@@ -7,9 +7,14 @@ import { Text } from '@ui-kitten/components';
 
 export class SpeciesCard extends React.Component {
   
+  constructor(props) {
+    super(props);
+  }
+
+
   render() {
     return (
-    <TouchableOpacity activeOpacity={0.95} >
+    <TouchableOpacity activeOpacity={0.95} onPress={this.props.onClick}>
         <ImageBackground style={styles.container} source={{uri: `${this.props.image}`}}>
         <View style={styles.overlay}>
             <View  style={styles.chipContainer}>
@@ -17,8 +22,6 @@ export class SpeciesCard extends React.Component {
                     {this.props.speciesName}
                 </Text>
             </View>
-
-    
         </View>
         </ImageBackground>
     </TouchableOpacity>
@@ -29,7 +32,10 @@ export class SpeciesCard extends React.Component {
 SpeciesCard.propTypes = {
   speciesName: PropTypes.string.isRequired,
   image: PropTypes.string,
-  formName: PropTypes.string
+  formName: PropTypes.string,
+  id: PropTypes.number,
+  pageName: PropTypes.string,
+  onClick: PropTypes.any,
   };
   
 
@@ -45,7 +51,7 @@ function elevationShadowStyle(elevation) {
 
 const styles = StyleSheet.create({
 container: {
-    height: 150,
+    height: 140,
     padding: 16,
     borderRadius: 12,
     justifyContent: 'center',
