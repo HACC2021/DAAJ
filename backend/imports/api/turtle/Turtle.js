@@ -30,7 +30,7 @@ Meteor.methods({
         OtherNotes: data.otherNotes, // String
 
         // Turtle specific
-        TurtleType: data.TurtleType, // Check spreadsheet
+        TurtleType: data.turtleType, // Check spreadsheet
         Sightings: data.sightings, // used for related sightings, default at one
         Related: data.related, // Another id for relating related sightings together
         Size: data.size, // String like 2ft
