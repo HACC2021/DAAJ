@@ -53,7 +53,9 @@ Meteor.methods({
 
         // Bird specific
         Sightings: data.sightings, // used for related sightings, default at one
-        Related: data.related, // Another id for relating related sightings together
+        xRelated: data.xrelated, // Another id for relating related sightings together
+        xConfirmRelated: data.xconfirmRelated, // Default at 1 and then after insertion, related algorithm changes this to 0 if needed
+
     }, err => {
       if (err){
         return err

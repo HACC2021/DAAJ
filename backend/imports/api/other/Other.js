@@ -37,8 +37,6 @@ Meteor.methods({
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
         MainIdentification: data.identification, // Tag, band, bleach markings, scars
         OtherNotes: data.otherNotes, // String
-
-        // Other specific
         Animal: data.animal, // user given
     }, err => {
       if (err){

@@ -52,6 +52,7 @@ Meteor.methods({
         xMainIdentification: data.xmainIdentification, // Tag, band, bleach markings, scars
         xSightings: data.xsightings, // used for related sightings, default at one
         xRelated: data.xrelated, // Another id for relating related sightings together
+        xConfirmRelated: data.xconfirmRelated, // Default at 1 and then after insertion, related algorithm changes this to 0 if needed
 
 
     }, err => {
