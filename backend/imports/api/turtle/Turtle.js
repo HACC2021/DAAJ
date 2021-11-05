@@ -38,6 +38,7 @@ Meteor.methods({
         xLongitude: data.xlongitude, // Floating number
         xNumHundredFt: data.xnumHundredFt,
         xAnimalBehavior: data.xanimalBehavior, // Free text?
+        xTagYN: data.xTagYN,
         xTagNumber: data.xtagNumber,
         xTagSide: data.xtagSide, // L, R, U
         xTagColor: data.xtagColor, // R or N

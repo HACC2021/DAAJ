@@ -25,6 +25,7 @@ Meteor.methods({
         Longitude: data.longitude, // Floating number
         NumHundredFt: data.numHundredFt,
         AnimalBehavior: data.animalBehavior, // Free text?
+        TagYN: data.TagYN,
         BandYN: data.BandYN,
         BandColor: data.bandColor, // String
         BleachMarkYN: data.bleachMarkYN, // Yes or No

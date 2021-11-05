@@ -33,6 +33,7 @@ Meteor.methods({
         xLongitude: data.xlongitude, // Floating number
         xNumHundredFt: data.xnumHundredFt,
         xAnimalBehavior: data.xanimalBehavior, // Free text?
+        xTagYN: data.xTagYN,
         xBandYN: data.xBandYN,
         xBandColor: data.xbandColor, // String
         xBleachMarkYN: data.xbleachMarkYN, // Yes or No
