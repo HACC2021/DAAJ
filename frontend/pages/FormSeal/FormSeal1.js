@@ -157,7 +157,7 @@ const FormSeal1 = (props) => {
       <>
           {/* QUESTION 13 */}
           <Text category='s1'>Please describe the markings</Text>
-      <Input placeholder='Enter description'
+      <Input status='warning' placeholder='Enter description'
       value={otherMarkingsWhere} onChangeText={nextValue => setotherMarkingsWhere(nextValue)} />
 
       </>
