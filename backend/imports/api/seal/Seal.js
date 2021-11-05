@@ -38,7 +38,7 @@ Meteor.methods({
         MomPup: data.momPup,
         SRASetBy: "", // Not implemented by us
         NumVolunteers: "", // Not implemented by us
-        SealDepart: data.dealDepart, // Yes or no
+        SealDepart: data.sealDepart, // Yes or no
         SealDepartDate: data.departDate, 
         SealDepartTime: data.departTime,
         NumCalls: "", // May be sightings
