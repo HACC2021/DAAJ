@@ -1,11 +1,10 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Divider, IconRegistry, Layout, Text, Button } from '@ui-kitten/components';
+import { ApplicationProvider, Divider, Layout, Text, Button } from '@ui-kitten/components';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, ScrollView  } from 'react-native';
-import {Linking} from 'react-native'
+import { Linking } from 'react-native'
 import { SpeciesCard } from './components/SpeciesCard';
 import { SpeciesGuide } from './pages/SpeciesGuide'
 import { ChooseImages } from './pages/ChooseImages'
@@ -14,6 +13,13 @@ import { SG2 } from './pages/SpeciesGuides/SG2'
 import { SG3 } from './pages/SpeciesGuides/SG3'
 import { SG4 } from './pages/SpeciesGuides/SG4'
 import { SG5 } from './pages/SpeciesGuides/SG5'
+import FormSeal1 from './pages/FormSeal/FormSeal1'
+import FormSeal2 from './pages/FormSeal/FormSeal2'
+import FormBird1 from './pages/FormBird/FormBird1'
+import FormOther1 from './pages/FormOther/FormOther1'
+import FormTurtle1 from './pages/FormTurtle/FormTurtle1'
+
+
 
 const HomeScreen = ({navigation}) => {
 
@@ -66,23 +72,23 @@ const Disclaimer = ({navigation}) => {
 
 
 let speciesList = [
-  { 'id': 'SG1', 'form': 'MonkForm1',
+  { 'id': 'SG1', 'form': 'FormSeal1',
     'name': 'Hawaiian Monk Seals',
     'image': 'https://npr.brightspotcdn.com/dims4/default/940647a/2147483647/strip/true/crop/750x500+0+0/resize/880x587!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2F51%2F0d%2F56122b7c41769dc7ecc20570170e%2F750x500-rm90-mele-exploring-behind-naupaka-hmar.jpg'
   },
-  { 'id': 'SG2', 'form': 'TurtleForm1',
+  { 'id': 'SG2', 'form': 'FormTurtle1',
     'name':"Hawaii's Sea Turtles",
     'image':'https://mauikayakadventures.com/wp-content/uploads/P8290054Sunomen--1030x773.jpg'
   },
-  { 'id': 'SG3', 'form': 'BirdForm1',
+  { 'id': 'SG3', 'form': 'FormBird1',
     'name': "Hawaii's Sea Birds",
     'image':'https://h-mar.org/wp-content/uploads/2019/06/BoninPetrel.jpg'
   },
-  { 'id': 'SG4', 'form': 'OtherForm1',
+  { 'id': 'SG4', 'form': 'FormOther1',
     'name': "Spinner Dolphins",
     'image':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpV4UFufqXdt4zABZWRIPucyiAIi32iau4cg&usqp=CAU'
   },
-  { 'id': 'SG5', 'form': 'OtherForm1',
+  { 'id': 'SG5', 'form': 'FormOther1',
     'name': "Humpback Whales",
   'image':'https://www.scubadiving.com/sites/scubadiving.com/files/styles/opengraph_1_91x1/public/images/2021/03/humpback-whale-shutterstock-craig-lambert-photography.jpg?itok=UkKURyI3'
   }
@@ -147,6 +153,11 @@ export default App = () => (
           <Stack.Screen name="SG3" component={SG3} />
           <Stack.Screen name="SG4" component={SG4} />
           <Stack.Screen name="SG5" component={SG5} />
+          <Stack.Screen name="FormSeal1" options={{ title: 'Identifying Characteristics' }} component={FormSeal1} />
+          <Stack.Screen name="FormSeal2" options={{ title: 'Identifying Characteristics' }} component={FormSeal2} />
+          <Stack.Screen name="FormBird1" options={{ title: 'Identifying Characteristics' }} component={FormBird1} />
+          <Stack.Screen name="FormTurtle1" options={{ title: 'Identifying Characteristics' }} component={FormTurtle1} />
+          <Stack.Screen name="FormOther1" options={{ title: 'Identifying Characteristics' }} component={FormOther1} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
@@ -159,7 +170,6 @@ export default App = () => (
 //  import React from 'react';
 // import { FlatList, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 // import Meteor, { Mongo, withTracker } from '@meteorrn/core';
-// import { AsyncStorage } from 'react-native';
 
 // // Colelctions:
 // const PhoneNumbers = new Mongo.Collection( 'phoneNumbers' );
@@ -169,8 +179,8 @@ export default App = () => (
 // const Others = new Mongo.Collection( 'others' );
 
 
-// Meteor.connect("ws://localhost:3000/websocket", { AsyncStorage });
-// Meteor.connect("wss://daaj.meteorapp.com/websocket", { AsyncStorage });
+// Meteor.connect("ws://localhost:3000/websocket");
+// Meteor.connect("wss://daaj.meteorapp.com/websocket");
 
 // class App extends React.Component {
 //   constructor(){

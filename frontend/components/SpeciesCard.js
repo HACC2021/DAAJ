@@ -10,7 +10,6 @@ export class SpeciesCard extends React.Component {
     super(props);
   }
 
-
   render() {
     return (
     <TouchableOpacity activeOpacity={0.95} onPress={this.props.onClick}>

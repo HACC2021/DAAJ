@@ -24,6 +24,7 @@ export class ChooseImages extends React.Component {
         }
       }
     }
+  
   }
 
   pickImage = async () => {
@@ -37,14 +38,16 @@ export class ChooseImages extends React.Component {
     console.log(result);
     this.state.images.push(result);
     if (!result.cancelled) {
-      this.setState( {image: result.uri} );
+      this.setState( { image: result.uri} );
     }
     console.log('state images');
     console.log(this.state.images);
   };
 
 
-
+  navigateForm = () => {
+    this.props.navigation.navigate(this.state.item.form, {item: this.state.item, images: this.state.images});
+  };
 
   // TODO: Add code to have multiple select images instead of one by one
   //https://docs.expo.dev/versions/v43.0.0/sdk/imagepicker/
@@ -55,10 +58,11 @@ export class ChooseImages extends React.Component {
       <Layout style={{flex: 1, padding: 10}}>
       <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
           alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
-        <Text  style={{marginTop: 10}} category='h6'>Please take photos of the animal and its surroundings so we may be better prepared for any needed field response.</Text>
+        <Text  style={{marginTop: 10}} category='h6'>Please take photos of the animal and its surroundings so we may be better prepared for any needed field response. </Text>
+
+        <Text style={{marginTop: 10}} category='s1'> If you see tags, bands, bleach markings, scars, or other markings, please capture it. Thank you!</Text>
         <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
         <Button style={{marginTop: 10}} onPress={this.pickImage} appearance='outline'>Choose Images</Button>
-        
 
         <FlatList
         horizontal={true}
@@ -80,21 +84,7 @@ export class ChooseImages extends React.Component {
         )}>
         </FlatList>
 
-
-{/* 
-          {this.state.images.map((item, index) => {
-        return (
-          <Image
-            style={{
-              width: 75, height: 75,
-              marginRight: 10,
-              borderRadius: 12, }}
-             source={{uri: item.uri}}
-          />)})}
- */}
-
-
-        <Button style={{marginTop: 10}}  status='info'>Next</Button>
+        <Button style={{marginTop: 10}} onPress={this.navigateForm} status='info'>Continue</Button>
         </View>
         </ScrollView>
       </Layout>
