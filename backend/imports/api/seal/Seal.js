@@ -8,6 +8,8 @@ export const Seals = new Mongo.Collection( 'seals' )
 Meteor.methods({
   addSeal( data ){
     Seals.insert({
+        DateObjectObserved: data.dateObjectObserved,
+        Animal: "Seal",
         // Common to all animals
         DateObserved: data.date, // Date object w date and time
         TimeObserved: data.timeObserved,
@@ -19,7 +21,7 @@ Meteor.methods({
         ObserverInitials: data.observerInitials, 
         ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
-        Location: data.location, // Look at spreadsheet
+        LocationName: data.location, // Look at spreadsheet
         LocationNotes: data.locationNotes, // won't have anything cuz already haveBeachPosition
         SealPresent: data.sealPresent,
         Size: data.size, // String (?)
@@ -58,7 +60,7 @@ Meteor.methods({
         xSightings: 1, // used for related sightings, default at one
         xRelated: "", // Another id for relating related sightings together
         xConfirmRelated: "", // Default at empty and then after insertion, related algorithm changes this to 0 if needed and then after volunteer confirms, this changes to 1
-
+        xChecked: 0,
     }, err => {
       if (err){
         return err
