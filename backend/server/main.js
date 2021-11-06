@@ -15,14 +15,32 @@ function insertLink({ title, url }) {
 
 function insertSeal({ ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, LocationName, LocationNotes, SealPresent,	Size,	Sex,	BeachPosition,	MainIdentification,	BleachNumber,	TagNumber,	TagSide,	TagColor,	MomPup,	SealDepart,	SealDepartDate,	SealDepartTime,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xBandYN,	xBandColor,	xBleachMarkYN,	xScarsYN,	xScarsLocation,	xImages,	xIsland}) {
   let aDate = new Date();
-  let month = String(aDate.getMonth() + 1)  // 10 (PS: +1 since Month is 0-based)
-  let day = String(aDate.getDate())       // 30
-  let year = String(aDate.getFullYear()).slice(-2)   // 2020
+  let month = String(aDate.getMonth() + 1) 
+  let day = String(aDate.getDate())
+  if (day.length === 1){
+      day = "0" + day
+  }
+  let year = String(aDate.getFullYear()).slice(-2)
   let date = month + day + year;
-  let time = (aDate.toTimeString()).slice(5);
+  let time = (aDate.toTimeString()).slice(0,5);
 
   Seals.insert({ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, LocationName, LocationNotes, SealPresent,	Size,	Sex,	BeachPosition,	MainIdentification,	BleachNumber,	TagNumber,	TagSide,	TagColor,	MomPup,	SealDepart,	SealDepartDate,	SealDepartTime,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xBandYN,	xBandColor,	xBleachMarkYN,	xScarsYN,	xScarsLocation,	xImages,	xIsland, DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time});
 }
+ 
+function insertTurtle ({ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification}) {
+  let aDate = new Date();
+  let month = String(aDate.getMonth() + 1) 
+  let day = String(aDate.getDate())
+  if (day.length === 1){
+      day = "0" + day
+  }
+  let year = String(aDate.getFullYear()).slice(-2)
+  let date = month + day + year;
+  let time = (aDate.toTimeString()).slice(0,5);
+
+  Turtles.insert({DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification})
+}
+
 
 
 Meteor.startup(() => {
@@ -94,4 +112,47 @@ Meteor.startup(() => {
     });
 
   }
+
+  // If the Turtles collection is empty, add some data.
+  if (Turtles.find().count() === 0) {
+    console.log("Seeding Turtles collection");
+    insertTurtle({
+      "ObserverName": "Mary",
+      "ObserverPhone": "808-938-1284",
+      "ObserverInitials": "MJ",
+      "ObserverType": "P",
+      "Island": "Oahu",
+      "Sector": "West",
+      "LocationName": "Kualoa Regional Park",
+      "LocationNotes": "",
+      "TurtleType": "Cm",
+      "Size": "1ft",
+      "Status": "Alive",
+      "OtherNotes": "",
+      "xTagYN": "Y",
+      "xLatitude": "21.516933",
+      "xLongitude": "-157.837617",
+      "xNumHundredFt": "1",
+      "xAnimalBehavior": "Swimming",
+      "xTagNumber": "D9102",
+      "xTagSide": "Left hind flipper",
+      "xTagColor": "N",
+      "xBandYN": "Y",
+      "xBandColor": "R",
+      "xBleachMarkYN": "N",
+      "xBleachMarkNum": "",
+      "xScarsYN": "N",
+      "xScarsLocation": "",
+      "xAmpFlipper": "",
+      "xWhichFlipper": "",
+      "xImages": ["a;sdkjfasda.jpeg", "uwerhbcukasjdhf.jpg"],
+      "MainIdentification": "T",
+    });
+
+    insertTurtle({
+     
+    });
+
+  }
+
 });
