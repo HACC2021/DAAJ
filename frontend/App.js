@@ -20,6 +20,7 @@ import FormOther1 from './pages/FormOther/FormOther1'
 import FormTurtle1 from './pages/FormTurtle/FormTurtle1'
 import FormAll from './pages/FormAll';
 import FormAll2 from './pages/FormAll2';
+import { LocationForm } from './pages/LocationForm';
 
 
 const HomeScreen = ({navigation}) => {
@@ -161,6 +162,7 @@ export default App = () => (
           <Stack.Screen name="FormOther1" options={{ title: 'Other Sighting' }} component={FormOther1} />
           <Stack.Screen name="FormAll" options={{ title: 'Identifying Characteristics' }} component={FormAll} />
           <Stack.Screen name="FormAll2" options={{ title: 'Identifying Characteristics' }} component={FormAll2} />
+          <Stack.Screen name="LocationForm" options={{ title: 'Location' }}  component={LocationForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApplicationProvider>

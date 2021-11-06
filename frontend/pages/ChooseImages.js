@@ -46,7 +46,7 @@ export class ChooseImages extends React.Component {
 
 
   navigateForm = () => {
-    this.props.navigation.navigate('FormAll', {item: this.state.item, images: this.state.images});
+    this.props.navigation.navigate('LocationForm', {item: this.state.item, images: this.state.images});
   };
 
   // TODO: Add code to have multiple select images instead of one by one

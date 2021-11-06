@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { View, ScrollView  } from 'react-native';
 
-
 const FormSeal1 = (props) => {
 
 
