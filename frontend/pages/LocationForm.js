@@ -1,9 +1,9 @@
 import React from 'react';
-import {  Layout, Text, Button, Select, SelectItem } from '@ui-kitten/components';
-import { View, ScrollView,  } from 'react-native';
+import {  Layout, Text, Button, Modal, Select, SelectItem } from '@ui-kitten/components';
+import { View, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 import { LocationView } from '../components/LocationView';
-import MapView from "react-native-maps";
+import MapPicker from "react-native-map-picker";
 
 
 
@@ -20,6 +20,7 @@ export class LocationForm extends React.Component {
       q1display: '',
       q2index: 0,
       q2display: '',
+      modal: false,
     }
   }
 
@@ -46,7 +47,6 @@ export class LocationForm extends React.Component {
       }
       let location = await Location.getCurrentPositionAsync({});
       this.updateState(location);
-      console.log(this.state);
     } catch (error) {
       console.log(error);
     }
@@ -61,6 +61,9 @@ export class LocationForm extends React.Component {
 
   // TODO: Add code to have multiple select images instead of one by one
   //https://docs.expo.dev/versions/v43.0.0/sdk/imagepicker/
+
+
+
 
   render() {
     return (
@@ -82,15 +85,30 @@ export class LocationForm extends React.Component {
           {this.q2.map(this.renderOption)}
       </Select>
 
+        {this.state.loading ? <Text category='h6' >Map is Loading....</Text> :  <Text category='s1'>Pick the location on the map</Text>}
+        
 
+        {!this.state.loading &&
+        <MapPicker style={{height:300, flex:1}}
+        initialCoordinate={{
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+        }}
+        onLocationSelect={({latitude, longitude})=> this.setState( {...this.state,
+          latitude: latitude,
+          longitude: longitude,} )}
+        />}
+
+        {/* 
         {!this.state.loading && 
         <LocationView 
         lat={this.state.latitude} 
-        long={this.state.longitude} />}
+        long={this.state.longitude} />} */}
      
-        <Button style={{marginTop: 10}}  appearance='outline'>Edit Location</Button>
-
-
+        {/* <Button style={{marginTop: 10}}  onPress={() => this.setState({...this.state, modal: true})}  appearance='outline'>Edit Location</Button> */}
+          
+          
+          
 
 
         <Button style={{marginTop: 10}} onPress={this.navigateForm} status='info'>Continue</Button>
@@ -101,3 +119,16 @@ export class LocationForm extends React.Component {
   }
 }
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mapStyle: {
+    // width: Dimensions.get('window').width,
+    // height: Dimensions.get('window').height,
+  },
+});
