@@ -5,6 +5,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
 import { Turtles } from '../../api/turtle/Turtle';
+import { Birds } from '../../api/bird/Bird';
+import { Seals } from '../../api/seal/Seal';
+import { Others } from '../../api/other/Other';
 import StuffItem from '../components/StuffItem';
 import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
@@ -19,8 +22,24 @@ class ListReports extends React.Component {
   }
 
   getReports() {
+/*
+    console.log("turtles");
     console.log(this.props.turtles);
-    return "jello world";
+    console.log("birds");
+    console.log(this.props.birds);
+    console.log("seals");
+    console.log(this.props.seals);
+    console.log("others");
+    console.log(this.props.others);
+    console.log("combined");
+    console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
+*/
+    const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
+    const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
+    const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
+    const others = this.props.others.map(report => ({...report, type: "Other"}));
+
+    return [...turtles, ...birds, ...seals, ...others];
   }
   // Render the page once subscriptions have been received.
   renderPage() {
@@ -30,15 +49,15 @@ class ListReports extends React.Component {
         <Table celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Quantity</Table.HeaderCell>
-              <Table.HeaderCell>Condition</Table.HeaderCell>
-              <Table.HeaderCell>Edit</Table.HeaderCell>
-              <Table.HeaderCell>{this.getReports()}</Table.HeaderCell>
+              <Table.HeaderCell>Date</Table.HeaderCell>
+              <Table.HeaderCell>Time</Table.HeaderCell>
+              <Table.HeaderCell>Type</Table.HeaderCell>
+              <Table.HeaderCell>Location</Table.HeaderCell>
+              <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.stuffs.map((stuff) => <ReportItem key={stuff._id} stuff={stuff} />)}
+            {this.getReports().map((report) => <ReportItem key={report._id} report={report} />)}
           </Table.Body>
         </Table>
       </Container>
@@ -63,10 +82,26 @@ export default withTracker(() => {
   const turtleSubscription = Meteor.subscribe('TurtlesCollection');
   const turtleReady = turtleSubscription.ready();
   const turtles = Turtles.find({}).fetch();
+  const birdSubscription = Meteor.subscribe('BirdsCollection');
+  const birdReady = birdSubscription.ready();
+  const birds = Birds.find({}).fetch();
+  const sealSubscription = Meteor.subscribe('SealsCollection');
+  const sealReady = sealSubscription.ready();
+  const seals = Seals.find({}).fetch();
+  const otherSubscription = Meteor.subscribe('OthersCollection');
+  const otherReady = otherSubscription.ready();
+  const others = Others.find({}).fetch();
+
   return {
     stuffs,
     ready,
     turtleReady,
     turtles,
+    birdReady,
+    birds,
+    sealReady,
+    seals,
+    otherReady,
+    others
   };
 })(ListReports);

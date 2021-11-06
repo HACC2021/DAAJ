@@ -4,30 +4,30 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-class StuffItem extends React.Component {
+class ReportItem extends React.Component {
   render() {
     return (
       <Table.Row>
-        <Table.Cell>{this.props.stuff.name}</Table.Cell>
-        <Table.Cell>{this.props.stuff.quantity}</Table.Cell>
-        <Table.Cell>{this.props.stuff.condition}</Table.Cell>
-        <Table.Cell>
-          <Link to={`/edit/${this.props.stuff._id}`}>Edit</Link>
-        </Table.Cell>
+        <Table.Cell>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
+        <Table.Cell>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
+        <Table.Cell>{this.props.report.type}</Table.Cell>
+        <Table.Cell>{this.props.report.LocationName}</Table.Cell>
+        <Table.Cell>{this.props.report.ObserverPhone}</Table.Cell>
       </Table.Row>
     );
   }
 }
 
 // Require a document to be passed to this component.
-StuffItem.propTypes = {
-  stuff: PropTypes.shape({
-    name: PropTypes.string,
-    quantity: PropTypes.number,
-    condition: PropTypes.string,
+ReportItem.propTypes = {
+  report: PropTypes.shape({
+    DateObjectObserved: PropTypes.instanceOf(Date),
+    type: PropTypes.string,
+    LocationName: PropTypes.string,
+    ObserverPhone: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };
 
 // Wrap this component in withRouter since we use the <Link> React Router element.
-export default withRouter(StuffItem);
+export default withRouter(ReportItem);
