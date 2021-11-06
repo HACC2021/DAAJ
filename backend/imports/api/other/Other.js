@@ -24,8 +24,6 @@ Meteor.methods({
         Size: "N/A",
         LocationName: data.beachLocation, // Look at spreadsheet
         LocationNotes: data.locationNotes, // Free text?
-        Latitude: data.latitude, // Floating number
-        Longitude: data.longitude, // Floating number
         NumHundredFt: data.numHundredFt,
         xAnimalBehavior: data.animalBehavior, // Free text?
         TagYN: data.TagYN,

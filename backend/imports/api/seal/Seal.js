@@ -23,7 +23,7 @@ Meteor.methods({
         Sector: data.sector, // North, East, West, South, Molokai
         LocationName: data.location, // Look at spreadsheet
         LocationNotes: data.locationNotes, // won't have anything cuz already haveBeachPosition
-        SealPresent: data.sealPresent,
+        SealPresent: "Y",
         Size: data.size, // String (?)
         Sex: data.sex, // Male/Female
         BeachPosition: data.beachPosition,

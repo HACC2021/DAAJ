@@ -46,18 +46,13 @@ Meteor.methods({
         xTagColor: data.xtagColor, // R or N
         xScarsYN: data.xscarsYN, // Yes or No
         xScarsLocation: data.xscarsLocation, // String
-        xAmpFlipper: data.xampFlipper, // Yes or No; export into other notes
-        xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes
         xImages: data.ximages, // array of links to images in cloud (?)
         MainIdentification: data.xmainIdentification, // Tag, band, bleach markings, scars
         xSightings: 1, // used for related sightings, default at one
         xRelated: "", // Another id for relating related sightings together
-        xImages: data.ximages, // array of links to images in cloud (?)
         xIsland: data.xIsland, // Oahu, Maui, Hawaii, Kauai, Molokai
 
         // Bird specific
-        Sightings: data.sightings, // used for related sightings, default at one
-        xRelated: data.xrelated, // Another id for relating related sightings together
         xConfirmRelated: "", // Default at empty and then after insertion, related algorithm changes this to 0 if needed and then after volunteer confirms, this changes to 1
         xChecked: 0,
 
