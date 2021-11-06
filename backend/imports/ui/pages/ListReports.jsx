@@ -31,14 +31,16 @@ class ListReports extends React.Component {
     console.log(this.props.seals);
     console.log("others");
     console.log(this.props.others);
+    */
     console.log("combined");
     console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
-*/
+
+    // adding fields to each array to indicate the animal of the report
     const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
     const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
     const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
     const others = this.props.others.map(report => ({...report, type: "Other"}));
-
+    // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
     return [...turtles, ...birds, ...seals, ...others];
   }
   // Render the page once subscriptions have been received.
@@ -51,8 +53,14 @@ class ListReports extends React.Component {
             <Table.Row>
               <Table.HeaderCell>Date</Table.HeaderCell>
               <Table.HeaderCell>Time</Table.HeaderCell>
-              <Table.HeaderCell>Type</Table.HeaderCell>
+              <Table.HeaderCell>Animal</Table.HeaderCell>
+              <Table.HeaderCell>Sector</Table.HeaderCell>
               <Table.HeaderCell>Location</Table.HeaderCell>
+              <Table.HeaderCell>Size</Table.HeaderCell>
+              <Table.HeaderCell>MainIdentification</Table.HeaderCell>
+              <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
+              <Table.HeaderCell>#Reports</Table.HeaderCell>
+              <Table.HeaderCell>Checked?</Table.HeaderCell>
               <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
             </Table.Row>
           </Table.Header>

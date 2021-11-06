@@ -11,7 +11,16 @@ class ReportItem extends React.Component {
         <Table.Cell>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
         <Table.Cell>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
         <Table.Cell>{this.props.report.type}</Table.Cell>
+        <Table.Cell>{this.props.report.Sector}</Table.Cell>
         <Table.Cell>{this.props.report.LocationName}</Table.Cell>
+        <Table.Cell>{this.props.report.Size}</Table.Cell>
+        <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
+        <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
+        <Table.Cell>{this.props.report.xSightings}</Table.Cell>
+        {this.props.report.xChecked &&
+        <Table.Cell>Yes</Table.Cell>}
+        {!this.props.report.xChecked &&
+        <Table.Cell>No</Table.Cell>}
         <Table.Cell>{this.props.report.ObserverPhone}</Table.Cell>
       </Table.Row>
     );
@@ -23,7 +32,13 @@ ReportItem.propTypes = {
   report: PropTypes.shape({
     DateObjectObserved: PropTypes.instanceOf(Date),
     type: PropTypes.string,
+    Sector: PropTypes.string,
     LocationName: PropTypes.string,
+    Size: PropTypes.string,
+    MainIdentification: PropTypes.string,
+    xAnimalBehavior: PropTypes.string,
+    xSightings: PropTypes.number,
+    xChecked: PropTypes.number,
     ObserverPhone: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
