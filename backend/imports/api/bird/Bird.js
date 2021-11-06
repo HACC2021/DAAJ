@@ -8,6 +8,8 @@ export const Birds = new Mongo.Collection( 'birds' )
 Meteor.methods({
   addBird( data ){
     Birds.insert({
+        DateObjectObserved: data.dateObjectObserved,
+        Animal: "Bird",
         // Common to all animals
         DateObserved: data.date, // Date object w date and time
         TimeObserved: data.timeObserved,
@@ -19,8 +21,9 @@ Meteor.methods({
         ObserverInitials: data.observerInitials,
         ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
-        Location: data.location, // Look at spreadsheet
+        LocationName: data.location, // Look at spreadsheet
         LocationNotes: data.locationNotes, // Free text?
+        Size: "N/A",
         BirdType: data.birdType, // Check spreadsheet
         ResponderName: "", // Not implemented by us
         Delivered: "", // Not implemented by us
@@ -33,6 +36,7 @@ Meteor.methods({
         xLongitude: data.xlongitude, // Floating number
         xNumHundredFt: data.xnumHundredFt,
         xAnimalBehavior: data.xanimalBehavior, // Free text?
+        xTagYN: data.xTagYN,
         xBandYN: data.xBandYN,
         xBandColor: data.xbandColor, // String
         xBleachMarkYN: data.xbleachMarkYN, // Yes or No
@@ -40,21 +44,22 @@ Meteor.methods({
         xTagNumber: data.xtagNumber,
         xTagSide: data.xtagSide, // L, R, U
         xTagColor: data.xtagColor, // R or N
-        xScars: data.xscars, // Yes or No
+        xScarsYN: data.xscarsYN, // Yes or No
+        xScarsLocation: data.xscarsLocation, // String
         xAmpFlipper: data.xampFlipper, // Yes or No; export into other notes
         xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes
         xImages: data.ximages, // array of links to images in cloud (?)
-        xMainIdentification: data.xmainIdentification, // Tag, band, bleach markings, scars
+        MainIdentification: data.xmainIdentification, // Tag, band, bleach markings, scars
         xSightings: 1, // used for related sightings, default at one
         xRelated: "", // Another id for relating related sightings together
         xImages: data.ximages, // array of links to images in cloud (?)
         xIsland: data.xIsland, // Oahu, Maui, Hawaii, Kauai, Molokai
-        xMainIdentification: data.xMainIdentification, // Tag, band, bleach markings, scars
 
         // Bird specific
         Sightings: data.sightings, // used for related sightings, default at one
         xRelated: data.xrelated, // Another id for relating related sightings together
         xConfirmRelated: "", // Default at empty and then after insertion, related algorithm changes this to 0 if needed and then after volunteer confirms, this changes to 1
+        xChecked: 0,
 
     }, err => {
       if (err){

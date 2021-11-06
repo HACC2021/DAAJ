@@ -8,6 +8,8 @@ export const Others = new Mongo.Collection( 'others' )
 Meteor.methods({
   addOther( data ){
     Others.insert({
+        DateObjectObserved: data.dateObjectObserved,
+        Animal: data.animal, // user given
         // Common to all animals      
         DateObserved: data.date, // Date object w date and time
         TimeObserved: data.timeObserved,
@@ -19,12 +21,14 @@ Meteor.methods({
         ObserverInitials: data.observerInitials,
         ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
-        BeachLocation: data.beachLocation, // Look at spreadsheet
+        Size: "N/A",
+        LocationName: data.beachLocation, // Look at spreadsheet
         LocationNotes: data.locationNotes, // Free text?
         Latitude: data.latitude, // Floating number
         Longitude: data.longitude, // Floating number
         NumHundredFt: data.numHundredFt,
-        AnimalBehavior: data.animalBehavior, // Free text?
+        xAnimalBehavior: data.animalBehavior, // Free text?
+        TagYN: data.TagYN,
         BandYN: data.BandYN,
         BandColor: data.bandColor, // String
         BleachMarkYN: data.bleachMarkYN, // Yes or No
@@ -32,12 +36,16 @@ Meteor.methods({
         TagNumber: data.tagNumber,
         TagSide: data.tagSide, // L, R, U
         TagColor: data.tagColor, // R or N
-        Scars: data.scars, // Yes or No
+        ScarsYN: data.scarsYN, // Yes or No
+        ScarsLocation: data.scarsLocation, // String
         Images: data.images, // array of links to images in cloud (?)
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
         MainIdentification: data.identification, // Tag, band, bleach markings, scars
         OtherNotes: data.otherNotes, // String
-        Animal: data.animal, // user given
+        xSightings: 1,
+        xLatitude: data.xlatitude, // Floating number
+        xLongitude: data.xlongitude, // Floating number
+        xChecked: 0,
     }, err => {
       if (err){
         return err
