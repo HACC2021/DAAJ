@@ -44,7 +44,7 @@ Meteor.methods({
         xTagNumber: data.xtagNumber,
         xTagSide: data.xtagSide, // L, R, U
         xTagColor: data.xtagColor, // R or N
-        xScarsYN: data.xscars, // Yes or No
+        xScarsYN: data.xscarsYN, // Yes or No
         xScarsLocation: data.xscarsLocation, // String
         xAmpFlipper: data.xampFlipper, // Yes or No; export into other notes
         xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes

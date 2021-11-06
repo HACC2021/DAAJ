@@ -36,7 +36,7 @@ Meteor.methods({
         TagNumber: data.tagNumber,
         TagSide: data.tagSide, // L, R, U
         TagColor: data.tagColor, // R or N
-        ScarsYN: data.scars, // Yes or No
+        ScarsYN: data.scarsYN, // Yes or No
         ScarsLocation: data.scarsLocation, // String
         Images: data.images, // array of links to images in cloud (?)
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai

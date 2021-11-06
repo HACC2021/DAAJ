@@ -54,7 +54,7 @@ Meteor.methods({
         xBandYN: data.xBandYN,
         xBandColor: data.xbandColor, // String
         xBleachMarkYN: data.xbleachMarkYN, // Yes or No
-        xScarsYN: data.xscars, // Yes or No
+        xScarsYN: data.xscarsYN, // Yes or No
         xScarsLocation: data.xscarsLocation, // String
         xImages: data.ximages, // array of links to images in cloud (?)
         xIsland: data.xisland, // Oahu, Maui, Hawaii, Kauai, Molokai
