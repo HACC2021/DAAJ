@@ -48,7 +48,8 @@ Meteor.methods({
         xBandColor: data.xbandColor, // String
         xBleachMarkYN: data.xbleachMarkYN, // Yes or No
         xBleachMarkNum: data.xBleachMarkNum, // String
-        xScars: data.xscars, // Yes or No
+        xScarsYN: data.xscars, // Yes or No
+        xScarsLocation: data.xscarsLocation, // String
         xAmpFlipper: data.xampFlipper, // Yes or No; export into other notes
         xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes
         xImages: data.ximages, // array of links to images in cloud (?)
