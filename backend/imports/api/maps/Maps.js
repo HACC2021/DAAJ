@@ -1,29 +1,17 @@
-import { Mongo } from 'meteor/mongo';
-import { Meteor } from 'meteor/meteor';
-import { fetch, Headers } from 'meteor/fetch';
+import axios from 'axios';
 
-// Make a POST request to url with data as a param.
-async function postData (url, data) {
-    const response = await fetch(url, {
-        method: 'POST', 
-        mode: 'no-cors', 
-        cache: 'no-cache', 
-        credentials: 'same-origin', 
-        headers: new Headers({
-            'Authorization': 'Bearer my-secret-key',
-            'Content-Type': 'application/json'
-        }),
-        redirect: 'follow', 
-        referrerPolicy: 'no-referrer', 
-        body: JSON.stringify(data),
-    });
-    return response.json();
-}
+// configure axios request
+var config = {
+  method: 'get',
+  url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=21.294022,-157.863525&key=API_KEY',
+  headers: { }
+};
 
-const postDataCall = Meteor.wrapAsync(postData);
-// for more information about parameters, visit https://developers.google.com/maps/documentation/geocoding/overview#reverse-example.
-const results = postDataCall('https://maps.googleapis.com/maps/api/geocode/json?', { 
-    // data here
+// make the request
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
 });
-
-console.log(results);
