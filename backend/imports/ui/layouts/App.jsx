@@ -17,7 +17,7 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import MapView from '../pages/MapView';
 import ChartView from '../pages/ChartView';
-import TableView from '../pages/ChartView';
+import TableView from '../pages/TableView';
 import Export from '../pages/Export';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
