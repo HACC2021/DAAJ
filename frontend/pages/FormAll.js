@@ -23,55 +23,55 @@ const q14 = ['Tag', 'Band', 'Bleach Marking', 'Scars', 'Other Marking', 'N/A']
 const FormAll = (props) => {
   // console.log(props.route.params);
 
-  // QUESTION 1
+  // QUESTION 1 Does the animal have a tag?
   const [q1index, setQ1index] = React.useState(0);
   const q1display = q1[q1index.row]
 
-   // QUESTION 2
+   // QUESTION 2 If so, what color?
    const [q2index, setQ2index] = React.useState(0);
    const q2display = q2[q2index.row]
  
-   // QUESTION 3
+   // QUESTION 3 Tag Code?
    const [tagCode, settagCode] = React.useState('');
 
-   // QUESTION 4
+   // QUESTION 4 Tag side ?
    const [q4index, setQ4index] = React.useState(0);
    const q4display = q4[q4index.row]
 
-  // QUESTION 5
+  // QUESTION 5 Does the animal have a band?
   const [q5index, setQ5index] = React.useState(0);
   const q5display = q5[q5index.row]
 
-  // QUESTION 6
+  // QUESTION 6 If so, what color?
   const [q6index, setQ6index] = React.useState(0);
   const q6display = q6[q6index.row]
   
-  // QUESTION 7
+  // QUESTION 7 Bleach markings?
   const [q7index, setQ7index] = React.useState(0);
   const q7display = q7[q7index.row]
   
-  // QUESTION 8
+  // QUESTION 8 Natural or applied?
   const [q8index, setQ8index] = React.useState(0);
   const q8display = q8[q8index.row]
 
-  // QUESTION 9
+  // QUESTION 9 Bleach number
   const [bleachNumber, setbleachNumber] = React.useState('');
 
-  // QUESTION 10
+  // QUESTION 10 Scars?
   const [q10index, setQ10index] = React.useState(0);
   const q10display = q10[q10index.row]
 
-  // QUESTION 11
+  // QUESTION 11 Scars where?
   const [scarsWhere, setscarsWhere] = React.useState('');
 
-  // QUESTION 12
+  // QUESTION 12 Other Markings
   const [q12index, setQ12index] = React.useState(0);
   const q12display = q12[q12index.row]
 
-  // QUESTION 13
+  // QUESTION 13 Where
   const [otherMarkingsWhere, setotherMarkingsWhere] = React.useState('');
 
- // QUESTION 14
+ // QUESTION 14 Most Prominent
  const [q14index, setQ14index] = React.useState(0);
  const q14display = q14[q14index.row]
 
@@ -167,11 +167,27 @@ const FormAll = (props) => {
   // TODO: Add data to pass to next page.
   // TODO: Convert selected indexes to actual data values when passing to next page.
 
+
   const navigateForm = () => {
 
+    let formAllData = {
+      sealPresent: 'Yes',
+      xTagYN: q1display,
+      tagNumber: tagCode,
+      tagSide: q4display,
+      tagColor: q2display,
+      xBandYN: q5display,
+      xbandColor: q6display,
+      xbleachMarkYN: q7display,
+      bleachNumber: bleachNumber,
 
-    props.navigation.navigate(props.route.params.item.form,
-      {item: props.route.params.item, images: props.route.params.images,});
+    }
+
+    props.navigation.navigate('FormAll2',
+      {item: props.route.params.item, 
+        images: props.route.params.images, 
+        formAllData: formAllData,
+      });
   };
 
 
@@ -225,12 +241,6 @@ const FormAll = (props) => {
 
     {renderOtherMarkingsQs()}
 
-      {/* QUESTION 14 */}
-      <Text style={{marginTop: 10}} category='s1'>Which is the most prominent characteristic of the animal?</Text>
-      <Select status='primary' selectedIndex={q14index} value={q14display}
-        onSelect={index => setQ14index(index)}>
-          {q14.map(renderOption)}
-      </Select>
 
 
       <Button onPress={navigateForm} style={{marginTop: 10}}  status='info'>Continue</Button>
