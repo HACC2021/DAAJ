@@ -21,7 +21,6 @@ function chooseTime (days = 0, minutes = 0) {
   return time;
 }
 
-
 function insertLink({ title, url }) {
   LinksCollection.insert({title, url, createdAt: new Date()});
 }

@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Stuffs } from '../../api/stuff/Stuff';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -18,11 +19,22 @@ const formSchema = new SimpleSchema({
   },
 });
 
+const mapStyles = {
+  marginTop: "-10px",
+  height: "100vh",
+  width: "100%"};
+
+const defaultCenter = {
+  lat: 20.3069, lng: -157.5583
+}
+
+
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 /** Renders the Page for adding a document. */
 class MapView extends React.Component {
 
+  
   // On submit, insert the data.
   submit(data, formRef) {
     const { name, quantity, condition } = data;
@@ -42,20 +54,14 @@ class MapView extends React.Component {
   render() {
     let fRef = null;
     return (
-      <Grid container centered>
-        <Grid.Column>
-          <Header as="h2" textAlign="center">Add Stuff</Header>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
-            <Segment>
-              <TextField name='name'/>
-              <NumField name='quantity' decimal={false}/>
-              <SelectField name='condition'/>
-              <SubmitField value='Submit'/>
-              <ErrorsField/>
-            </Segment>
-          </AutoForm>
-        </Grid.Column>
-      </Grid>
+      <LoadScript
+      googleMapsApiKey='AIzaSyDy4lATc_hd8VHpkRBfDYUgfD3pGNQtdXA'>
+       <GoogleMap
+         mapContainerStyle={mapStyles}
+         zoom={7}
+         center={defaultCenter}
+       />
+    </LoadScript>
     );
   }
 }
