@@ -21,8 +21,8 @@ Meteor.methods({
         ObserverInitials: data.observerInitials,
         ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
-        LocationName: data.location, // Look at spreadsheet
-        LocationNotes: data.locationNotes, // Free text?
+        LocationName: "Call Dylan's function", // Look at spreadsheet
+        LocationNotes: "", // Free text?
         Size: "N/A",
         BirdType: data.birdType, // Check spreadsheet
         ResponderName: "", // Not implemented by us

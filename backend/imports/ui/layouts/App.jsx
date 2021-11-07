@@ -8,6 +8,7 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import ListStuff from '../pages/ListStuff';
+import ListReports from '../pages/ListReports';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
 import EditStuff from '../pages/EditStuff';
@@ -32,7 +33,7 @@ class App extends React.Component {
             <Route path="/signin" component={Signin}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/signout" component={Signout}/>
-            <ProtectedRoute path="/list" component={AddStuff}/>
+            <ProtectedRoute path="/list" component={ListReports}/>
             <ProtectedRoute path="/mapview" component={MapView}/>
             <ProtectedRoute path="/chartview" component={ChartView}/>
             <ProtectedRoute path="/tableview" component={TableView}/>

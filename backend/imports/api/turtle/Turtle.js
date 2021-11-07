@@ -22,7 +22,7 @@ Meteor.methods({
         ObserverType: data.observerType, // P, V, or A
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
         Sector: data.sector, // North, East, West, South, Molokai
-        LocationName: data.beachLocation, // Look at spreadsheet
+        LocationName: "Call Dylan's function", // Look at spreadsheet
         LocationNotes: data.locationNotes,
         TurtleType: data.turtleType, // Check spreadsheet
         Size: data.size, // String like 2ft
