@@ -39,7 +39,7 @@ function insertSeal({ artificialTime, ObserverName, ObserverPhone, ObserverIniti
   Seals.insert({Animal: "Seal", ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, LocationName, LocationNotes, SealPresent,	Size,	Sex,	BeachPosition,	MainIdentification,	BleachNumber,	TagNumber,	TagSide,	TagColor,	MomPup,	SealDepart,	SealDepartDate,	SealDepartTime,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xBandYN,	xBandColor,	xBleachMarkYN,	xScarsYN,	xScarsLocation,	xImages,	xIsland, DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time, TicketNumber,	HotlineOpInitials,	TicketType,	IDPerm,	Molt,	AdditionalNotesOnID,	IDVerifiedBy,	SealLogging,	SRASetBy,	NumVolunteers,	NumCalls,	xSightings,	xRelated,	xConfirmRelated});
 }
  
-function insertTurtle ({ artificialTime, ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification}) {
+function insertTurtle ({ artificialTime,	Animal,	TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	PrimaryIssue,	Response,	TimeResponderLeft,	ResponderArrivalTime,	OutreachProvided,	FAST,	NumCallsReceived,	OtherNotes,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagYN,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification,	xSightings,	xRelated,	xConfirmRelated,	xChecked,}) {
   let aDate = artificialTime;
   let month = String(aDate.getMonth() + 1) 
   let day = String(aDate.getDate())
@@ -50,7 +50,7 @@ function insertTurtle ({ artificialTime, ObserverName,	ObserverPhone,	ObserverIn
   let date = month + day + year;
   let time = (aDate.toTimeString()).slice(0,5);
 
-  Turtles.insert({Animal: "Turtle", DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification})
+  Turtles.insert({DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time,	Animal, TicketNumber,	HotlineOpInitials, TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	PrimaryIssue,	Response,	TimeResponderLeft,	ResponderArrivalTime,	OutreachProvided,	FAST,	NumCallsReceived,	OtherNotes,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagYN,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification,	xSightings,	xRelated,	xConfirmRelated,	xChecked,})
 }
 
 function insertBird ({ artificialTime, Animal,	TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	LocationName,	LocationNotes,	Size,	BirdType,	ResponderName,	Delivered,	WhereTo,	OutreachProvided,	NumCallsReceived,	OtherNotes,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagYN,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xTagNumber,	xTagSide,	xTagColor,	xScarsYN,	xScarsLocation,	xImages,	MainIdentification,	xSightings,	xRelated,	xIsland,	xConfirmRelated,	xChecked}) {
@@ -210,7 +210,7 @@ Meteor.startup(() => {
       xScarsYN: "N",
       xScarsLocation: "",
       xImages: ["askfajhienxfbiq.jpeg", "hbetysdfihqwjeh.jpeg"],
-      xIsland: "_Oahu__",
+      xIsland: "Oahu",
       xSightings: 1,
       xRelated: "",
       xConfirmRelated: "",
@@ -474,7 +474,7 @@ Meteor.startup(() => {
       MainIdentification: "S",
       xSightings: 1,
       xRelated: "",
-      xConfirmRelated: "1",
+      xConfirmRelated: "",
       xChecked: 0,
     });
 
