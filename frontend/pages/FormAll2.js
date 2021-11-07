@@ -36,7 +36,9 @@ const FormAll2 = (props) => {
 
   props.navigation.navigate(props.route.params.item.form,
     {item: props.route.params.item, 
-      images: props.route.params.images, 
+      ximages: props.route.params.ximages, 
+      locationData: props.route.params.locationData,
+      contactInfoData: props.route.params.contactInfoData,
       formAllData: props.route.params.formAllData,
       formAll2Data: formAll2Data,
     });
@@ -48,7 +50,7 @@ const FormAll2 = (props) => {
       <ScrollView bounces={false} bouncesZoom={false} alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
 
   {/* QUESTION 14 */}
-  <Text style={{marginTop: 10}} category='s1'>Which is the most prominent characteristic of the animal?</Text>
+  <Text style={{marginTop: 10}} category='h6'>The animal is mainly identified by ...</Text>
       <Select status='primary' selectedIndex={q14index} value={q14display}
         onSelect={index => setQ14index(index)}>
           {q14.map(renderOption)}
@@ -56,13 +58,13 @@ const FormAll2 = (props) => {
 
 
      {/* QUESTION 15 */}
-     <Text style={{marginTop: 10}} category='s1'>Please briefly describe the animal behavior.</Text>
+     <Text style={{marginTop: 10}} category='s1'>Briefly describe the animal behavior.</Text>
       <Input status='primary' placeholder='Enter a few words about the behavior'
       value={animalBehavior} onChangeText={nextValue => setanimalBehavior(nextValue)} />
 
 
      {/* QUESTION 16 */}
-     <Text style={{marginTop: 10}} category='s1'>How mamy people are within 100 ft. of the animal?</Text>
+     <Text style={{marginTop: 10}} category='s1'>About how mamy people are within 100 ft. of the animal?</Text>
       <Input status='primary' placeholder='Enter an estimate'
       value={beachgoers} onChangeText={nextValue => setbeachgoers(nextValue)} />
 

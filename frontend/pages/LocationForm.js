@@ -21,6 +21,8 @@ export class LocationForm extends React.Component {
       q2index: 0,
       q2display: '',
       modal: false,
+      xlatitude: null,
+      xlongitude: null,
     }
   }
 
@@ -33,8 +35,8 @@ export class LocationForm extends React.Component {
   updateState(location) {
     this.setState({
       ...this.state,
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
+      xlatitude: location.coords.latitude,
+      xlongitude: location.coords.longitude,
       loading: false
     });
   }
@@ -53,9 +55,18 @@ export class LocationForm extends React.Component {
   }
 
   navigateForm = () => {
-    this.props.navigation.navigate('FormAll', {item: this.props.route.params.item, 
-      images: this.props.route.params.images, 
-      location: this.state.location
+
+    let locationData = {
+      xlatitude: this.state.latitude, 
+      xlongitude: this.state.longitude,
+      xisland: this.state.q1display,
+      sector: this.state.q2display,
+    };
+
+    this.props.navigation.navigate('ContactInfo', 
+    {item: this.props.route.params.item, 
+      ximages: this.props.route.params.ximages, 
+      locationData: locationData,
     });
   };
 
@@ -73,31 +84,32 @@ export class LocationForm extends React.Component {
           alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
         <Text  style={{marginTop: 10}} category='h6'>Where did you see the animal?</Text>
         
-        <Text style={{marginTop: 10}}  category='s1'>Please select the island</Text>
+        <Text style={{marginTop: 10}}  category='s1'>Select the island</Text>
       <Select  style={{marginBottom: 10}} status='primary' selectedIndex={this.state.q1index} value={this.state.q1display}
         onSelect={index => this.setState({q1index: index, q1display: this.q1[index.row]})}>
           {this.q1.map(this.renderOption)}
       </Select>
       
-      <Text  category='s1'>Please select the sector of the island</Text>
+      <Text  category='s1'>Select the sector of the island</Text>
       <Select  style={{marginBottom: 10}} status='primary' selectedIndex={this.state.q2index} value={this.state.q2display}
         onSelect={index => this.setState({q2index: index, q2display: this.q2[index.row]})}>
           {this.q2.map(this.renderOption)}
       </Select>
 
-        {this.state.loading ? <Text category='h6' >Map is Loading....</Text> :  <Text category='s1'>Pick the location on the map</Text>}
+        {this.state.loading ? <Text category='h6' >Map is Loading....</Text> :  <Text category='h6'>Select the location (red marker)</Text>}
         
 
         {!this.state.loading &&
-        <MapPicker style={{height:300, flex:1}}
+        <MapPicker style={{height:250, flex:1, borderRadius:10}}
         initialCoordinate={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
+          latitude: this.state.xlatitude,
+          longitude: this.state.xlongitude,
         }}
         onLocationSelect={({latitude, longitude})=> this.setState( {...this.state,
-          latitude: latitude,
-          longitude: longitude,} )}
+          xlatitude: latitude,
+          xlongitude: longitude,} )}
         />}
+        
 
         {/* 
         {!this.state.loading && 

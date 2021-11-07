@@ -180,12 +180,15 @@ const FormAll = (props) => {
       xbandColor: q6display,
       xbleachMarkYN: q7display,
       bleachNumber: bleachNumber,
-
+      xscarsYN: q10display,
+      xscarsLocation: scarsWhere,
     }
 
     props.navigation.navigate('FormAll2',
       {item: props.route.params.item, 
-        images: props.route.params.images, 
+        ximages: props.route.params.ximages, 
+        locationData: props.route.params.locationData,
+        contactInfoData: props.route.params.contactInfoData,
         formAllData: formAllData,
       });
   };
@@ -195,8 +198,11 @@ const FormAll = (props) => {
     <View style={{ flex: 1, flexDirection:'column'  }}>
     <Layout style={{flex: 1, padding:15, }}>
       <ScrollView bounces={false} bouncesZoom={false} alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
+      <Text  category='h6'>Does the animal have... </Text>
+
+     
      {/* QUESTION 1 */}
-      <Text  category='s1'>Does the animal have a tag?</Text>
+      <Text  style={{marginTop: 5}} category='s1'> ... a tag?</Text>
       <Select status='primary' selectedIndex={q1index} value={q1display}
         onSelect={index => setQ1index(index)}>
           {q1.map(renderOption)}
@@ -205,7 +211,7 @@ const FormAll = (props) => {
       {renderTagQs()}
 
       {/* QUESTION 5 */}
-      <Text style={{marginTop: 10}} category='s1'>Does the animal have a band?</Text>
+      <Text style={{marginTop: 10}} category='s1'> ... a band?</Text>
       <Select status='primary' selectedIndex={q5index} value={q5display}
         onSelect={index => setQ5index(index)}>
           {q5.map(renderOption)}
@@ -215,7 +221,7 @@ const FormAll = (props) => {
 
 
       {/* QUESTION 7 */}
-      <Text style={{marginTop: 10}} category='s1'>Does the animal have a bleach markings?</Text>
+      <Text style={{marginTop: 10}} category='s1'> ... bleach markings?</Text>
       <Select status='primary' selectedIndex={q7index} value={q7display}
         onSelect={index => setQ7index(index)}>
           {q7.map(renderOption)}
@@ -224,7 +230,7 @@ const FormAll = (props) => {
       {renderBleachQs()}
 
         {/* QUESTION 10 */}
-        <Text style={{marginTop: 10}} category='s1'>Does the animal have scars?</Text>
+        <Text style={{marginTop: 10}} category='s1'> ... scars?</Text>
       <Select status='primary' selectedIndex={q10index} value={q10display}
         onSelect={index => setQ10index(index)}>
           {q10.map(renderOption)}
@@ -233,7 +239,7 @@ const FormAll = (props) => {
       {renderScarsQs()}
 
        {/* QUESTION 12 */}
-      <Text style={{marginTop: 10}} category='s1'>Does the animal have other markings?</Text>
+      <Text style={{marginTop: 10}} category='s1'> ... other markings?</Text>
       <Select status='primary' selectedIndex={q12index} value={q12display}
         onSelect={index => setQ12index(index)}>
           {q12.map(renderOption)}

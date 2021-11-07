@@ -21,6 +21,7 @@ import FormTurtle1 from './pages/FormTurtle/FormTurtle1'
 import FormAll from './pages/FormAll';
 import FormAll2 from './pages/FormAll2';
 import { LocationForm } from './pages/LocationForm';
+import ContactInfo from './pages/ContactInfo';
 
 
 const HomeScreen = ({navigation}) => {
@@ -149,20 +150,23 @@ export default App = () => (
           <Stack.Screen name="Report Distressed" component={ReportDistressed} />
           <Stack.Screen name="Species Guide" component={SpeciesGuide} />
           <Stack.Screen name="Disclaimer" component={Disclaimer} />
-          <Stack.Screen name="Choose Images" component={ChooseImages} />
           <Stack.Screen name="SG1" component={SG1}  options={{ title: 'Species Guide' }}/>
           <Stack.Screen name="SG2" component={SG2}  options={{ title: 'Species Guide' }}/>
           <Stack.Screen name="SG3" component={SG3}  options={{ title: 'Species Guide' }}/>
           <Stack.Screen name="SG4" component={SG4}  options={{ title: 'Species Guide' }}/>
           <Stack.Screen name="SG5" component={SG5}  options={{ title: 'Species Guide' }}/>
+          {/* Begin Form: Choose Species */}
+          <Stack.Screen name="Choose Images" component={ChooseImages} />
+          <Stack.Screen name="LocationForm" options={{ title: 'Location' }}  component={LocationForm} />
+          <Stack.Screen name="ContactInfo" options={{ title: 'Contact Information' }}  component={ContactInfo} />
+          <Stack.Screen name="FormAll" options={{ title: 'Identifying Characteristics' }} component={FormAll} />
+          <Stack.Screen name="FormAll2" options={{ title: 'Identifying Characteristics' }} component={FormAll2} />
           <Stack.Screen name="FormSeal1" options={{ title: 'Seal Sighting' }} component={FormSeal1} />
           <Stack.Screen name="FormSeal2" options={{ title: 'Seal Sighting' }} component={FormSeal2} />
           <Stack.Screen name="FormBird1" options={{ title: 'Bird Sighting' }} component={FormBird1} />
           <Stack.Screen name="FormTurtle1" options={{ title: 'Turtle Sighting' }} component={FormTurtle1} />
           <Stack.Screen name="FormOther1" options={{ title: 'Other Sighting' }} component={FormOther1} />
-          <Stack.Screen name="FormAll" options={{ title: 'Identifying Characteristics' }} component={FormAll} />
-          <Stack.Screen name="FormAll2" options={{ title: 'Identifying Characteristics' }} component={FormAll2} />
-          <Stack.Screen name="LocationForm" options={{ title: 'Location' }}  component={LocationForm} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
