@@ -22,10 +22,8 @@ Meteor.methods({
         ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
         Size: "N/A",
-        LocationName: data.beachLocation, // Look at spreadsheet
-        LocationNotes: data.locationNotes, // Free text?
-        Latitude: data.latitude, // Floating number
-        Longitude: data.longitude, // Floating number
+        LocationName: "Call Dylan's function", // Look at spreadsheet
+        LocationNotes: "", // Free text?
         NumHundredFt: data.numHundredFt,
         xAnimalBehavior: data.animalBehavior, // Free text?
         TagYN: data.TagYN,
@@ -36,7 +34,8 @@ Meteor.methods({
         TagNumber: data.tagNumber,
         TagSide: data.tagSide, // L, R, U
         TagColor: data.tagColor, // R or N
-        Scars: data.scars, // Yes or No
+        ScarsYN: data.scarsYN, // Yes or No
+        ScarsLocation: data.scarsLocation, // String
         Images: data.images, // array of links to images in cloud (?)
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
         MainIdentification: data.identification, // Tag, band, bleach markings, scars

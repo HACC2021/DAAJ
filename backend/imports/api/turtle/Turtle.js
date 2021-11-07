@@ -22,7 +22,7 @@ Meteor.methods({
         ObserverType: data.observerType, // P, V, or A
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
         Sector: data.sector, // North, East, West, South, Molokai
-        LocationName: data.beachLocation, // Look at spreadsheet
+        LocationName: "Call Dylan's function", // Look at spreadsheet
         LocationNotes: data.locationNotes,
         TurtleType: data.turtleType, // Check spreadsheet
         Size: data.size, // String like 2ft
@@ -48,7 +48,8 @@ Meteor.methods({
         xBandColor: data.xbandColor, // String
         xBleachMarkYN: data.xbleachMarkYN, // Yes or No
         xBleachMarkNum: data.xBleachMarkNum, // String
-        xScars: data.xscars, // Yes or No
+        xScarsYN: data.xscarsYN, // Yes or No
+        xScarsLocation: data.xscarsLocation, // String
         xAmpFlipper: data.xampFlipper, // Yes or No; export into other notes
         xWhichFlipper: data.xwhichFlipper, //string that'll be exported into other notes
         xImages: data.ximages, // array of links to images in cloud (?)
