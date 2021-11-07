@@ -20,6 +20,57 @@ class TableView extends React.Component {
 
   // Render the page once subscriptions have been received.
   renderPage() {
+    let aDate = new Date();
+    let month = String(aDate.getMonth() + 1) 
+    let day = String(aDate.getDate())
+    if (day.length === 1){
+        day = "0" + day
+    }
+    let year = String(aDate.getFullYear()).slice(-2)
+    let date = month + day + year;
+    let time = (aDate.toTimeString()).slice(0,5);
+
+    let sealTest = {
+      dateObjectObserved: aDate,
+      date: date,
+      timeObserved: time,
+      observerName: "Bumblebee",
+      observerPhone: "808-381-4912",
+      observerInitials: "BB",
+      observerType: "P",
+      sector: "East",
+      location: "Laniakea",
+      locationNotes: "",
+      size: "6ft",
+      sex: "M",
+      beachPosition: "In-water",
+      mainIdentification: "T",
+      bleachNumber: "",
+      tagNumber: "K888",
+      tagSide: "Tail",
+      tagColor: "N",
+      momPup: "N",
+      sealDepart: "N",
+      departDate: "",
+      departTime: "",
+      otherNotes: "",
+      xlatitude: 21.6188,
+      xlongitude: -158.0854,
+      xnumHundredFt: "15",
+      xanimalBehavior: "Chasing me in the water",
+      xTagYN: "Y",
+      xBandYN: "N",
+      xbandColor: "",
+      xbleachMarkYN: "N",
+      xscarsYN: "N",
+      xscarsLocation: "",
+      ximages: ["akdfhas.jpeg"],
+      xisland: "Oahu",
+    }
+    if (Seals.find().count() <= 5) {
+      console.log("adding bumblebee")
+      Meteor.call('addSeal', sealTest);
+    }
     return (
       <h1> {/* <Container>
         <Header as="h2" textAlign="center">List Stuff</Header>
