@@ -8,7 +8,6 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import StuffItem from '../components/StuffItem';
 import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 
@@ -36,12 +35,18 @@ class ListReports extends React.Component {
     console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
 
     // adding fields to each array to indicate the animal of the report
+    //const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
     const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
     const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
     const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
     const others = this.props.others.map(report => ({...report, type: "Other"}));
     // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
-    return [...turtles, ...birds, ...seals, ...others];
+    return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(b.DateObjectObserved) - new Date(a.DateObjectObserved);
+    });
+    ;
   }
   // Render the page once subscriptions have been received.
   renderPage() {
