@@ -21,8 +21,8 @@ Meteor.methods({
         ObserverInitials: data.observerInitials, 
         ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
-        LocationName: data.location, // Look at spreadsheet
-        LocationNotes: data.locationNotes, // won't have anything cuz already haveBeachPosition
+        LocationName: "Call Dylan's function", // Look at spreadsheet
+        LocationNotes: "", // won't have anything cuz already haveBeachPosition
         SealPresent: "Y",
         Size: data.size, // String (?)
         Sex: data.sex, // Male/Female
@@ -40,9 +40,9 @@ Meteor.methods({
         MomPup: data.momPup,
         SRASetBy: "", // Not implemented by us
         NumVolunteers: "", // Not implemented by us
-        SealDepart: data.sealDepart, // Yes or no
-        SealDepartDate: data.departDate, 
-        SealDepartTime: data.departTime,
+        SealDepart: "", // Not implemented by us
+        SealDepartDate: "", // Not implemented by us
+        SealDepartTime: "", // Not implemented by us
         NumCalls: "", // May be sightings
         OtherNotes: data.otherNotes, // String
 
