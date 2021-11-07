@@ -37,7 +37,7 @@ class Export extends React.Component {
     return (
       <Grid container centered>
         <Grid.Column>
-          <Header as="h2" textAlign="center">Add Stuff</Header>
+          <Header as="h2" textAlign="center">Export</Header>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportData(data, fRef)} >
             <Segment>
               <SubmitField value='Submit'/>
