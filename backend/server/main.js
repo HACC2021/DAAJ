@@ -5,6 +5,7 @@ import { Seals } from '/imports/api/seal/Seal';
 import { Turtles } from '/imports/api/turtle/Turtle';
 import { Birds } from '/imports/api/bird/Bird';
 import { Others } from '/imports/api/other/Other';
+import '/imports/api/maps/Maps';
 import '/imports/startup/server/Accounts';
 import '/imports/startup/server/Publications';
 import '/imports/startup/server/Mongo';
@@ -19,7 +20,6 @@ function chooseTime (days = 0, minutes = 0) {
   time.setMinutes(time.getMinutes() + minutes); // Change the time
   return time;
 }
-
 
 function insertLink({ title, url }) {
   LinksCollection.insert({title, url, createdAt: new Date()});
