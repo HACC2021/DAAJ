@@ -10,12 +10,23 @@ import '/imports/startup/server/Publications';
 import '/imports/startup/server/Mongo';
 
 
+// int days : the number of days to go forward or back. Positive number for forward; negative for backward
+// int minutes : the number of minutes to go forward or back. Positive number for forward; negative for backward
+//               can go beyond 60 mins
+function chooseTime (days = 0, minutes = 0) {
+  let time = new Date();
+  time.setDate(time.getDate() + days); // Change the date
+  time.setMinutes(time.getMinutes() + minutes); // Change the time
+  return time;
+}
+
+
 function insertLink({ title, url }) {
   LinksCollection.insert({title, url, createdAt: new Date()});
 }
 
-function insertSeal({ ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, LocationName, LocationNotes, SealPresent,	Size,	Sex,	BeachPosition,	MainIdentification,	BleachNumber,	TagNumber,	TagSide,	TagColor,	MomPup,	SealDepart,	SealDepartDate,	SealDepartTime,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xBandYN,	xBandColor,	xBleachMarkYN,	xScarsYN,	xScarsLocation,	xImages,	xIsland, TicketNumber,	HotlineOpInitials,	TicketType,	IDPerm,	Molt,	AdditionalNotesOnID,	IDVerifiedBy,	SealLogging,	SRASetBy,	NumVolunteers,	NumCalls,	xSightings,	xRelated,	xConfirmRelated,}) {
-  let aDate = new Date();
+function insertSeal({ artificialTime, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, LocationName, LocationNotes, SealPresent,	Size,	Sex,	BeachPosition,	MainIdentification,	BleachNumber,	TagNumber,	TagSide,	TagColor,	MomPup,	SealDepart,	SealDepartDate,	SealDepartTime,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xBandYN,	xBandColor,	xBleachMarkYN,	xScarsYN,	xScarsLocation,	xImages,	xIsland, TicketNumber,	HotlineOpInitials,	TicketType,	IDPerm,	Molt,	AdditionalNotesOnID,	IDVerifiedBy,	SealLogging,	SRASetBy,	NumVolunteers,	NumCalls,	xSightings,	xRelated,	xConfirmRelated,}) {
+  let aDate = artificialTime;
   let month = String(aDate.getMonth() + 1) 
   let day = String(aDate.getDate())
   if (day.length === 1){
@@ -101,6 +112,7 @@ Meteor.startup(() => {
   if (Seals.find().count() === 0) {
     console.log("Seeding Seals collection");
     insertSeal({
+      artificialTime: chooseTime(0, 0),
       Animal: "Seal",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -153,6 +165,7 @@ Meteor.startup(() => {
     });
 
     insertSeal({
+      artificialTime: chooseTime(0, 30),
       Animal: "Seal",
       TicketNumber: "",
       HotlineOpInitials: "",
