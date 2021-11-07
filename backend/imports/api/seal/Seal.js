@@ -96,7 +96,7 @@ if (Meteor.isServer) {
 
 /*
  * Given an ID, this algorithm will try to find the closest matching seal already in the collection.
- * Returns the 
+ * Changes any necessary fields for both the new seal and the matching seal if it finds a match
  */
 function findRelatedSeal(newSealID) {
   console.log("In findRelatedSeal");
@@ -121,27 +121,102 @@ function findRelatedSeal(newSealID) {
       // Location
       'Sector': 1,
       'LocationName': 1,
-
+      'xRelated': 1,
+      'xSightings': 1,
     }
   }).fetch();
 
-  console.log("oldSeals: " + JSON.stringify(oldSeals));
-  if (testing) {
-    // Filter out older dates
+  console.log("oldSeals: " + JSON.stringify(oldSeals)); // All of the seals in the collection beside the newly added one
+  let newSeal = Seals.find({ '_id': newSealID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'xSightings': 1 } }).fetch()[0];
 
-    oldSeals.forEach(oldSeal => {
-      // Check timing 25%
-      let diffInMilliSeconds = Math.abs(date1 - date2) / 1000;
-      let oneDay = 0;
-      if (diffInMilliSeconds >= 86400) oneDay = 1440;
-      const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
-      console.log('difference in minutes', (minutes + oneDay));
-      // Check identifying characteristics 25%
+  // Weights to adjust
+  const TIMING_WEIGHT = 0.25;
+  const CHARACTERISTICS_WEIGHT = 0.25;
+  const LOCATION_WEIGHT = 0.50;
+  const FIRST_TIMING_CUTOFF = 30; // # of mins to have full weight
+  const SECOND_TIMING_CUTOFF = 60; // # of mins to have 0.75 weight
+  const THIRD_TIMING_CUTOFF = 60; // # of mins to have 0.50 weight
+  const CUTOFF_SCORE = 0.6;
 
-      // Check location 50%
+  let bestMatchScore = 0;
+  let bestMatchID = null;
+  let oldxRelated = "";
+  let totalSightings = 0;
 
-      // Check species
+  // Find the best matching seal:
+  oldSeals.forEach(oldSeal => {
+    // Check timing
+    let timeScore = 0;
+    let minutes = Math.ceil(Math.abs(newSeal.DateObjectObserved - oldSeal.DateObjectObserved) / 60000);
+    if (minutes <= FIRST_TIMING_CUTOFF) {
+      timeScore = 1;
+    } else if (minutes <= SECOND_TIMING_CUTOFF) {
+      timeScore = 0.75;
+    } else if (minutes <= THIRD_TIMING_CUTOFF) {
+      timeScore = 0.5;
+    } else {
+      timeScore = 0;
+    }
+    console.log('timeScore = ', timeScore);
 
-    });
+    // Check identifying characteristics
+    let identifyingCharsScore = 0;
+    if (newSeal.Sex === oldSeal.Sex) identifyingCharsScore++;
+    if (newSeal.MainIdentification === oldSeal.MainIdentification) identifyingCharsScore++;
+    if (newSeal.TagColor === oldSeal.TagColor) identifyingCharsScore++;
+    if (newSeal.xTagYN === oldSeal.xTagYN) identifyingCharsScore++;
+    if (newSeal.xBandYN === oldSeal.xBandYN) identifyingCharsScore++;
+    if (newSeal.xBleachMarkYN === oldSeal.xBleachMarkYN) identifyingCharsScore++;
+    if (newSeal.xScarsYN === oldSeal.xScarsYN) identifyingCharsScore++;
+    identifyingCharsScore = identifyingCharsScore / 7;
+    console.log("identifyingCharsScore:" + identifyingCharsScore);
+
+    // Check location
+    let locationScore = 0;
+    if (newSeal.Sector === oldSeal.Sector) locationScore++;
+    if (newSeal.LocationName === oldSeal.LocationName) locationScore++;
+    locationScore = locationScore / 2;
+    console.log("locationScore: " + locationScore);
+
+    // Calculate degree of matching score
+    let matchingScore = (timeScore * TIMING_WEIGHT) + (identifyingCharsScore * CHARACTERISTICS_WEIGHT) + (locationScore * LOCATION_WEIGHT);
+    console.log("matchingScore: " + matchingScore + "\n");
+
+    if (matchingScore >= bestMatchScore) {
+      bestMatchScore = matchingScore;
+      bestMatchID = oldSeal._id;
+      oldxRelated = oldSeal.xRelated
+      totalSightings = oldSeal.xSightings + newSeal.xSightings;
+    }
+  })
+
+  // See if the best match has a high enough score
+  if (bestMatchScore >= CUTOFF_SCORE) {
+    console.log("Found a best matching seal! w/the id of: " + bestMatchID);
+    console.log("bestMatchScore: " + bestMatchScore + " bestMatchID: " + bestMatchID + " oldxRelated: " + oldxRelated + " totalSightings: " + totalSightings);
+    // Prepare fields
+    let relatedID = oldxRelated;
+    if (relatedID === "") {
+      console.log("Need to generate an id for xRelated");
+      relatedID = bestMatchID; // just use the old seal's id so that you can trace to when the first sighting of this animal was
+    }
+    // Update certain fields of the new seal and matching seal to indicate match:
+    // Update newest seal
+    Seals.update({ '_id': newSealID }, {
+      $set: {
+        xRelated: relatedID,
+        xSightings: totalSightings,
+        xConfirmRelated: 0,
+      }
+    })
+
+    // Update older seal
+    Seals.update({ '_id': bestMatchID }, {
+      $set: {
+        xRelated: relatedID,
+        xSightings: 0,
+        xConfirmRelated: 0,
+      }
+    })
   }
 }
