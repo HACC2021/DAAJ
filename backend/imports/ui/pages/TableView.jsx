@@ -27,49 +27,47 @@ class TableView extends React.Component {
         day = "0" + day
     }
     let year = String(aDate.getFullYear()).slice(-2)
-    let date = month + day + year;
-    let time = (aDate.toTimeString()).slice(0,5);
+    // let date = month + day + year;
+    // let time = (aDate.toTimeString()).slice(0,5);
 
-    let sealTest = {
-      dateObjectObserved: aDate,
-      date: date,
-      timeObserved: time,
-      observerName: "Bumblebee",
-      observerPhone: "808-381-4912",
-      observerInitials: "BB",
+    let turtleTest = {
+      dateObjectObserved: new Date("2021-11-07T03:14:24.284+00:00"),
+      date: "110621",
+      timeObserved: "17:14",
+      observerName: "Optimum Prime",
+      observerPhone: "808-234-5739",
+      observerInitials: "OP",
       observerType: "P",
-      sector: "East",
-      location: "Laniakea",
-      locationNotes: "",
-      size: "6ft",
-      sex: "M",
-      beachPosition: "In-water",
-      mainIdentification: "T",
-      bleachNumber: "",
-      tagNumber: "K888",
-      tagSide: "Tail",
-      tagColor: "N",
-      momPup: "N",
-      sealDepart: "N",
-      departDate: "",
-      departTime: "",
+      island: "Mayu",
+      sector: "West",
+      beachLocation: "Laniakea",
+      locationNotes: "On beach",
+      turtleType: "Cm",
+      size: "2ft",
+      status: "Alive",
       otherNotes: "",
       xlatitude: 21.6188,
       xlongitude: -158.0854,
-      xnumHundredFt: "15",
-      xanimalBehavior: "Chasing me in the water",
-      xTagYN: "Y",
-      xBandYN: "N",
-      xbandColor: "",
-      xbleachMarkYN: "N",
-      xscarsYN: "N",
-      xscarsLocation: "",
-      ximages: ["akdfhas.jpeg"],
-      xisland: "Oahu",
+      xnumHundredFt: "10",
+      xanimalBehavior: 'Digging in the sand',
+      xTagYN: "N",
+      xtagNumber: "L123",
+      xtagSide: "Right front flipper",
+      xtagColor: "R",
+      xBandYN: "Y",
+      xbandColor: "R",
+      xbleachMarkYN: "",
+      xBleachMarkNum: "",
+      xscarsYN: "Y",
+      xscarsLocation: "On shell",
+      xampFlipper: "Y",
+      xwhichFlipper: "Left",
+      ximages: ["sdfghjty.jpeg", "ertyughj.jpeg"],
+      xmainIdentification: "S",
     }
-    if (Seals.find().count() <= 5) {
-      console.log("adding bumblebee")
-      Meteor.call('addSeal', sealTest);
+    if (Turtles.find().count() <= 5) {
+      console.log("adding optimus prime")
+      Meteor.call('addTurtle', turtleTest);
     }
     return (
       <h1> {/* <Container>
@@ -88,7 +86,7 @@ class TableView extends React.Component {
           </Table.Body>
         </Table>
       </Container> */}
-      {JSON.stringify(this.props.seals)}<br></br></h1>
+      {JSON.stringify(this.props.turtles)}<br></br></h1>
     );
   }
 }

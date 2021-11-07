@@ -100,7 +100,6 @@ if (Meteor.isServer) {
  */
 function findRelatedSeal(newSealID) {
   console.log("In findRelatedSeal");
-  let testing = 0;
   // Get all of the existing seals and only the fields needed in this algorithm
   let oldSeals = Seals.find({
     //birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') },
@@ -136,7 +135,7 @@ function findRelatedSeal(newSealID) {
   const FIRST_TIMING_CUTOFF = 30; // # of mins to have full weight
   const SECOND_TIMING_CUTOFF = 60; // # of mins to have 0.75 weight
   const THIRD_TIMING_CUTOFF = 60; // # of mins to have 0.50 weight
-  const CUTOFF_SCORE = 0.6;
+  const CUTOFF_SCORE = 0.75;
 
   let bestMatchScore = 0;
   let bestMatchID = null;
@@ -191,7 +190,7 @@ function findRelatedSeal(newSealID) {
   })
 
   // See if the best match has a high enough score
-  if (bestMatchScore >= CUTOFF_SCORE) {
+  if (bestMatchScore > CUTOFF_SCORE) {
     console.log("Found a best matching seal! w/the id of: " + bestMatchID);
     console.log("bestMatchScore: " + bestMatchScore + " bestMatchID: " + bestMatchID + " oldxRelated: " + oldxRelated + " totalSightings: " + totalSightings);
     // Prepare fields
