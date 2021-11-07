@@ -39,8 +39,8 @@ function insertSeal({ artificialTime, ObserverName, ObserverPhone, ObserverIniti
   Seals.insert({Animal: "Seal", ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, LocationName, LocationNotes, SealPresent,	Size,	Sex,	BeachPosition,	MainIdentification,	BleachNumber,	TagNumber,	TagSide,	TagColor,	MomPup,	SealDepart,	SealDepartDate,	SealDepartTime,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xBandYN,	xBandColor,	xBleachMarkYN,	xScarsYN,	xScarsLocation,	xImages,	xIsland, DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time, TicketNumber,	HotlineOpInitials,	TicketType,	IDPerm,	Molt,	AdditionalNotesOnID,	IDVerifiedBy,	SealLogging,	SRASetBy,	NumVolunteers,	NumCalls,	xSightings,	xRelated,	xConfirmRelated});
 }
  
-function insertTurtle ({ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification}) {
-  let aDate = new Date();
+function insertTurtle ({ artificialTime, ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification}) {
+  let aDate = artificialTime;
   let month = String(aDate.getMonth() + 1) 
   let day = String(aDate.getDate())
   if (day.length === 1){
@@ -53,8 +53,8 @@ function insertTurtle ({ObserverName,	ObserverPhone,	ObserverInitials,	ObserverT
   Turtles.insert({Animal: "Turtle", DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Island,	Sector,	LocationName,	LocationNotes,	TurtleType,	Size,	Status,	OtherNotes,	xTagYN,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagNumber,	xTagSide,	xTagColor,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xScarsYN,	xScarsLocation,	xAmpFlipper,	xWhichFlipper,	xImages,	MainIdentification})
 }
 
-function insertBird ({Animal,	TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	LocationName,	LocationNotes,	Size,	BirdType,	ResponderName,	Delivered,	WhereTo,	OutreachProvided,	NumCallsReceived,	OtherNotes,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagYN,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xTagNumber,	xTagSide,	xTagColor,	xScarsYN,	xScarsLocation,	xImages,	MainIdentification,	xSightings,	xRelated,	xIsland,	xConfirmRelated,	xChecked}) {
-  let aDate = new Date();
+function insertBird ({ artificialTime, Animal,	TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	LocationName,	LocationNotes,	Size,	BirdType,	ResponderName,	Delivered,	WhereTo,	OutreachProvided,	NumCallsReceived,	OtherNotes,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagYN,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xTagNumber,	xTagSide,	xTagColor,	xScarsYN,	xScarsLocation,	xImages,	MainIdentification,	xSightings,	xRelated,	xIsland,	xConfirmRelated,	xChecked}) {
+  let aDate = artificialTime;
   let month = String(aDate.getMonth() + 1) 
   let day = String(aDate.getDate())
   if (day.length === 1){
@@ -67,8 +67,8 @@ function insertBird ({Animal,	TicketNumber,	HotlineOpInitials,	TicketType,	Obser
   Birds.insert({DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time, Animal,	TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	LocationName,	LocationNotes,	Size,	BirdType,	ResponderName,	Delivered,	WhereTo,	OutreachProvided,	NumCallsReceived,	OtherNotes,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagYN,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xTagNumber,	xTagSide,	xTagColor,	xScarsYN,	xScarsLocation,	xImages,	MainIdentification,	xSightings,	xRelated,	xIsland,	xConfirmRelated,	xChecked})
 }
 
-function insertOther ({Animal, TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	Size,	LocationName,	LocationNotes,	NumHundredFt,	xAnimalBehavior,	TagYN,	BandYN,	BandColor,	BleachMarkYN,	BleachMarkNum,	TagNumber,	TagSide,	TagColor,	ScarsYN,	ScarsLocation,	Images,	Island,	MainIdentification,	OtherNotes,	xSightings,	xLatitude,	xLongitude,	xChecked}) {
-  let aDate = new Date();
+function insertOther ({ artificialTime, Animal, TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	Size,	LocationName,	LocationNotes,	NumHundredFt,	xAnimalBehavior,	TagYN,	BandYN,	BandColor,	BleachMarkYN,	BleachMarkNum,	TagNumber,	TagSide,	TagColor,	ScarsYN,	ScarsLocation,	Images,	Island,	MainIdentification,	OtherNotes,	xSightings,	xLatitude,	xLongitude,	xChecked}) {
+  let aDate = artificialTime;
   let month = String(aDate.getMonth() + 1) 
   let day = String(aDate.getDate())
   if (day.length === 1){
@@ -218,6 +218,7 @@ Meteor.startup(() => {
     });
 
     insertSeal({
+      artificialTime: chooseTime(0, -180),
       Animal: "Seal",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -270,6 +271,7 @@ Meteor.startup(() => {
     });
 
     insertSeal({
+      artificialTime: chooseTime(0, -50),
       Animal: "Seal",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -379,6 +381,7 @@ Meteor.startup(() => {
   if (Turtles.find().count() === 0) {
     console.log("Seeding Turtles collection");
     insertTurtle({
+      artificialTime: chooseTime(0, -25),
       Animal: "Turtle",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -427,6 +430,7 @@ Meteor.startup(() => {
     });
 
     insertTurtle({
+      artificialTime: chooseTime(0, -30),
       Animal: "Turtle",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -475,14 +479,15 @@ Meteor.startup(() => {
     });
 
     insertTurtle({
+      artificialTime: chooseTime(0, -40),
       Animal: "Turtle",
       TicketNumber: "",
       HotlineOpInitials: "",
-      TicketType: "C",
+      TicketType: "",
       ObserverName: "Ken",
       ObserverPhone: "808-424-4839",
       ObserverInitials: "LI",
-      ObserverType: "V",
+      ObserverType: "P",
       Island: "Mayu",
       Sector: "West",
       LocationName: "Laniakea",
@@ -523,14 +528,15 @@ Meteor.startup(() => {
     });
 
     insertTurtle({
+      artificialTime: chooseTime(0, -10),
       Animal: "Turtle",
       TicketNumber: "",
       HotlineOpInitials: "",
       TicketType: "",
       ObserverName: "Ken",
       ObserverPhone: "808-424-4839",
-      ObserverInitials: "LI",
-      ObserverType: "V",
+      ObserverInitials: "KI",
+      ObserverType: "P",
       Island: "Mayu",
       Sector: "West",
       LocationName: "Laniakea",
@@ -555,7 +561,7 @@ Meteor.startup(() => {
       xTagSide: "Right front flipper",
       xTagColor: "R",
       xBandYN: "Y",
-      xBandColor: "Red",
+      xBandColor: "R",
       xBleachMarkYN: "",
       xBleachMarkNum: "",
       xScarsYN: "Y",
@@ -625,6 +631,7 @@ Meteor.startup(() => {
   if (Birds.find().count() === 0) {
     console.log("Seeding Birds collection");
     insertBird({
+      artificialTime: chooseTime(0, -5),
       Animal: "Bird",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -668,6 +675,7 @@ Meteor.startup(() => {
     });
 
     insertBird({
+      artificialTime: chooseTime(0, -18),
       Animal: "Bird",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -711,6 +719,7 @@ Meteor.startup(() => {
     });
 
     insertBird({
+      artificialTime: chooseTime(0, -30),
       Animal: "Bird",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -762,6 +771,7 @@ Meteor.startup(() => {
   if (Others.find().count() === 0) {
     console.log("Seeding Others collection");
     insertOther({
+      artificialTime: chooseTime(0, -80),
       Animal: "Dolphin",
       TicketNumber: "",
       HotlineOpInitials: "",
@@ -797,6 +807,7 @@ Meteor.startup(() => {
     });
 
     insertOther({
+      artificialTime: chooseTime(0, 83),
       Animal: "Whale",
       TicketNumber: "",
       HotlineOpInitials: "",
