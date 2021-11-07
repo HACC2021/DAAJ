@@ -9,13 +9,6 @@ import { Stuffs } from '../../api/stuff/Stuff';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
-  name: String,
-  quantity: Number,
-  condition: {
-    type: String,
-    allowedValues: ['excellent', 'good', 'fair', 'poor'],
-    defaultValue: 'good',
-  },
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -45,11 +38,8 @@ class Export extends React.Component {
       <Grid container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Add Stuff</Header>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
+          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportData(data, fRef)} >
             <Segment>
-              <TextField name='name'/>
-              <NumField name='quantity' decimal={false}/>
-              <SelectField name='condition'/>
               <SubmitField value='Submit'/>
               <ErrorsField/>
             </Segment>
@@ -57,6 +47,19 @@ class Export extends React.Component {
         </Grid.Column>
       </Grid>
     );
+  }
+
+  exportData(data, ref) {
+    const rows = [
+      ["name1", "city1", "some other info"],
+      ["name2", "city2", "more info"]
+    ];
+
+    let csvContent = "data:text/csv;charset=utf-8,"
+      + rows.map(e => e.join(",")).join("\n");
+
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
   }
 }
 
