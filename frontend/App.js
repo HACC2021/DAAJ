@@ -1,10 +1,9 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Divider, Layout, Text, Button } from '@ui-kitten/components';
+import { ApplicationProvider, Layout, Text, Button } from '@ui-kitten/components';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, ScrollView  } from 'react-native';
-import { Linking } from 'react-native'
+import { View, ScrollView, Linking, Image  } from 'react-native';
 import { SpeciesCard } from './components/SpeciesCard';
 import { SpeciesGuide } from './pages/SpeciesGuide'
 import { ChooseImages } from './pages/ChooseImages'
@@ -39,17 +38,18 @@ const HomeScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-    <Layout style={{flex: 1, alignItems: 'center'}}>
-      <Text category='h1'>Welcome</Text>
+    <View style={{ flex: 1, flexDirection:'column' }}>
+    <Layout style={{flex: 1, padding: 15}}>
+      <Image  style={{width:250, height:150}} source={{uri: 'https://i.ibb.co/C13Xx78/daaj-logo.png'}}/>
+      <Text style={{marginTop: 10}} category='h1'>E komo mai!</Text>
       <Text style={{marginTop: 10}} category='s1'>Please read the species guides before reporting a sighting to better understand the animal:</Text>
       <Button style={{marginTop: 10}} size='large' appearance='outline' status='info' onPress={navigateSpeciesGuide} >Species Guide (HMAR)</Button>
-      <Divider style={{paddingTop: 50}}/>
-      <Text category='h6'>Help us out:</Text>
-      <Button style={{marginTop: 10}}  size='large' status='info' onPress={navigateChooseSpecies}>Report a Sighting</Button>
-      <Text style={{marginTop: 10}} category='h6'>OR</Text>
+      
+      <Text style={{marginTop: 20}}category='h6'>You can help us out:</Text>
+      <Button  style={{marginTop: 10}}  size='large' status='primary' onPress={navigateChooseSpecies}>Report a Sighting</Button>
+      {/* <Text style={{marginTop: 10}} category='h6'>OR</Text> */}
       <Button style={{marginTop: 10}}  size='large' status='info' onPress={navigateReportDistressed}>Report Distressed Animal</Button>
-      <Divider style={{paddingTop: 90}}/>
+      
       
     </Layout>
     </View>
@@ -65,7 +65,7 @@ const Disclaimer = ({navigation}) => {
   return (
     <View style={{ flex: 1, flexDirection:'column'  }}>
     <Layout style={{flex: 1, padding:20, alignItems: 'center'}}>
-      <Text category='h5'>Please try to keep your distance from the animal, if you don't know the answer to a question on the form, just press unknown.</Text>
+      <Text category='h6'>Please try to keep your distance from the animal, if you don't know the answer to a question on the form, just press unknown.</Text>
       <Button style={{marginTop: 20}} size='large' status='info' onPress={navigateChooseSpecies}>I understand, Continue</Button>
     </Layout>
     </View>
@@ -106,7 +106,7 @@ function ChooseSpecies({navigation}) {
     <Layout style={{flex: 1,}}>
     <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
-      <Text  style={{marginTop: 10}} category='h5'>I'm reporting....</Text>
+      <Text  style={{marginTop: 10, marginLeft:20}} category='h5'>I'm reporting....</Text>
       <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
        {speciesList.map( (item, index) => (
         <SpeciesCard key={index}
