@@ -7,8 +7,6 @@ export const Birds = new Mongo.Collection( 'birds' )
 // Meteor methods:
 Meteor.methods({
   addBird( data ){
-    console.log("data.location" + data.location);
-    console.log("data.locationNotes" + data.locationNotes);
     Birds.insert({
         DateObjectObserved: data.dateObjectObserved,
         Animal: "Bird",
@@ -143,6 +141,7 @@ function findRelatedBird(newBirdID) {
 
   // Find the best matching bird:
   oldBirds.forEach(oldBird => {
+    console.log(oldBird._id + ":");
     // Check timing
     let timeScore = 0;
     let minutes = Math.ceil(Math.abs(newBird.DateObjectObserved - oldBird.DateObjectObserved) / 60000);

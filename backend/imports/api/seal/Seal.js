@@ -144,6 +144,7 @@ function findRelatedSeal(newSealID) {
 
   // Find the best matching seal:
   oldSeals.forEach(oldSeal => {
+    console.log(oldSeal._id + ":");
     // Check timing
     let timeScore = 0;
     let minutes = Math.ceil(Math.abs(newSeal.DateObjectObserved - oldSeal.DateObjectObserved) / 60000);

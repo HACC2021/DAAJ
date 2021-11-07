@@ -145,6 +145,7 @@ function findRelatedTurtle(newTurtleID) {
 
   // Find the best matching turtle:
   oldTurtles.forEach(oldTurtle => {
+    console.log(oldTurtle._id + ":");
     // Check timing
     let timeScore = 0;
     let minutes = Math.ceil(Math.abs(newTurtle.DateObjectObserved - oldTurtle.DateObjectObserved) / 60000);
