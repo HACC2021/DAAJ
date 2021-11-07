@@ -118,13 +118,15 @@ function findRelatedTurtle(newTurtleID) {
       'Sector': 1,
       'LocationName': 1,
       'LocationNotes': 1,
+      // Species
+      'TurtleType': 1,
       'xRelated': 1,
       'xSightings': 1,
     }
   }).fetch();
 
   console.log("oldTurtles: " + JSON.stringify(oldTurtles)); // All of the turtles in the collection beside the newly added one
-  let newTurtle = Turtles.find({ '_id': newTurtleID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'xAmpFlipper': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'xSightings': 1 } }).fetch()[0];
+  let newTurtle = Turtles.find({ '_id': newTurtleID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'xAmpFlipper': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'TurtleType': 1, 'xSightings': 1 } }).fetch()[0];
 
   // Weights to adjust
   const TIMING_WEIGHT = 0.25;

@@ -27,47 +27,45 @@ class TableView extends React.Component {
         day = "0" + day
     }
     let year = String(aDate.getFullYear()).slice(-2)
-    // let date = month + day + year;
-    // let time = (aDate.toTimeString()).slice(0,5);
+    let date = month + day + year;
+    let time = (aDate.toTimeString()).slice(0,5);
 
-    let turtleTest = {
-      dateObjectObserved: new Date("2021-11-07T03:14:24.284+00:00"),
-      date: "110621",
-      timeObserved: "17:14",
-      observerName: "Optimum Prime",
-      observerPhone: "808-234-5739",
-      observerInitials: "OP",
+    let birdTest = {
+      dateObjectObserved: aDate,
+      date: date,
+      timeObserved: time,
+      observerName: "Deceptacon",
+      observerPhone: "808-843-9381",
+      observerInitials: "DC",
       observerType: "P",
-      island: "Mayu",
-      sector: "West",
-      beachLocation: "Laniakea",
-      locationNotes: "On beach",
-      turtleType: "Cm",
-      size: "2ft",
-      status: "Alive",
+      sector: "South",
+      birdType: "LAAL",
       otherNotes: "",
-      xlatitude: 21.6188,
-      xlongitude: -158.0854,
-      xnumHundredFt: "10",
-      xanimalBehavior: 'Digging in the sand',
-      xTagYN: "N",
-      xtagNumber: "L123",
-      xtagSide: "Right front flipper",
-      xtagColor: "R",
-      xBandYN: "Y",
-      xbandColor: "R",
-      xbleachMarkYN: "",
+      location: "Kaiaka Bay Beach Park",
+      locationNotes: "",
+      xlatitude: 21.582583,
+      xlongitude: -158.124545,
+      xnumHundredFt: "25",
+      xanimalBehavior: "Screeching at nearby rocks",
+      xTagYN: "Y",
+      xBandYN: "N",
+      xbandColor: "",
+      xbleachMarkYN: "N",
       xBleachMarkNum: "",
-      xscarsYN: "Y",
-      xscarsLocation: "On shell",
-      xampFlipper: "Y",
-      xwhichFlipper: "Left",
-      ximages: ["sdfghjty.jpeg", "ertyughj.jpeg"],
-      xmainIdentification: "S",
+      xtagNumber: "H102",
+      xtagSide: "Right wing",
+      xtagColor: "R",
+      xscarsYN: "N",
+      xscarsLocation: "",
+      ximages: ["yuiqwebnfdsj.jpeg"],
+      xmainIdentification: "T",
+      xIsland: "Oahu",
     }
-    if (Turtles.find().count() <= 5) {
-      console.log("adding optimus prime")
-      Meteor.call('addTurtle', turtleTest);
+
+    if (Birds.find().count() <= 5) {
+      console.log("adding Deceptacon");
+      console.log("birdTest.location: " + birdTest.location);
+      Meteor.call('addBird', birdTest);
     }
     return (
       <h1> {/* <Container>
@@ -86,7 +84,7 @@ class TableView extends React.Component {
           </Table.Body>
         </Table>
       </Container> */}
-      {JSON.stringify(this.props.turtles)}<br></br></h1>
+      {JSON.stringify(this.props.birds)}<br></br></h1>
     );
   }
 }
