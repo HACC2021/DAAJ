@@ -15,8 +15,11 @@ import { SG5 } from './pages/SpeciesGuides/SG5'
 import FormSeal1 from './pages/FormSeal/FormSeal1'
 import FormSeal2 from './pages/FormSeal/FormSeal2'
 import FormBird1 from './pages/FormBird/FormBird1'
+import FormBird2 from './pages/FormBird/FormBird2'
 import FormOther1 from './pages/FormOther/FormOther1'
+import FormOther2 from './pages/FormOther/FormOther2'
 import FormTurtle1 from './pages/FormTurtle/FormTurtle1'
+import FormTurtle2 from './pages/FormTurtle/FormTurtle2'
 import FormAll from './pages/FormAll';
 import FormAll2 from './pages/FormAll2';
 import { LocationForm } from './pages/LocationForm';
@@ -164,8 +167,12 @@ export default App = () => (
           <Stack.Screen name="FormSeal1" options={{ title: 'Seal Sighting' }} component={FormSeal1} />
           <Stack.Screen name="FormSeal2" options={{ title: 'Seal Sighting' }} component={FormSeal2} />
           <Stack.Screen name="FormBird1" options={{ title: 'Bird Sighting' }} component={FormBird1} />
+          <Stack.Screen name="FormBird2" options={{ title: 'Bird Sighting' }} component={FormBird2} />
           <Stack.Screen name="FormTurtle1" options={{ title: 'Turtle Sighting' }} component={FormTurtle1} />
+          <Stack.Screen name="FormTurtle2" options={{ title: 'Turtle Sighting' }} component={FormTurtle2} />
           <Stack.Screen name="FormOther1" options={{ title: 'Other Sighting' }} component={FormOther1} />
+          <Stack.Screen name="FormOther2" options={{ title: 'Other Sighting' }} component={FormOther2} />
+
 
         </Stack.Navigator>
       </NavigationContainer>

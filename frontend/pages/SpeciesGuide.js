@@ -1,5 +1,4 @@
 import React from 'react';
-import * as eva from '@eva-design/eva';
 import {  Layout, Text } from '@ui-kitten/components';
 import { View, ScrollView  } from 'react-native';
 import { SpeciesCard } from '../components/SpeciesCard';
