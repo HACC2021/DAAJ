@@ -8,12 +8,12 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import ReportItem from '../components/ReportItem';
+import RelatedReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-class ListReports extends React.Component {
+class ListRelated extends React.Component {
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
@@ -21,16 +21,6 @@ class ListReports extends React.Component {
   }
 
   getReports() {
-/*
-    console.log("turtles");
-    console.log(this.props.turtles);
-    console.log("birds");
-    console.log(this.props.birds);
-    console.log("seals");
-    console.log(this.props.seals);
-    console.log("others");
-    console.log(this.props.others);
-    */
     console.log("combined");
     console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
 
@@ -44,7 +34,7 @@ class ListReports extends React.Component {
     return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
-      return new Date(b.DateObjectObserved) - new Date(a.DateObjectObserved);
+      return new Date(b.DateObjectObserved) - new Date(a.DateObjectObserved); // Change to sort by xRelated
     });
     ;
   }
@@ -64,9 +54,12 @@ class ListReports extends React.Component {
               <Table.HeaderCell>Size</Table.HeaderCell>
               <Table.HeaderCell>MainIdentification</Table.HeaderCell>
               <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
+              <Table.HeaderCell>Tag present?</Table.HeaderCell>
+              <Table.HeaderCell>Band present?</Table.HeaderCell>
+              <Table.HeaderCell>Bleach mark present?</Table.HeaderCell>
+              <Table.HeaderCell>Scars present?</Table.HeaderCell>
               <Table.HeaderCell>#Reports</Table.HeaderCell>
-              <Table.HeaderCell>Checked?</Table.HeaderCell>
-              <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
+              <Table.HeaderCell>Related ID</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -79,7 +72,7 @@ class ListReports extends React.Component {
 }
 
 // Require an array of Stuff documents in the props.
-ListReports.propTypes = {
+ListRelated.propTypes = {
   stuffs: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 
@@ -103,7 +96,12 @@ export default withTracker(() => {
   // Determine if the subscription is ready
   const ready = subscription.ready();
   // Get the Stuff documents
-  const stuffs = Stuffs.collection.find({}).fetch();
+  const stuffs = Stuffs.collection.find({ $and: [
+    { xRelated: { $ne: "" } },
+    { xConfirmRelated: { $ne: "" } }
+ ] }).fetch();
+  
+  
   const turtleSubscription = Meteor.subscribe('TurtlesCollection');
   const turtleReady = turtleSubscription.ready();
   const turtles = Turtles.find({}).fetch();
@@ -129,4 +127,4 @@ export default withTracker(() => {
     otherReady,
     others
   };
-})(ListReports);
+})(ListRelated);

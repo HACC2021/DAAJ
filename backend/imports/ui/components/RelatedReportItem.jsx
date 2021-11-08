@@ -16,11 +16,13 @@ class RelatedReportItem extends React.Component {
         <Table.Cell>{this.props.report.Size}</Table.Cell>
         <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
         <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
+        <Table.Cell>{this.props.report.xTagYN}</Table.Cell>
+        <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
+        <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
+        <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
+        {/*this.props.report.xChecked === 1 ? <Table.Cell>Yes</Table.Cell> : <Table.Cell>No</Table.Cell>*/}
         <Table.Cell>{this.props.report.xSightings}</Table.Cell>
-        {this.props.report.xChecked === 1 ? <Table.Cell>Yes</Table.Cell> : <Table.Cell>No</Table.Cell>}
-        {/* {!this.props.report.xChecked &&
-        <Table.Cell>No</Table.Cell>} */}
-        <Table.Cell>{this.props.report.ObserverPhone}</Table.Cell>
+        <Table.Cell>{this.props.report.xRelated}</Table.Cell>
       </Table.Row>
     );
   }
@@ -36,12 +38,17 @@ RelatedReportItem.propTypes = {
     Size: PropTypes.string,
     MainIdentification: PropTypes.string,
     xAnimalBehavior: PropTypes.string,
-    xSightings: PropTypes.number,
-    xChecked: PropTypes.number,
-    ObserverPhone: PropTypes.string,
+    // xChecked: PropTypes.number,
+    //ObserverPhone: PropTypes.string,
     _id: PropTypes.string,
 
     xRelated: PropTypes.string,
+    xTagYN: PropTypes.string,
+    xBandYN: PropTypes.string,
+    xBleachMarkYN: PropTypes.string,
+    xScarsYN: PropTypes.string,
+    xSightings: PropTypes.string,
+    xConfirmRelated: PropTypes.string,
   }).isRequired,
 };
 
