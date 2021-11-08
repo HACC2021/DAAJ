@@ -17,7 +17,7 @@ class ListReports extends React.Component {
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
-    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+    return (this.props.ready && this.props.sealReady && this.props.turtleReady && this.props.birdReady && this.props.otherReady) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
   getReports() {
@@ -82,6 +82,18 @@ class ListReports extends React.Component {
 ListReports.propTypes = {
   stuffs: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+
+  seals: PropTypes.array.isRequired,
+  sealReady: PropTypes.bool.isRequired,
+
+  turtles: PropTypes.array.isRequired,
+  turtleReady: PropTypes.bool.isRequired,
+
+  birds: PropTypes.array.isRequired,
+  birdReady: PropTypes.bool.isRequired,
+
+  others: PropTypes.array.isRequired,
+  otherReady: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
