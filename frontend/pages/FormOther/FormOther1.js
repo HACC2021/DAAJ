@@ -5,14 +5,11 @@ import { View, ScrollView  } from 'react-native';
 
 const FormOther1 = (props) => {
 
-
   // QUESTION Animal Behavior
  const [animal, setanimal] = React.useState('');
 
   // QUESTION Any Notes
   const [otherNotes, setotherNotes] = React.useState('');
-
-
 
   const renderQ1 = () => {
     if (props.route.params.item.id != 'SG4' && props.route.params.item.id != 'SG5') {
@@ -20,7 +17,7 @@ const FormOther1 = (props) => {
     <>
      <Text style={{marginTop: 10}} category='h6'>Name of the animal</Text>
      <Input status='primary' placeholder='Enter a name or type "Unknown"'
-     value={animal} onChangeText={nextValue => animal(nextValue)} />
+     value={animal} onChangeText={nextValue => setanimal(nextValue)} />
     </>
       )
 
@@ -29,6 +26,14 @@ const FormOther1 = (props) => {
   }
 
   const navigateForm = () => {
+
+    if (props.route.params.item.id == 'SG4') {
+      setanimal('Spinner Dolphins');
+    }
+
+    if (props.route.params.item.id == 'SG5') {
+      setanimal('Humpback Whales')
+    }
 
     let formOther1Data = {
       animal: animal,

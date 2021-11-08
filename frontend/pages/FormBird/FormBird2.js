@@ -9,6 +9,24 @@ const FormBird2 = (props) => {
   const dateObj = new Date();
   // const [loading, setloading] = React.useState(true);  
 
+
+  renderLocView = () => {
+    if (props.route.params.locationData.xlatitude!=null) {
+      return (
+        <LocationView 
+      lat={props.route.params.locationData.xlatitude} 
+      long={props.route.params.locationData.xlongitude}/>)
+    } else {
+      return (
+        <Text category='h5'>No GPS data</Text>
+      )
+    }
+}
+
+
+
+
+
   return (
     <View style={{ flex: 1, flexDirection:'column'  }}>
     <Layout style={{flex: 1, padding:10}}>
@@ -44,9 +62,9 @@ const FormBird2 = (props) => {
       <Text category='h5'>{props.route.params.formAll2Data.xanimalBehavior}</Text>
       <Text style={{marginTop: 10}} category='s1'>Location</Text>
       <Text category='h5'>{props.route.params.locationData.sector} {props.route.params.locationData.xisland}</Text>
-      <LocationView 
-        lat={props.route.params.locationData.xlatitude} 
-        long={props.route.params.locationData.xlongitude}  />
+
+      {renderLocView()}
+
       <Button style={{marginTop: 10}} status='info'>Submit</Button>
 
 

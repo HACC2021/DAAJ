@@ -8,6 +8,19 @@ const FormTurtle3 = (props) => {
 
   const dateObj = new Date();
 
+  renderLocView = () => {
+    if (props.route.params.locationData.xlatitude!=null) {
+      return (
+        <LocationView 
+      lat={props.route.params.locationData.xlatitude} 
+      long={props.route.params.locationData.xlongitude}/>)
+    } else {
+      return (
+        <Text category='h5'>No GPS data</Text>
+      )
+    }
+}
+
   return (
     <View style={{ flex: 1, flexDirection:'column'  }}>
     <Layout style={{flex: 1, padding:20,}}>
@@ -43,9 +56,10 @@ const FormTurtle3 = (props) => {
       
       <Text style={{marginTop: 10}} category='s1'>Location</Text>
       <Text category='h5'>{props.route.params.locationData.sector} {props.route.params.locationData.xisland}</Text>
-      <LocationView 
-        lat={props.route.params.locationData.xlatitude} 
-        long={props.route.params.locationData.xlongitude}  />
+      
+
+      {renderLocView()}
+
       <Button style={{marginTop: 10}} status='info'>Submit</Button>
 
 

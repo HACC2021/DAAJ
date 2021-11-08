@@ -18,7 +18,7 @@ const FormSeal2 = (props) => {
 
     // QUESTION 3 Mom/Pup
     const [q3index, setQ3index] = React.useState('');
-    const q3display = q3[q2index.row]
+    const q3display = q3[q3index.row]
 
     
     const renderOption = (title, index) => ( <SelectItem key={index} title={title}/> )
@@ -62,7 +62,7 @@ const FormSeal2 = (props) => {
 
     {/* QUESTION 3 */}
 <Text style={{marginTop: 10}} category='h6'>Mother and pup pair?</Text>
-    <Select status='primary' selectedIndex={q2index} value={q3display}
+    <Select status='primary' selectedIndex={q3index} value={q3display}
       onSelect={index => setQ3index(index)}>
         {q3.map(renderOption)}
     </Select>
