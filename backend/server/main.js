@@ -5,6 +5,7 @@ import { Seals } from '/imports/api/seal/Seal';
 import { Turtles } from '/imports/api/turtle/Turtle';
 import { Birds } from '/imports/api/bird/Bird';
 import { Others } from '/imports/api/other/Other';
+import '/imports/api/maps/Maps';
 import '/imports/startup/server/Accounts';
 import '/imports/startup/server/Publications';
 import '/imports/startup/server/Mongo';
@@ -140,9 +141,6 @@ Meteor.startup(() => {
       MomPup: "N",
       SRASetBy: "",
       NumVolunteers: "",
-      SealDepart: "No",
-      SealDepartDate: "",
-      SealDepartTime: "",
       NumCalls: "",
       OtherNotes: "",
       xLatitude: 21.27518,
@@ -193,9 +191,6 @@ Meteor.startup(() => {
       MomPup: "N",
       SRASetBy: "",
       NumVolunteers: "",
-      SealDepart: "No",
-      SealDepartDate: "",
-      SealDepartTime: "",
       NumCalls: "",
       OtherNotes: "",
       xLatitude: 21.37518,
@@ -246,9 +241,6 @@ Meteor.startup(() => {
       MomPup: "N",
       SRASetBy: "",
       NumVolunteers: "",
-      SealDepart: "N",
-      SealDepartDate: "",
-      SealDepartTime: "",
       NumCalls: "",
       OtherNotes: "",
       xLatitude: 21.33246,
@@ -299,9 +291,6 @@ Meteor.startup(() => {
       MomPup: "N",
       SRASetBy: "",
       NumVolunteers: "",
-      SealDepart: "N",
-      SealDepartDate: "",
-      SealDepartTime: "",
       NumCalls: "",
       OtherNotes: "",
       xLatitude: 21.33246,
