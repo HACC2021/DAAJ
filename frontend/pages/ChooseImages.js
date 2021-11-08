@@ -1,5 +1,4 @@
 import React from 'react';
-import * as eva from '@eva-design/eva';
 import {  Layout, Text, Button } from '@ui-kitten/components';
 import { View, ScrollView, Image, FlatList } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';

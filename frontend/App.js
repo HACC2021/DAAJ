@@ -43,7 +43,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <View style={{ flex: 1, flexDirection:'column' }}>
     <Layout style={{flex: 1, padding: 15}}>
-      <Image  style={{width:250, height:150}} source={{uri: 'https://i.ibb.co/C13Xx78/daaj-logo.png'}}/>
+      <Image  style={{width:250, height:150}} source={require('./assets/daaj-logo.png')}/>
       <Text style={{marginTop: 10}} category='h1'>E komo mai!</Text>
       <Text style={{marginTop: 10}} category='s1'>Please read the species guides before reporting a sighting to better understand the animal:</Text>
       <Button style={{marginTop: 10}} size='large' appearance='outline' status='info' onPress={navigateSpeciesGuide} >Species Guide (HMAR)</Button>
@@ -97,7 +97,12 @@ let speciesList = [
   { 'id': 'SG5', 'form': 'FormOther1',
     'name': "Humpback Whales",
   'image':'https://www.scubadiving.com/sites/scubadiving.com/files/styles/opengraph_1_91x1/public/images/2021/03/humpback-whale-shutterstock-craig-lambert-photography.jpg?itok=UkKURyI3'
-  }
+  },
+  { 'id': 'SG6', 'form': 'FormOther1',
+  'name': "Other Species",
+'image':'https://mocah.org/thumbs/5298601-water-texture-ripple-background-ocean-blue-light-wafe-sea-wallpaper-wallpaper-water-wallpaper-blue-wallpaper-sea-beauty-free-images.jpg'
+  },
+
 
 ]
 

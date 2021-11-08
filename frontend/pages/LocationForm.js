@@ -57,8 +57,8 @@ export class LocationForm extends React.Component {
   navigateForm = () => {
 
     let locationData = {
-      xlatitude: this.state.latitude, 
-      xlongitude: this.state.longitude,
+      xlatitude: this.state.xlatitude, 
+      xlongitude: this.state.xlongitude,
       xisland: this.state.q1display,
       sector: this.state.q2display,
     };

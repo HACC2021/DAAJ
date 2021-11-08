@@ -49,7 +49,7 @@ function elevationShadowStyle(elevation) {
 
 const styles = StyleSheet.create({
 container: {
-    height: 170,
+    height: 160,
     padding: 10,
     borderRadius: 12,
     justifyContent: 'center',
@@ -84,7 +84,7 @@ chipContainer: {
     borderRadius: 100,
   },
 overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.30)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'column',
     justifyContent: 'flex-end',

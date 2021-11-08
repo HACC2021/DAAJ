@@ -64,7 +64,7 @@ const FormAll2 = (props) => {
 
 
      {/* QUESTION 16 */}
-     <Text style={{marginTop: 20}} category='h6'>About how mamy people are within 100 ft. of the animal?</Text>
+     <Text style={{marginTop: 20}} category='h6'>About how many people are within 100 ft. of the animal?</Text>
       <Input status='primary' placeholder='Enter an estimate'
       value={beachgoers} onChangeText={nextValue => setbeachgoers(nextValue)} />
 

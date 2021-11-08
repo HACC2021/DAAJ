@@ -1,16 +1,63 @@
 import React from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
-import { View, ScrollView  } from 'react-native';
+import { View, ScrollView, Image, FlatList  } from 'react-native';
+import { LocationView } from '../../components/LocationView';
 
 
 const FormBird2 = (props) => {
 
+  const dateObj = new Date();
+  // const [loading, setloading] = React.useState(true);
+
+
+
+  console.log(props.route.params)
+  
 
   return (
     <View style={{ flex: 1, flexDirection:'column'  }}>
-    <Layout style={{flex: 1, padding:10, alignItems: 'center'}}>
-      <Text category='h5'>Confirm Information</Text>
+    <Layout style={{flex: 1, padding:10}}>
+    <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
+          alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
+      <Text category='h5'>Confirm Report</Text>
+      <Text category='s1'>{dateObj.toLocaleDateString()} at {dateObj.toLocaleTimeString()}</Text>
+      <Text style={{marginTop: 10}}category='h5'>Images</Text>
+      <FlatList
+        horizontal={true}
+        data={props.route.params.ximages}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 5
+        }}
+        keyExtractor={item => item.uri}
+        renderItem={ ({item, index}) => (
+          <Image
+            style={{
+              width: 100, height: 100,
+              marginRight: 10,
+              borderRadius: 12, }}
+             source={{uri: item.uri}}
+          />
+        )}>
+        </FlatList>
+
+      <Text style={{marginTop: 10}} category='s1'>Bird Species Type</Text>
       <Text category='h5'>{props.route.params.birdType}</Text>
+      <Text style={{marginTop: 10}} category='s1'>Main Identification</Text>
+      <Text category='h5'>{props.route.params.formAll2Data.mainIdentification}</Text>
+      <Text style={{marginTop: 10}} category='s1'>Animal Behavior</Text>
+      <Text category='h5'>{props.route.params.formAll2Data.xanimalBehavior}</Text>
+      <Text style={{marginTop: 10}} category='s1'>People within 100ft.</Text>
+      <Text category='h5'>{props.route.params.formAll2Data.xnumHundredFt}</Text>
+      <Text style={{marginTop: 10}} category='s1'>Location</Text>
+      <Text category='h5'>{props.route.params.locationData.sector} {props.route.params.locationData.xisland}</Text>
+      <LocationView 
+        lat={props.route.params.locationData.xlatitude} 
+        long={props.route.params.locationData.xlongitude}  />
+      <Button style={{marginTop: 10}} status='info'>Submit</Button>
+
+
+      </ScrollView>
     </Layout>
     </View>
 

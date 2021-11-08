@@ -1,7 +1,7 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
 import {  Layout, Text, Button } from '@ui-kitten/components';
-import { View, ScrollView, Linking  } from 'react-native';
+import { View, ScrollView, Linking, Image  } from 'react-native';
 import { SpeciesCard } from '../../components/SpeciesCard';
 
 
@@ -36,7 +36,10 @@ export class SG1 extends React.Component {
         <Text style={{marginTop: 10}} category='s1'>
           Of all marine mammals, the Hawaiian monk seal (ʻilio holo ika ua ua) is the most endangered in the pinniped family (seals, sea lions and walrus) 
           in the western hemisphere and is listed as endangered under the Endangered Species Act.
+          Other than DNA testing, the only way to confirm whether a seal is female or male is by looking at its belly.
         </Text>
+        <Image  style={{width:330, height:245}} source={{uri: 'https://h-mar.org/wp-content/uploads/2016/05/Screenshot-2016-05-12-23.20.12.png'}}/>
+
 
             <Text style={{marginTop: 10}} category='h6'>Learn more at h-mar.org</Text>
             <Button onPress={this.visitSite}>Visit H-mar.org</Button>

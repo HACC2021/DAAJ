@@ -1,7 +1,7 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
 import {  Layout, Text, Button } from '@ui-kitten/components';
-import { View, ScrollView, Linking  } from 'react-native';
+import { View, ScrollView, Linking, Image  } from 'react-native';
 import { SpeciesCard } from '../../components/SpeciesCard';
 
 
@@ -38,7 +38,7 @@ export class SG2 extends React.Component {
           The green sea turtle (honu) is categorized as threatened under the Endangered Species Act while the hawksbill turtle (honu ‘ea or ʻea) 
           is categorized as endangered under the Endangered Species Act.
         </Text>
-
+        <Image  style={{width:310, height:335}} source={{uri: 'https://www.researchgate.net/profile/Alasdair-Edwards/publication/257395050/figure/fig11/AS:669447366905873@1536620098689/Heads-and-dorsal-carapaces-shells-of-the-Green-and-Hawksbill-turtles-Note-the.png'}}/>
         <Text style={{marginTop: 10}} category='h6'>Learn more at h-mar.org</Text>
             <Button onPress={this.visitSite}>Visit H-mar.org</Button>
         </View>

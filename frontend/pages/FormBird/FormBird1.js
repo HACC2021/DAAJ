@@ -146,7 +146,6 @@ const FormBird1 = (props) => {
          return (<SpeciesCard key={index}
             speciesName={item.name}
             image={item.image}
-            pageName={item.id}
             onClick={() => navigateForm(item.name)}
             />
        )})}

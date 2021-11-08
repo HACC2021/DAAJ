@@ -33,7 +33,7 @@ const ContactInfo = (props) => {
     props.navigation.navigate('FormAll',
       {item: props.route.params.item, 
         ximages: props.route.params.ximages, 
-        locationData: props.route.locationData,
+        locationData: props.route.params.locationData,
         contactInfoData: contactInfoData,
       });
 
