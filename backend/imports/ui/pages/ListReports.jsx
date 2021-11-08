@@ -41,6 +41,7 @@ class ListReports extends React.Component {
     const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
     const others = this.props.others.map(report => ({...report, type: "Other"}));
     // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
+    // also sorting by date
     return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
