@@ -40,7 +40,7 @@ const FormTurtle1 = (props) => {
     <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
         alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
       <Text  style={{marginTop: 10, marginLeft:20 }} category='h5'>Select the turtle species</Text>
-      <Text  style={{marginTop: 10, marginLeft:20 }} category='h6'>How to distinguish between species:</Text>
+      <Text  style={{marginTop: 10, marginLeft:20, marginBottom:10 }} category='s1'>How to distinguish between species:</Text>
       <Image  style={{width:340, height:365}} source={{uri: 'https://www.researchgate.net/profile/Alasdair-Edwards/publication/257395050/figure/fig11/AS:669447366905873@1536620098689/Heads-and-dorsal-carapaces-shells-of-the-Green-and-Hawksbill-turtles-Note-the.png'}}/>
       <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
        {speciesList.map( (item, index) => {

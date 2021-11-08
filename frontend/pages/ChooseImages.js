@@ -34,18 +34,18 @@ export class ChooseImages extends React.Component {
       quality: 1,
     });
 
-    console.log(result);
+    
     this.state.ximages.push(result);
     if (!result.cancelled) {
       this.setState( { image: result.uri} );
     }
-    console.log('state images');
-    console.log(this.state.ximages);
+ 
   };
 
 
   navigateForm = () => {
-    this.props.navigation.navigate('LocationForm', {item: this.state.item, ximages: this.state.ximages});
+    this.props.navigation.navigate('LocationForm',
+     {item: this.state.item, ximages: this.state.ximages});
   };
 
   // TODO: Add code to have multiple select images instead of one by one

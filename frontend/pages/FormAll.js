@@ -21,58 +21,57 @@ const q14 = ['Tag', 'Band', 'Bleach Marking', 'Scars', 'Other Marking', 'N/A']
 
 
 const FormAll = (props) => {
-  // console.log(props.route.params);
 
   // QUESTION 1 Does the animal have a tag?
-  const [q1index, setQ1index] = React.useState(0);
+  const [q1index, setQ1index] = React.useState('');
   const q1display = q1[q1index.row]
 
    // QUESTION 2 If so, what color?
-   const [q2index, setQ2index] = React.useState(0);
+   const [q2index, setQ2index] = React.useState('');
    const q2display = q2[q2index.row]
  
    // QUESTION 3 Tag Code?
    const [tagCode, settagCode] = React.useState('');
 
    // QUESTION 4 Tag side ?
-   const [q4index, setQ4index] = React.useState(0);
+   const [q4index, setQ4index] = React.useState('');
    const q4display = q4[q4index.row]
 
   // QUESTION 5 Does the animal have a band?
-  const [q5index, setQ5index] = React.useState(0);
+  const [q5index, setQ5index] = React.useState('');
   const q5display = q5[q5index.row]
 
   // QUESTION 6 If so, what color?
-  const [q6index, setQ6index] = React.useState(0);
+  const [q6index, setQ6index] = React.useState('');
   const q6display = q6[q6index.row]
   
   // QUESTION 7 Bleach markings?
-  const [q7index, setQ7index] = React.useState(0);
+  const [q7index, setQ7index] = React.useState('');
   const q7display = q7[q7index.row]
   
   // QUESTION 8 Natural or applied?
-  const [q8index, setQ8index] = React.useState(0);
+  const [q8index, setQ8index] = React.useState('');
   const q8display = q8[q8index.row]
 
   // QUESTION 9 Bleach number
   const [bleachNumber, setbleachNumber] = React.useState('');
 
   // QUESTION 10 Scars?
-  const [q10index, setQ10index] = React.useState(0);
+  const [q10index, setQ10index] = React.useState('');
   const q10display = q10[q10index.row]
 
   // QUESTION 11 Scars where?
   const [scarsWhere, setscarsWhere] = React.useState('');
 
   // QUESTION 12 Other Markings
-  const [q12index, setQ12index] = React.useState(0);
+  const [q12index, setQ12index] = React.useState('');
   const q12display = q12[q12index.row]
 
   // QUESTION 13 Where
   const [otherMarkingsWhere, setotherMarkingsWhere] = React.useState('');
 
  // QUESTION 14 Most Prominent
- const [q14index, setQ14index] = React.useState(0);
+ const [q14index, setQ14index] = React.useState('');
  const q14display = q14[q14index.row]
 
   const renderOption = (title, index) => ( <SelectItem key={index} title={title}/> )
@@ -171,7 +170,7 @@ const FormAll = (props) => {
   const navigateForm = () => {
 
     let formAllData = {
-      sealPresent: 'Yes',
+      // sealPresent: 'Yes',
       xTagYN: q1display,
       tagNumber: tagCode,
       tagSide: q4display,

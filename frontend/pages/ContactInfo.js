@@ -16,7 +16,7 @@ const ContactInfo = (props) => {
   const [phoneNumber, setphoneNumber] = React.useState('');
 
   // QUESTION 4 Are you a volunteer?
-  const [q4index, setQ4index] = React.useState(0);
+  const [q4index, setQ4index] = React.useState('');
   const q4display = q4[q4index.row]
 
   const renderOption = (title, index) => ( <SelectItem key={index} title={title}/> )
@@ -55,7 +55,7 @@ const ContactInfo = (props) => {
 
   {/* QUESTION 2 */}
 <Text style={{marginTop: 10}} category='s1'>Last Name</Text>
-    <Input status='primary' placeholder='First Name'
+    <Input status='primary' placeholder='Last Name'
     value={lastName} onChangeText={nextValue => setlastName(nextValue)} />
 
 

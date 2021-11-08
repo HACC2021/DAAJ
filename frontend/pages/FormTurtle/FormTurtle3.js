@@ -1,17 +1,16 @@
 import React from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
-import { View, ScrollView, Image, FlatList  } from 'react-native';
+import { View, ScrollView, FlatList, Image  } from 'react-native';
 import { LocationView } from '../../components/LocationView';
 
 
-const FormBird2 = (props) => {
+const FormTurtle3 = (props) => {
 
   const dateObj = new Date();
-  // const [loading, setloading] = React.useState(true);  
 
   return (
     <View style={{ flex: 1, flexDirection:'column'  }}>
-    <Layout style={{flex: 1, padding:10}}>
+    <Layout style={{flex: 1, padding:20,}}>
     <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
           alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
       <Text category='h5'>Confirm Report</Text>
@@ -35,13 +34,13 @@ const FormBird2 = (props) => {
           />
         )}>
         </FlatList>
-
-      <Text style={{marginTop: 10}} category='s1'>Bird Species Type</Text>
+        <Text style={{marginTop: 10}} category='s1'>Turtle Species Type</Text>
       <Text category='h5'>{props.route.params.birdType}</Text>
       <Text style={{marginTop: 10}} category='s1'>Main Identification</Text>
       <Text category='h5'>{props.route.params.formAll2Data.mainIdentification}</Text>
       <Text style={{marginTop: 10}} category='s1'>Animal Behavior</Text>
       <Text category='h5'>{props.route.params.formAll2Data.xanimalBehavior}</Text>
+      
       <Text style={{marginTop: 10}} category='s1'>Location</Text>
       <Text category='h5'>{props.route.params.locationData.sector} {props.route.params.locationData.xisland}</Text>
       <LocationView 
@@ -50,11 +49,12 @@ const FormBird2 = (props) => {
       <Button style={{marginTop: 10}} status='info'>Submit</Button>
 
 
+
       </ScrollView>
-    </Layout>
+      </Layout>
     </View>
 
   );
 }
 
-export default FormBird2;
+export default FormTurtle3;

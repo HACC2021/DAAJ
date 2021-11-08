@@ -11,7 +11,7 @@ const FormAll2 = (props) => {
 
 
    // QUESTION 14 Most Prominent
- const [q14index, setQ14index] = React.useState(0);
+ const [q14index, setQ14index] = React.useState('');
  const q14display = q14[q14index.row]
 
  // QUESTION 15 Animal Behavior
@@ -19,8 +19,6 @@ const FormAll2 = (props) => {
 
  // QUESTION 16 Beachgoers 100 feet
  const [beachgoers, setbeachgoers] = React.useState('');
-
-
 
 
  const renderOption = (title, index) => ( <SelectItem key={index} title={title}/> )

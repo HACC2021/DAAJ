@@ -14,12 +14,14 @@ import { SG4 } from './pages/SpeciesGuides/SG4'
 import { SG5 } from './pages/SpeciesGuides/SG5'
 import FormSeal1 from './pages/FormSeal/FormSeal1'
 import FormSeal2 from './pages/FormSeal/FormSeal2'
+import FormSeal3 from './pages/FormSeal/FormSeal3'
 import FormBird1 from './pages/FormBird/FormBird1'
 import FormBird2 from './pages/FormBird/FormBird2'
 import FormOther1 from './pages/FormOther/FormOther1'
 import FormOther2 from './pages/FormOther/FormOther2'
 import FormTurtle1 from './pages/FormTurtle/FormTurtle1'
 import FormTurtle2 from './pages/FormTurtle/FormTurtle2'
+import FormTurtle3 from './pages/FormTurtle/FormTurtle3'
 import FormAll from './pages/FormAll';
 import FormAll2 from './pages/FormAll2';
 import { LocationForm } from './pages/LocationForm';
@@ -45,7 +47,7 @@ const HomeScreen = ({navigation}) => {
     <Layout style={{flex: 1, padding: 15}}>
       <Image  style={{width:250, height:150}} source={require('./assets/daaj-logo.png')}/>
       <Text style={{marginTop: 10}} category='h1'>E komo mai!</Text>
-      <Text style={{marginTop: 10}} category='s1'>Please read the species guides before reporting a sighting to better understand the animal:</Text>
+      <Text style={{marginTop: 10}} category='s1'>Please read the species guides to better understand the animals:</Text>
       <Button style={{marginTop: 10}} size='large' appearance='outline' status='info' onPress={navigateSpeciesGuide} >Species Guide (HMAR)</Button>
       
       <Text style={{marginTop: 20}}category='h6'>You can help us out:</Text>
@@ -171,10 +173,12 @@ export default App = () => (
           <Stack.Screen name="FormAll2" options={{ title: 'Identifying Characteristics' }} component={FormAll2} />
           <Stack.Screen name="FormSeal1" options={{ title: 'Seal Sighting' }} component={FormSeal1} />
           <Stack.Screen name="FormSeal2" options={{ title: 'Seal Sighting' }} component={FormSeal2} />
+          <Stack.Screen name="FormSeal3" options={{ title: 'Seal Sighting' }} component={FormSeal3} />
           <Stack.Screen name="FormBird1" options={{ title: 'Bird Sighting' }} component={FormBird1} />
           <Stack.Screen name="FormBird2" options={{ title: 'Bird Sighting' }} component={FormBird2} />
           <Stack.Screen name="FormTurtle1" options={{ title: 'Turtle Sighting' }} component={FormTurtle1} />
           <Stack.Screen name="FormTurtle2" options={{ title: 'Turtle Sighting' }} component={FormTurtle2} />
+          <Stack.Screen name="FormTurtle3" options={{ title: 'Turtle Sighting' }} component={FormTurtle3} />
           <Stack.Screen name="FormOther1" options={{ title: 'Other Sighting' }} component={FormOther1} />
           <Stack.Screen name="FormOther2" options={{ title: 'Other Sighting' }} component={FormOther2} />
 
