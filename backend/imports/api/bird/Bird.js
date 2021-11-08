@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
+import {getDateTime} from '../functions.js';
 
 
 export const Birds = new Mongo.Collection( 'birds' )
@@ -7,12 +8,13 @@ export const Birds = new Mongo.Collection( 'birds' )
 // Meteor methods:
 Meteor.methods({
   addBird( data ){
+    let dateTime = getDateTime(data.dateObjectObserved);
     Birds.insert({
         DateObjectObserved: data.dateObjectObserved,
         Animal: "Bird",
         // Common to all animals
-        DateObserved: data.date, // Date object w date and time
-        TimeObserved: data.timeObserved,
+        DateObserved: dateTime[0], // Date object w date and time
+        TimeObserved: dateTime[1],
         TicketNumber: "", // Not implemented by us
         HotlineOpInitials: "", // Not implemented by us
         TicketType: "", // Not implemented by us
