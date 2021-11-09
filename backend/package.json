@@ -11,6 +11,7 @@
     "@babel/core": "^7.16.0",
     "@babel/runtime": "^7.15.4",
     "@react-google-maps/api": "^2.5.0",
+    "@wojtekmaj/date-utils": "^1.0.3",
     "@wojtekmaj/react-datetimerange-picker": "^3.4.2",
     "axios": "^0.24.0",
     "clone": "^2.1.2",
