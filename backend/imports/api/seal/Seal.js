@@ -66,6 +66,7 @@ Meteor.methods({
         xChecked: 0,
     }, function (err, newID) {
       if (err){
+        console.log(err);
         return err
       } else {
         console.log("Successfully added a seal");

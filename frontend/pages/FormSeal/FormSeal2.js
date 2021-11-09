@@ -26,6 +26,12 @@ const FormSeal2 = (props) => {
 
     const navigateForm = () => {
 
+      let formSeal2Data = {
+        size: q1display,
+        momPup: q3display,
+        beachPosition: q2display,
+      }
+
       props.navigation.navigate('FormSeal3',
         {item: props.route.params.item, 
           ximages: props.route.params.ximages, 
@@ -34,6 +40,7 @@ const FormSeal2 = (props) => {
           formAllData: props.route.params.formAllData,
           formAll2Data: props.route.params.formAll2Data,
           sex: props.route.params.q1display,
+          formSeal2Data: formSeal2Data,
         });
     };
 

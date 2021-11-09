@@ -2,13 +2,62 @@ import React from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { View, ScrollView, FlatList, Image  } from 'react-native';
 import { LocationView } from '../../components/LocationView';
+import Meteor, { Mongo, withTracker } from '@meteorrn/core';
+
+
+Meteor.connect('ws://localhost:3000/websocket')
 
 
 const FormSeal3 = (props) => {
 
   const dateObj = new Date();
 
-  renderLocView = () => {
+  let data = {
+    dateObjectObserved: dateObj,
+    observerName: props.route.params.contactInfoData.observerName,
+    observerPhone: props.route.params.contactInfoData.observerPhone,
+    observerInitials: props.route.params.contactInfoData.observerInitials,
+    observerType: props.route.params.contactInfoData.observerType,
+    sector: props.route.params.locationData.xsector,
+    size: props.route.params.formSeal2Data.size,
+    sex:props.route.params.sex,
+    beachPosition: props.route.params.formSeal2Data.beachPosition,
+    mainIdentification: props.route.params.formAll2Data.mainIdentification,
+    bleachNumber: props.route.params.formAllData.bleachNumber,
+    tagNumber: props.route.params.formAllData.tagNumber,
+    tagSide: props.route.params.formAllData.tagSide,
+    tagColor: props.route.params.formAllData.tagColor,
+    momPup: props.route.params.formSeal2Data.momPup,
+    otherNotes: "",
+    xlatitude: props.route.params.locationData.xlatitude,
+    xlongitude: props.route.params.locationData.xlongitude,
+    xnumHundredFt: props.route.params.formAll2Data.xnumHundredFt,
+    xanimalBehavior: props.route.params.formAll2Data.xanimalBehavior,
+    xTagYN: props.route.params.formAllData.xTagYN,
+    xBandYN: props.route.params.formAllData.xBandYN,
+    xbandColor: props.route.params.formAllData.xbandColor,
+    xbleachMarkYN: props.route.params.formAllData.xbleachMarkYN,
+    xscarsYN: props.route.params.formAllData.xscarsYN,
+    xscarsLocation: props.route.params.formAllData.xscarsLocation,
+    ximages: props.route.params.ximages,
+    xisland: props.route.params.locationData.xisland,
+  };
+  
+console.log("FORM DATA")
+  console.log(data);
+
+  const insertSeal = () => {
+      Meteor.call('addSeal', data, err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("Submitted report from App.")
+        }
+      }) 
+  };
+
+
+  const renderLocView = () => {
       if (props.route.params.locationData.xlatitude!=null) {
         return (
           <LocationView 
@@ -20,7 +69,6 @@ const FormSeal3 = (props) => {
         )
       }
   }
-
 
   return (
     <View style={{ flex: 1, flexDirection:'column'  }}>
@@ -56,12 +104,8 @@ const FormSeal3 = (props) => {
       <Text category='h5'>{props.route.params.formAll2Data.xanimalBehavior}</Text>
       <Text style={{marginTop: 10}} category='s1'>Location</Text>
       <Text category='h5'>{props.route.params.locationData.sector} {props.route.params.locationData.xisland}</Text>
-      
       {renderLocView()}
-
-      <Button style={{marginTop: 10}} status='info'>Submit</Button>
-
-
+      <Button onPress={insertSeal} style={{marginTop: 10}} status='info'>Submit</Button>
 
       </ScrollView>
       </Layout>

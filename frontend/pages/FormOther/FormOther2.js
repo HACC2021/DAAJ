@@ -8,7 +8,7 @@ const FormOther2 = (props) => {
 
   const dateObj = new Date();
 
-  renderLocView = () => {
+  const renderLocView = () => {
       if (props.route.params.locationData.xlatitude!=null) {
         return (
           <LocationView 
