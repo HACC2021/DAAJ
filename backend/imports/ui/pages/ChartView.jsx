@@ -25,17 +25,30 @@ class ChartView extends React.Component {
         <Grid.Column>
           <Header as="h2" textAlign="center">Add Stuff</Header>
           <VictoryBar/>
+          {this.filter(["Dolphin"])}
         </Grid.Column>
       </Grid>
     );
   }
 
-  getWeeklyData() {
+  filter(otherAnimalFilter) {
+    // Filters needed: Time, Location, Animal
+    let turtlesFiltered = Turtles.find({}).fetch();
+    let birdsFiltered = Birds.find({}).fetch();
+    let sealsFiltered = Seals.find({}).fetch();
+    let otherAnimals = otherAnimalFilter;
+    let othersFiltered = Others.find({
+      'Animal' : { $in : otherAnimals }
+    }).fetch();
 
-  }
+    console.log("turtlesFiltered: " + JSON.stringify(turtlesFiltered));
+    console.log("birdsFiltered: " + JSON.stringify(birdsFiltered));
+    console.log("sealsFiltered: " + JSON.stringify(sealsFiltered));
+    console.log("othersFiltered: " + JSON.stringify(othersFiltered));
 
-  getMonthlyData() {
-    
+    // Combine the animals using a set thing that Abdullah did
+    let theSet = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
+    console.log("theSet: " + JSON.stringify(theSet));
   }
 }
 
@@ -57,7 +70,7 @@ ChartView.propTypes = {
 export default withTracker(() => {
   const turtleSubscription = Meteor.subscribe('TurtlesCollection');
   const turtleReady = turtleSubscription.ready();
-  const turtles = Turtles.find({}).fetch();
+  const turtles = Turtles.find({});
   const birdSubscription = Meteor.subscribe('BirdsCollection');
   const birdReady = birdSubscription.ready();
   const birds = Birds.find({}).fetch();
