@@ -36,14 +36,12 @@ class App extends React.Component {
             <ProtectedRoute path="/list" component={ListReports}/>
             <ProtectedRoute path="/mapview" component={MapView}/>
             <ProtectedRoute path="/chartview" component={ChartView}/>
-            <ProtectedRoute path="/tableview" component={TableView}/>
             <ProtectedRoute path="/export" component={Export}/>
             <ProtectedRoute path="/add" component={AddStuff}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
             <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
             <Route component={NotFound}/>
           </Switch>
-          <Footer/>
         </div>
       </Router>
     );

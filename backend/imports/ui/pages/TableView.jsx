@@ -20,6 +20,53 @@ class TableView extends React.Component {
 
   // Render the page once subscriptions have been received.
   renderPage() {
+    let aDate = new Date();
+    let month = String(aDate.getMonth() + 1) 
+    let day = String(aDate.getDate())
+    if (day.length === 1){
+        day = "0" + day
+    }
+    let year = String(aDate.getFullYear()).slice(-2)
+    let date = month + day + year;
+    let time = (aDate.toTimeString()).slice(0,5);
+
+    let birdTest = {
+      dateObjectObserved: aDate,
+      date: date,
+      timeObserved: time,
+      observerName: "Deceptacon",
+      observerPhone: "808-843-9381",
+      observerInitials: "DC",
+      observerType: "P",
+      sector: "South",
+      birdType: "LAAL",
+      otherNotes: "",
+      location: "Kaiaka Bay Beach Park",
+      locationNotes: "",
+      xlatitude: 21.582583,
+      xlongitude: -158.124545,
+      xnumHundredFt: "25",
+      xanimalBehavior: "Screeching at nearby rocks",
+      xTagYN: "Y",
+      xBandYN: "N",
+      xbandColor: "",
+      xbleachMarkYN: "N",
+      xBleachMarkNum: "",
+      xtagNumber: "H102",
+      xtagSide: "Right wing",
+      xtagColor: "R",
+      xscarsYN: "N",
+      xscarsLocation: "",
+      ximages: ["yuiqwebnfdsj.jpeg"],
+      xmainIdentification: "T",
+      xIsland: "Oahu",
+    }
+
+    if (Birds.find().count() <= 5) {
+      console.log("adding Deceptacon");
+      console.log("birdTest.location: " + birdTest.location);
+      Meteor.call('addBird', birdTest);
+    }
     return (
       <h1> {/* <Container>
         <Header as="h2" textAlign="center">List Stuff</Header>
@@ -37,7 +84,7 @@ class TableView extends React.Component {
           </Table.Body>
         </Table>
       </Container> */}
-      {JSON.stringify(this.props.seals)}<br></br></h1>
+      {JSON.stringify(this.props.birds)}<br></br></h1>
     );
   }
 }

@@ -1,18 +1,19 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-
+import {getDateTime} from '../functions.js';
 
 export const Others = new Mongo.Collection( 'others' )
 
 // Meteor methods:
 Meteor.methods({
   addOther( data ){
+    let dateTime = getDateTime(data.dateObjectObserved);
     Others.insert({
         DateObjectObserved: data.dateObjectObserved,
         Animal: data.animal, // user given
         // Common to all animals      
-        DateObserved: data.date, // Date object w date and time
-        TimeObserved: data.timeObserved,
+        DateObserved: dateTime[0], // Date object w date and time
+        TimeObserved: dateTime[1],
         TicketNumber: "", // Not implemented by us
         HotlineOpInitials: "", // Not implemented by us
         TicketType: "", // Not implemented by us
@@ -22,8 +23,8 @@ Meteor.methods({
         ObserverType: data.observerType, // P, V, or A
         Sector: data.sector, // North, East, West, South, Molokai
         Size: "N/A",
-        LocationName: data.beachLocation, // Look at spreadsheet
-        LocationNotes: data.locationNotes, // Free text?
+        LocationName: "Call Dylan's function", // Look at spreadsheet
+        LocationNotes: "", // Free text?
         NumHundredFt: data.numHundredFt,
         xAnimalBehavior: data.animalBehavior, // Free text?
         TagYN: data.TagYN,

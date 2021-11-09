@@ -17,10 +17,9 @@ class ReportItem extends React.Component {
         <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
         <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
         <Table.Cell>{this.props.report.xSightings}</Table.Cell>
-        {this.props.report.xChecked &&
-        <Table.Cell>Yes</Table.Cell>}
-        {!this.props.report.xChecked &&
-        <Table.Cell>No</Table.Cell>}
+        {this.props.report.xChecked === 1 ? <Table.Cell>Yes</Table.Cell> : <Table.Cell>No</Table.Cell>}
+        {/* {!this.props.report.xChecked &&
+        <Table.Cell>No</Table.Cell>} */}
         <Table.Cell>{this.props.report.ObserverPhone}</Table.Cell>
       </Table.Row>
     );

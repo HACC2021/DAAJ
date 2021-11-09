@@ -8,7 +8,6 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import StuffItem from '../components/StuffItem';
 import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 
@@ -44,27 +43,6 @@ class ListReports extends React.Component {
     };
   }
 
-  getReports() {
-    /*
-        console.log("turtles");
-        console.log(this.props.turtles);
-        console.log("birds");
-        console.log(this.props.birds);
-        console.log("seals");
-        console.log(this.props.seals);
-        console.log("others");
-        console.log(this.props.others);
-        */
-        // adding fields to each array to indicate the animal of the report
-        const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
-        const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
-        const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
-        const others = this.props.others.map(report => ({...report, type: "Other"}));
-       console.log([...turtles, ...birds, ...seals, ...others]);
-        // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
-        return [...turtles, ...birds, ...seals, ...others];
-      }
-
 /*
   componentDidMount() {
     let result = this.getReports();
@@ -75,32 +53,59 @@ class ListReports extends React.Component {
   
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
-    console.log("checking if renderable")
-    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+    return (this.props.ready && this.props.sealReady && this.props.turtleReady && this.props.birdReady && this.props.otherReady) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
+    // reformats location data to standard captialization
+    reformatLocation() {
+      let filteredLocationOptions=  [...new Set(locationOptions)].sort();
+      let lowercased = filteredLocationOptions.map(name => name.toLowerCase());
+      let upperCaseFirstLetter = lowercased.map(name => 
+        name.split(' ').map(word => 
+          word[0].toUpperCase() + word.slice(1).toLowerCase()
+        ).join(' '));
+      return upperCaseFirstLetter;
+    }
+   
+    // returns only objects in the array that matches the location value of the user's selceted locations
+    filterByValue(array, value) {
+      return array.filter((data) =>  JSON.stringify(data).toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    }
+  
+    // updates user's selected location choices
+    handleChange = (e, {value}) => {
+     // this.setState({searchPressed: true, filteredLocationReports: value});
+      console.log("clicked locations: " + this.state.filteredLocationReports);
+      this.compareLocations();
+    }
 
-  // reformats location data to standard captialization
-  reformatLocation() {
-    let filteredLocationOptions=  [...new Set(locationOptions)].sort();
-    let lowercased = filteredLocationOptions.map(name => name.toLowerCase());
-    let upperCaseFirstLetter = lowercased.map(name => 
-      name.split(' ').map(word => 
-        word[0].toUpperCase() + word.slice(1).toLowerCase()
-      ).join(' '));
-    return upperCaseFirstLetter;
-  }
- 
-  // returns only objects in the array that matches the location value of the user's selceted locations
-  filterByValue(array, value) {
-    return array.filter((data) =>  JSON.stringify(data).toLowerCase().indexOf(value.toLowerCase()) !== -1);
-  }
+  getReports() {
+/*
+    console.log("turtles");
+    console.log(this.props.turtles);
+    console.log("birds");
+    console.log(this.props.birds);
+    console.log("seals");
+    console.log(this.props.seals);
+    console.log("others");
+    console.log(this.props.others);
+    */
+    console.log("combined");
+    console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
 
-  // updates user's selected location choices
-  handleChange = (e, {value}) => {
-   // this.setState({searchPressed: true, filteredLocationReports: value});
-    console.log("clicked locations: " + this.state.filteredLocationReports);
-    this.compareLocations();
+    // adding fields to each array to indicate the animal of the report
+    //const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
+    const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
+    const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
+    const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
+    const others = this.props.others.map(report => ({...report, type: "Other"}));
+    // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
+    return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(b.DateObjectObserved) - new Date(a.DateObjectObserved);
+    });
+    ;
   }
 
   // compares user's selected location to the fullData
@@ -119,17 +124,17 @@ class ListReports extends React.Component {
     console.log("renderPage" + this.state.filteredData);
     return (
       <Container>
-        <Header as="h2" textAlign="center">List Reports</Header>
+        <Header as="h2" textAlign="center">Latest Reports</Header>
         <Dropdown
             placeholder='Location'
-            fluid
+            floated
             multiple
             search
             onChange={this.handleChange.bind(this)}
             options={this.reformatLocation().map(location =>({key: location, text:location, value: location }))}
             selection
           />
-        <Table celled>
+        <Table celled striped>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Date</Table.HeaderCell>
@@ -160,6 +165,18 @@ class ListReports extends React.Component {
 ListReports.propTypes = {
   stuffs: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+
+  seals: PropTypes.array.isRequired,
+  sealReady: PropTypes.bool.isRequired,
+
+  turtles: PropTypes.array.isRequired,
+  turtleReady: PropTypes.bool.isRequired,
+
+  birds: PropTypes.array.isRequired,
+  birdReady: PropTypes.bool.isRequired,
+
+  others: PropTypes.array.isRequired,
+  otherReady: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
