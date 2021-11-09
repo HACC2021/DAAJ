@@ -124,7 +124,7 @@ class ListReports extends React.Component {
     console.log("renderPage" + this.state.filteredData);
     return (
       <Container>
-        <Header as="h2" textAlign="center">Latest Reports</Header>
+        <Header style={{paddingTop: 25}} as="h2" textAlign="center">Latest Reports</Header>
         <Dropdown
             placeholder='Location'
             floated
@@ -134,7 +134,7 @@ class ListReports extends React.Component {
             options={this.reformatLocation().map(location =>({key: location, text:location, value: location }))}
             selection
           />
-        <Table celled striped>
+        <Table compact striped>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Date</Table.HeaderCell>
@@ -143,8 +143,8 @@ class ListReports extends React.Component {
               <Table.HeaderCell>Sector</Table.HeaderCell>
               <Table.HeaderCell>Location</Table.HeaderCell>
               <Table.HeaderCell>Size</Table.HeaderCell>
-              <Table.HeaderCell>MainIdentification</Table.HeaderCell>
-              <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
+              <Table.HeaderCell>Main ID Trait</Table.HeaderCell>
+              <Table.HeaderCell>Animal Behavior</Table.HeaderCell>
               <Table.HeaderCell>#Reports</Table.HeaderCell>
               <Table.HeaderCell>Checked?</Table.HeaderCell>
               <Table.HeaderCell>Reporter phone #</Table.HeaderCell>

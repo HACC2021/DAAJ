@@ -13,7 +13,7 @@ class ReportItem extends React.Component {
         <Table.Cell>{this.props.report.type}</Table.Cell>
         <Table.Cell>{this.props.report.Sector}</Table.Cell>
         <Table.Cell>{this.props.report.LocationName}</Table.Cell>
-        <Table.Cell>{this.props.report.Size}</Table.Cell>
+        <Table.Cell >{this.props.report.Size}</Table.Cell>
         <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
         <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
         <Table.Cell>{this.props.report.xSightings}</Table.Cell>

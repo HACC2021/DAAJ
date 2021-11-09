@@ -132,8 +132,10 @@ class MapView extends React.Component {
         }
       }
 
-      handleExtraFields(text) {
+      handleExtraFields(text, pin) {
+        if (pin) {
         return <Header style={{paddingTop: 20}} as='h3'>{text}</Header>;
+        }
       }
 
       // check if image array works
@@ -152,7 +154,7 @@ class MapView extends React.Component {
           <Grid.Row>{this.getType(this.state.pin.Animal)} {this.state.pin.BirdType || this.state.pin.TurtleType}</Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Tag Number:</Header> {this.handleFields(this.state.pin.xTagNumber, "tag number")}</Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Location:</Header> {this.handleFields(this.state.pin.LocationName, "location")}</Grid.Row>
-          <Grid.Row>{this.handleExtraFields("Location Notes: ")} {this.state.pin.LocationNotes} </Grid.Row>
+          <Grid.Row>{this.handleExtraFields("Location Notes: ", this.state.pin.LocationNotes)} {this.state.pin.LocationNotes} </Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Status:</Header> {this.handleFields(this.state.pin.Status, "status")}</Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Size:</Header> {this.handleFields(this.state.pin.Size, "size")}</Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Behavior:</Header> {this.handleFields(this.state.pin.xAnimalBehavior, "animal behavior")}</Grid.Row>
