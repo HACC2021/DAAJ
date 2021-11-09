@@ -1,63 +1,94 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
-import swal from 'sweetalert';
+import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
-import { Stuffs } from '../../api/stuff/Stuff';
-
-// Create a schema to specify the structure of the data to appear in the form.
-const formSchema = new SimpleSchema({
-  name: String,
-  quantity: Number,
-  condition: {
-    type: String,
-    allowedValues: ['excellent', 'good', 'fair', 'poor'],
-    defaultValue: 'good',
-  },
-});
-
-const bridge = new SimpleSchema2Bridge(formSchema);
+import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
+import { Turtles } from '../../api/turtle/Turtle';
+import { Birds } from '../../api/bird/Bird';
+import { Seals } from '../../api/seal/Seal';
+import { Others } from '../../api/other/Other';
+// import * as V from 'victory';
+import { VictoryBar } from 'victory';
 
 /** Renders the Page for adding a document. */
 class ChartView extends React.Component {
 
-  // On submit, insert the data.
-  submit(data, formRef) {
-    const { name, quantity, condition } = data;
-    const owner = Meteor.user().username;
-    Stuffs.collection.insert({ name, quantity, condition, owner },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-        }
-      });
+  // If the subscription(s) have been received, render the page, otherwise show a loading icon.
+  render() {
+    return (this.props.sealReady && this.props.turtleReady && this.props.birdReady && this.props.otherReady) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-  // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  render() {
+  renderPage() {
     let fRef = null;
     return (
       <Grid container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Add Stuff</Header>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
-            <Segment>
-              <TextField name='name'/>
-              <NumField name='quantity' decimal={false}/>
-              <SelectField name='condition'/>
-              <SubmitField value='Submit'/>
-              <ErrorsField/>
-            </Segment>
-          </AutoForm>
+          <VictoryBar/>
         </Grid.Column>
       </Grid>
     );
   }
+
+  getWeeklyData() {
+
+  }
+
+  getMonthlyData() {
+    
+  }
 }
 
-export default ChartView;
+ChartView.propTypes = {
+  seals: PropTypes.array.isRequired,
+  sealReady: PropTypes.bool.isRequired,
+
+  turtles: PropTypes.array.isRequired,
+  turtleReady: PropTypes.bool.isRequired,
+
+  birds: PropTypes.array.isRequired,
+  birdReady: PropTypes.bool.isRequired,
+
+  others: PropTypes.array.isRequired,
+  otherReady: PropTypes.bool.isRequired,
+};
+
+// withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+export default withTracker(() => {
+  const turtleSubscription = Meteor.subscribe('TurtlesCollection');
+  const turtleReady = turtleSubscription.ready();
+  const turtles = Turtles.find({}).fetch();
+  const birdSubscription = Meteor.subscribe('BirdsCollection');
+  const birdReady = birdSubscription.ready();
+  const birds = Birds.find({}).fetch();
+  const sealSubscription = Meteor.subscribe('SealsCollection');
+  const sealReady = sealSubscription.ready();
+  const seals = Seals.find({}).fetch();
+  const otherSubscription = Meteor.subscribe('OthersCollection');
+  const otherReady = otherSubscription.ready();
+  const others = Others.find({}).fetch();
+
+  // Calculations for the graphs:
+  
+
+  return {
+    turtleReady,
+    turtles,
+    birdReady,
+    birds,
+    sealReady,
+    seals,
+    otherReady,
+    others,
+  };
+})(ChartView);
+
+// int days : the number of days to go forward or back. Positive number for forward; negative for backward
+// int minutes : the number of minutes to go forward or back. Positive number for forward; negative for backward
+//               can go beyond 60 mins
+function chooseTime (days = 0, minutes = 0) {
+  let time = new Date();
+  time.setDate(time.getDate() + days); // Change the date
+  time.setMinutes(time.getMinutes() + minutes); // Change the time
+  return time;
+}
