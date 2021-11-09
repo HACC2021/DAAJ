@@ -134,6 +134,7 @@ class ListReports extends React.Component {
             options={this.reformatLocation().map(location =>({key: location, text:location, value: location }))}
             selection
           />
+          Unconfirmed: {this.props.unConfirmedRelated}
         <Table celled striped>
           <Table.Header>
             <Table.Row>
@@ -177,6 +178,8 @@ ListReports.propTypes = {
 
   others: PropTypes.array.isRequired,
   otherReady: PropTypes.bool.isRequired,
+
+  unConfirmedRelated: PropTypes.number.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -200,6 +203,10 @@ export default withTracker(() => {
   const otherReady = otherSubscription.ready();
   const others = Others.find({}).fetch();
 
+  // Find counts of xConfirmRelated that is == to 0:
+  let unConfirmedRelated = Seals.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Turtles.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Birds.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count();
+  console.log("unConfirmedRelated:" + unConfirmedRelated);
+
   return {
     stuffs,
     ready,
@@ -210,6 +217,7 @@ export default withTracker(() => {
     sealReady,
     seals,
     otherReady,
-    others
+    others,
+    unConfirmedRelated,
   };
 })(ListReports);
