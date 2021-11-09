@@ -869,7 +869,11 @@ Meteor.startup(() => {
     // });
   }
 
-  getLocationName(72.3, 74.3);
-
+  let result = getLocationName(21.2911, -157.8435);
+  result.then(v => console.log("Location Name: " + v.data.result.name));
+  // result.then((v) => {
+  //   let filteredData = v.data.results.filter(obj => obj.geometry.location_type == "APPROXIMATE")[0].place_id;
+  //   console.log(filteredData);
+  // });
 });
 
