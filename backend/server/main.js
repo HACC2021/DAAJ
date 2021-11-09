@@ -5,10 +5,10 @@ import { Seals } from '/imports/api/seal/Seal';
 import { Turtles } from '/imports/api/turtle/Turtle';
 import { Birds } from '/imports/api/bird/Bird';
 import { Others } from '/imports/api/other/Other';
-import '/imports/api/maps/Maps';
 import '/imports/startup/server/Accounts';
 import '/imports/startup/server/Publications';
 import '/imports/startup/server/Mongo';
+import { getLocationName } from '../imports/api/maps/Maps';
 
 
 // int days : the number of days to go forward or back. Positive number for forward; negative for backward
@@ -868,6 +868,8 @@ Meteor.startup(() => {
       // xChecked: 0,
     // });
   }
+
+  getLocationName(72.3, 74.3);
 
 });
 
