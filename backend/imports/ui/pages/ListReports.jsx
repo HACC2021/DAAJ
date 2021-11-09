@@ -200,6 +200,32 @@ export default withTracker(() => {
   const otherReady = otherSubscription.ready();
   const others = Others.find({}).fetch();
 
+  // Find distinct locations:
+  let sealLocations = Seals.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  let turtleLocations = Turtles.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  let birdLocations = Birds.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  let otherLocations = Others.find({}, { fields: { 'LocationName': 1 } }).fetch();
+
+  // Combine all of the report objects into one array
+  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
+
+  // For each report object, get the text in the locationName field
+  let distinctLocations = [];
+  allLocations.forEach(report => {
+    distinctLocations.push(report.LocationName);
+  });
+
+  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+  // Use a set to get rid of duplicate locations
+  distinctLocations = [... new Set(distinctLocations)];
+
+  // Remove null (May keep replace with no location)
+  distinctLocations = distinctLocations.filter(function (el) {
+    return el != null;
+  });
+
+  console.log("distinctLocations:" + distinctLocations);
+
   return {
     stuffs,
     ready,
