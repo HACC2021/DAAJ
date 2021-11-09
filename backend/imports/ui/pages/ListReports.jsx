@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Table, Header, Loader } from 'semantic-ui-react';
+import { Container, Table, Header, Dropdown, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
@@ -13,41 +13,122 @@ import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 
 
+const locationOptions = ["ALA MOANA BEACH PARK","ALA WAI HARBOR","CHINA WALL","CLIFFS","COCKROACH COVE (KAUPO BEACH)","COLONY SURF","WAIKIKI","CONCESSIONS","CROMWELL'S","DIAMOND HEAD","ELK'S CLUB","WAIKIKI",
+"ETERNITY BEACH","FORT DERUSSY BEACH","HALONA BLOWHOLE","HANAUMA BAY","HAWAII KAI","HONOLULU HARBOR","IRMA'S","KAHALA BEACH","KAHALA MANDARIN HOTEL","KAHANAMOKU BEACH (HALE KOA HOTEL)","KAIMANA BEACH","WAIKIKI",
+"KALOKO BEACH (ALAN DAVIS BIRTH BEACH)","KEEHI LAGOON","KEWALO BASIN/HARBOR","KOKEE FLATS","KUHIO BEACH PARK","WAIKIKI","LANAI LOOKOUT","MAGIC ISLAND (TROUGH)","MAKAI PIER","MAKALEI BEACH PARK","MAKAPUU BEACH PARK",
+"OUTRIGGER CANOE CLUB","WAIKIKI","PEARL HARBOR","PELE'S CHAIR (ALAN DAVIS)","QUEEN'S BEACH","REEF RUNWAY","SAND ISLAND BEACH PARK","SANDY BEACH","SPITTING CAVES","SUICIDES","WAIKIKI","AKI'S BEACH","BARBER'S POINT",
+"CAMPBELL BOAT RAMP","CAMPBELL INDUSTRIAL PARK","DEPOTS BEACH","NANAKULI","ELECTRIC BEACH","EWA BEACH","GERMAIN'S LUAU","IROQUOIS POINT","IROQUOIS POINT (COVE 1)", "IROQUOIS POINT (COVE 2)", "IROQUOIS POINT (COVE 3)",
+"IROQUOIS POINT (COVE 4)","IROQUOIS POINT (COVE 5 - DOG BEACH)","IROQUOIS POINT (COVE 6)","IROQUOIS POINT (COVE 7)","IROQUOIS POINT (COVE 8)","KAENA POINT (LIGHT STATION)","KAENA POINT (WEST SIDE ARCH)","KAENA STATE PARK",
+"KAHE POINT","KALAELOA CAMPGROUNDS","KALAELOA HARBOR","KAUPUNI CANAL","KEAAU BEACH PARK (RANCHES)","KOOLINA","KOOLINA (LAGOON 1 - KOHOLA)","KOOLINA (LAGOON 2 - HONU)","KOOLINA (LAGOON 3 - NAIA)","KOOLINA (LAGOON 4 - ULUA)",
+"KOOLINA MARINA","LANIKOHONUA (LANI'S)","MAILI BEACH PARK","MAILI CANAL","MAILI GUARDRAILS","MAILI POINT","MAIPALAOA BEACH","MAIPALOA CANAL","MAKAHA BEACH PARK","MAKUA BEACH","MAKUA BEACH (PRAY FOR SETS/SEX)","MAKUA CLIFFS (PUKANO PT.)",
+"MAUNA LAHILAHI BEACH","NANAKULI BEACH (ZABLAN)","NANAKULI BEACH PARK","NIMITZ BEACH,NIMITZ COVE","ONEULA BEACH","PARADISE COVE","POKAI BAY","SECRET BEACH (KOOLINA)","TRACKS BEACH","ULEHAWA BEACH PARK (PUKA PANTS)","WAIANAE","WAIANAE BEACH (PUKA PANTS)",
+"WAIANAE BEACH PARK","WAIANAE BOAT HARBOR","WAIANAE CANAL","WHITE PLAINS BEACH","YOKOHAMA BEACH (KEAWAULA)","ALLIGATOR ROCK (HAUULA)","AUKAI BEACH (HAUULA FIRE STATION)","BATHTUB BEACH","LAIE","BELLOWS BEACH","ELBOW BEACH (KAHUKU POINT)","GOAT ISLAND",
+"HANAKAILIO BEACH (2ND BEACH / MARCONIS)","HAUULA BEACH PARK","HIGH ROCK","HUKILAU BEACH","JAMES CAMPBELL WILDLIFE REFUGE","KAAAWA BEACH","KAHUKU GOLF COURSE","KAIHALULU BEACH","KAILUA BEACH PARK","KAKELA BEACH","KAUPO BEACH PARK (BABY MAKAPUU)","KEIKI POOL",
+"KAIHALULU BEACH","KOKOLOLIO BEACH","KUALOA BEACH PARK","KUALOA RANCH BEACH","KUILIMA COVE","LAIE BEACH PARK (POUNDERS)","LANIKAI BEACH","MALAEKAHANA BAY","MCBH - CABINS BEACH","MCBH - FORT HASE BEACH","MCBH - HALEKOA BEACH","MCBH - NORTH BEACH",
+"MCBH - PYRAMID ROCK","MCKENZIES BEACH (KAIHALULU BEACH)","MOKU IKI ISLAND","MOKU MANU","MOKU NUI ISLAND","MOKULUA ISLANDS","PUNALUU BEACH PARK","RABBIT ISLAND","RIGHT SPOTS SPOT (KAIHALULU BEACH)","TEMPLE BEACH (LAIE)","TURTLE BAY (STABLES)","WAIMANALO BAY BEACH PARK","WAIMANALO BEACH",
+"ALII BEACH PARK","HALEIWA","ALLIGATOR ROCK (NORTH SHORE)","ARMY BEACH","HALEIWA","ARMY BEACH","MOKULEIA","CAMP ERDMAN","CAMP MOKULEIA","EHUKAI BEACH PARK (PIPELINES)","HALEIWA BEACH PARK","HIDDEN BEACH","KAENA POINT","KAENA POINT","KAENA POINT (10 MINUTE BEACH)","KAENA POINT (HIDDEN BEACH)",
+"KAENA POINT (LIGHT STATION)","LANIAKEA BEACH","MOKULEIA BEACH PARK","PAHIPAHIALUA BEACH","PAPAILOA BEACH","PUAENA POINT","HALEIWA","PUPUKEA (GAS CHAMBERS)","PUU NENUE POINT","ROCKY POINT","SHARK'S COVE","SUNSET BEACH PARK","TABLES BEACH","MOKULEIA","THREE TABLES","VELZYLAND","WAIALEE BEACH PARK",
+"WAIALUA BEACH","WAIMEA BAY BEACH PARK"];
+
+
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ListReports extends React.Component {
-
-  // If the subscription(s) have been received, render the page, otherwise show a loading icon.
-  render() {
-    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+  constructor(props) {
+    console.log("In the constructor");
+    super(props);
+    this.state = {
+      fullData: this.getReports(),
+      filteredData: [],
+      searchPressed: false,
+      filteredLocationReports: [], //the locations user chooses
+    };
   }
 
   getReports() {
-/*
-    console.log("turtles");
-    console.log(this.props.turtles);
-    console.log("birds");
-    console.log(this.props.birds);
-    console.log("seals");
-    console.log(this.props.seals);
-    console.log("others");
-    console.log(this.props.others);
-    */
-    console.log("combined");
-    console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
+    /*
+        console.log("turtles");
+        console.log(this.props.turtles);
+        console.log("birds");
+        console.log(this.props.birds);
+        console.log("seals");
+        console.log(this.props.seals);
+        console.log("others");
+        console.log(this.props.others);
+        */
+        // adding fields to each array to indicate the animal of the report
+        const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
+        const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
+        const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
+        const others = this.props.others.map(report => ({...report, type: "Other"}));
+       console.log([...turtles, ...birds, ...seals, ...others]);
+        // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
+        return [...turtles, ...birds, ...seals, ...others];
+      }
 
-    // adding fields to each array to indicate the animal of the report
-    const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
-    const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
-    const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
-    const others = this.props.others.map(report => ({...report, type: "Other"}));
-    // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
-    return [...turtles, ...birds, ...seals, ...others];
+/*
+  componentDidMount() {
+    let result = this.getReports();
+    this.setState({fullData: result});
+    console.log("compontdid moujnt" + this.state.fullData);
+
+  }*/
+  
+  // If the subscription(s) have been received, render the page, otherwise show a loading icon.
+  render() {
+    console.log("checking if renderable")
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
+
+
+  // reformats location data to standard captialization
+  reformatLocation() {
+    let filteredLocationOptions=  [...new Set(locationOptions)].sort();
+    let lowercased = filteredLocationOptions.map(name => name.toLowerCase());
+    let upperCaseFirstLetter = lowercased.map(name => 
+      name.split(' ').map(word => 
+        word[0].toUpperCase() + word.slice(1).toLowerCase()
+      ).join(' '));
+    return upperCaseFirstLetter;
+  }
+ 
+  // returns only objects in the array that matches the location value of the user's selceted locations
+  filterByValue(array, value) {
+    return array.filter((data) =>  JSON.stringify(data).toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  // updates user's selected location choices
+  handleChange = (e, {value}) => {
+   // this.setState({searchPressed: true, filteredLocationReports: value});
+    console.log("clicked locations: " + this.state.filteredLocationReports);
+    this.compareLocations();
+  }
+
+  // compares user's selected location to the fullData
+  compareLocations() { // suffers from input lag
+    for (let i = 0; i < this.state.filteredLocationReports.length; i++) {
+      console.log(this.filterByValue(this.state.fullData, this.state.filteredLocationReports[i]));
+   //   this.setState({ filteredPins: this.filterByValue(this.state.fullData, this.state.filteredLocationReports[i])})
+    }
+  }
+
+  // dkdkd
+
+  //dd
   // Render the page once subscriptions have been received.
   renderPage() {
+    console.log("renderPage" + this.state.filteredData);
     return (
       <Container>
         <Header as="h2" textAlign="center">List Reports</Header>
+        <Dropdown
+            placeholder='Location'
+            fluid
+            multiple
+            search
+            onChange={this.handleChange.bind(this)}
+            options={this.reformatLocation().map(location =>({key: location, text:location, value: location }))}
+            selection
+          />
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -65,7 +146,9 @@ class ListReports extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
+          
             {this.getReports().map((report) => <ReportItem key={report._id} report={report} />)}
+            
           </Table.Body>
         </Table>
       </Container>
