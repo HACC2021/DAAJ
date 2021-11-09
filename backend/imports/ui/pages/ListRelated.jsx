@@ -8,7 +8,7 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import RelatedReportItem from '../components/ReportItem';
+import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 
 
@@ -42,7 +42,7 @@ class ListRelated extends React.Component {
   renderPage() {
     return (
       <Container>
-        <Header as="h2" textAlign="center">List Reports</Header>
+        <Header as="h2" textAlign="center">Confirm Related Sightings</Header>
         <Table celled>
           <Table.Header>
             <Table.Row>
