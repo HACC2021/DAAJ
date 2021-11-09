@@ -12,6 +12,8 @@ import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
 
+import Sample from '../components/Sample';
+
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -21,6 +23,20 @@ const bridge = new SimpleSchema2Bridge(formSchema);
 
 /** Renders the Page for adding a document. */
 class Export extends React.Component {
+
+  getDate() {
+    let inputGroups = document.getElementsByClassName("react-datetimerange-picker__inputGroup");
+    // console.log(JSON.stringify("inputGroups: " + inputGroups));
+    // console.log("splitting: " + JSON.stringify(inputGroups[0].innerHTML.split('"')[11]));
+    // console.log("splitting: " + JSON.stringify(inputGroups[1].innerHTML.split('"')[11]));
+    let from = new Date(inputGroups[0].innerHTML.split('"')[11]);
+    let to = new Date(inputGroups[1].innerHTML.split('"')[11]);
+
+    console.log("from: " + from);
+    console.log("to: " + to);
+    
+    return [from, to];
+  }
 
   // On submit, insert the data.
   submit(data, formRef) {
@@ -43,6 +59,7 @@ class Export extends React.Component {
     return (
       <Grid container centered>
         <Grid.Column>
+          <Sample />
           <Header as="h2" textAlign="center">Export</Header>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
             <Segment>
@@ -56,12 +73,25 @@ class Export extends React.Component {
   }
 
   exportSealData(data, ref) {
+    console.log("in exportSealData");
+    // Grab the date range that the user selected
+    let fromTo = this.getDate();
+    let from = new Date(fromTo[0]);
+    let to = new Date(fromTo[1]);
+    
     // Problems with: "ID Temp (Bleach #)" , "# of Volunteers Engaged"
     // Headers copied from Sightings Data Template
     let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Sector", "Location", "Location Notes", "Seal Present?", "Size", "Sex", "Beach Position", "How Identified?", "ID Temp", "Tag Number", "Tag Side", "Tag Color", "ID Perm", "Molt", "Additional Notes on ID", "ID Verified By", "Seal Logging", "Mom & Pup Pair", "SRA Set Up", "SRA Set By", "Num of Volunteers Engaged", "Seal Depart Info Avail?", "Seal Departed Date", "Seal Departed Time", "Number of Calls Received", "Other Notes"]
 
-    // Get everything in the Seals collection (can do some filtering too)
-    let sealsToExport = Seals.find({}).fetch(); // an array of seal objects
+    // Get everything in the Seals collection (after filtering)
+    let sealsToExport = Seals.find({
+      // Filtering by date
+      DateObjectObserved : {
+        $gte : from,
+        $lte : to,
+      }
+    }).fetch(); // an array of seal objects
+    console.log("sealsToExport after filtering: " + JSON.stringify(sealsToExport));
 
     // For each seal, put its fields into an array 
     let rows = []
@@ -73,6 +103,7 @@ class Export extends React.Component {
       // Grab the fields from the collection to put into the array
       rows[index + 1].push(sealsToExport[index].ObserverName);
       rows[index + 1].push(sealsToExport[index].ObserverPhone);
+      rows[index + 1].push(sealsToExport[index].DateObjectObserved);
     }
 
     console.log("exporting result: " + JSON.stringify(rows));
@@ -84,13 +115,13 @@ class Export extends React.Component {
 
     let csvContent = "data:text/csv;charset=utf-8,"
       + rows.map(e => e.join(",")).join("\n");
-      
+
     console.log("csvContent:\n" + csvContent);
 
     // encodeURI doesn't encode: , / ? : @ & = + $ # ()
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI <- figure out how to encode it by replacing it or using encodeURIComponent?
     var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+    // window.open(encodedUri);
   }
 }
 
