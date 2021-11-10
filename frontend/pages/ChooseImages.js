@@ -35,11 +35,12 @@ export class ChooseImages extends React.Component {
     });
 
     
-    this.state.ximages.push(result);
     if (!result.cancelled) {
+      this.state.ximages.push(result);
       this.setState( { image: result.uri} );
     }
- 
+    console.log("IMAGES: ARRAY OF OBJECTS")
+    console.log(this.state.ximages)
   };
 
 

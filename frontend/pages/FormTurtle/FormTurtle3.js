@@ -114,7 +114,7 @@ const FormTurtle3 = (props) => {
         )}>
         </FlatList>
         <Text style={{marginTop: 10}} category='s1'>Turtle Species Type</Text>
-      <Text category='h5'>{props.route.params.birdType}</Text>
+      <Text category='h5'>{props.route.params.turtleType}</Text>
       <Text style={{marginTop: 10}} category='s1'>Main Identification</Text>
       <Text category='h5'>{props.route.params.formAll2Data.mainIdentification}</Text>
       <Text style={{marginTop: 10}} category='s1'>Animal Behavior</Text>
