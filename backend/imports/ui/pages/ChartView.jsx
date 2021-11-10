@@ -7,8 +7,9 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-// import * as V from 'victory';
 import { VictoryBar } from 'victory';
+import Sample from '../components/Sample';
+
 
 /** Renders the Page for adding a document. */
 class ChartView extends React.Component {
@@ -25,7 +26,7 @@ class ChartView extends React.Component {
         <Grid.Column>
           <Header as="h2" textAlign="center">Add Stuff</Header>
           <VictoryBar/>
-          {this.filter(new Date(), new Date(), ["Turtle Bay"], ["Bird", "Dolphin"])}
+          {JSON.stringify(this.filter(new Date(), new Date(), ["Turtle Bay"], ["Bird", "Dolphin"]))}
         </Grid.Column>
       </Grid>
     );
