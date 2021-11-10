@@ -180,8 +180,6 @@ class ListRelated extends React.Component {
               <Table.HeaderCell>Band present?</Table.HeaderCell>
               <Table.HeaderCell>Bleach mark present?</Table.HeaderCell>
               <Table.HeaderCell>Scars present?</Table.HeaderCell>
-              <Table.HeaderCell>#Reports</Table.HeaderCell>
-              <Table.HeaderCell>Related ID</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

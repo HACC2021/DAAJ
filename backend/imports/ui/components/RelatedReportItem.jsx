@@ -21,9 +21,6 @@ class RelatedReportItem extends React.Component {
           <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
           <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
           <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
-          {/*this.props.report.xChecked === 1 ? <Table.Cell>Yes</Table.Cell> : <Table.Cell>No</Table.Cell>*/}
-          <Table.Cell>{this.props.report.xSightings}</Table.Cell>
-          <Table.Cell>{this.props.report.xRelated}</Table.Cell>
         </Table.Row> 
       );
     } else {
@@ -41,9 +38,6 @@ class RelatedReportItem extends React.Component {
           <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
           <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
           <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
-          {/*this.props.report.xChecked === 1 ? <Table.Cell>Yes</Table.Cell> : <Table.Cell>No</Table.Cell>*/}
-          <Table.Cell>{this.props.report.xSightings}</Table.Cell>
-          <Table.Cell>{this.props.report.xRelated}</Table.Cell>
         </Table.Row>
       );
   
