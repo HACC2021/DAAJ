@@ -25,7 +25,7 @@ class ChartView extends React.Component {
         <Grid.Column>
           <Header as="h2" textAlign="center">Add Stuff</Header>
           <VictoryBar/>
-          {this.filter(new Date(), new Date(), ["Hanauma Bay"], ["Turtle", "Dolphin"])}
+          {this.filter(new Date(), new Date(), ["Turtle Bay"], ["Bird", "Dolphin"])}
         </Grid.Column>
       </Grid>
     );
@@ -34,10 +34,11 @@ class ChartView extends React.Component {
   /*
    * from : date object of what time to start from
    * to : date object of what time to end to 
-   * location : array of locations to include 
+   * locationFilter : array of locations to include 
    * animalFilter : array of the animals (i.e. Seal, Turtle, Bird, and Other which can have multiple things) to include
    */
-  filter(from, to, location, animalFilter) {
+  filter(from, to, locationFilter, animalFilter) {
+    console.log("locationFilter: " + locationFilter);
     // Filters needed: Time, Location, Animal
     // Default empty arrays
     let turtlesFiltered = [];
@@ -47,17 +48,23 @@ class ChartView extends React.Component {
 
     // Turtle filtering
     if (animalFilter.includes("Turtle")) {
-      turtlesFiltered = Turtles.find({}).fetch();
+      turtlesFiltered = Turtles.find({
+        'LocationName' : { $in : locationFilter}
+      }).fetch();
     } 
 
     // Bird filtering
     if (animalFilter.includes("Bird")) {
-      birdsFiltered = Birds.find({}).fetch();
+      birdsFiltered = Birds.find({
+        'LocationName' : { $in : locationFilter}
+      }).fetch();
     }
 
     // Seal filtering
     if (animalFilter.includes("Seal")) {
-      sealsFiltered = Seals.find({}).fetch();
+      sealsFiltered = Seals.find({
+        'LocationName' : { $in : locationFilter}
+      }).fetch();
     }
 
     // Others filtering
@@ -66,7 +73,10 @@ class ChartView extends React.Component {
     });
     if (otherAnimalFilter.length > 0) {
       othersFiltered = Others.find({
-        'Animal' : { $in : otherAnimalFilter }
+        $and : [
+          {'LocationName' : { $in : locationFilter}},
+          {'Animal' : { $in : otherAnimalFilter }}
+        ]
       }).fetch();
     }
 
