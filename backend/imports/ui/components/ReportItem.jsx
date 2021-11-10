@@ -12,7 +12,7 @@ class ReportItem extends React.Component {
         <Table.Cell>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
         <Table.Cell>{this.props.report.Animal}</Table.Cell>
         <Table.Cell>{this.props.report.Sector}</Table.Cell>
-        <Table.Cell>{this.props.report.LocationName}</Table.Cell>
+        <Table.Cell>{this.props.report.Island || this.props.report.xIsland}</Table.Cell>
         <Table.Cell>{this.props.report.Size}</Table.Cell>
         <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
         <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
@@ -32,6 +32,7 @@ ReportItem.propTypes = {
     DateObjectObserved: PropTypes.instanceOf(Date),
     type: PropTypes.string,
     Sector: PropTypes.string,
+    Island: PropTypes.string,
     LocationName: PropTypes.string,
     Size: PropTypes.string,
     MainIdentification: PropTypes.string,

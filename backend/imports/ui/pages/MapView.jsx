@@ -282,24 +282,24 @@ findDistinctLocations() {
   let otherLocations = Others.find({}, { fields: { 'LocationName': 1 } }).fetch();
 
     // Combine all of the report objects into one array
-  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
+let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
 
-  // For each report object, get the text in the locationName field
-  let distinctLocations = [];
-  allLocations.forEach(report => {
-    distinctLocations.push(report.LocationName);
-  });
+// For each report object, get the text in the locationName field
+let distinctLocations = [];
+allLocations.forEach(report => {
+  distinctLocations.push(report.LocationName);
+});
 
-  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
-  // Use a set to get rid of duplicate locations
-  distinctLocations = [... new Set(distinctLocations)];
+// https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+// Use a set to get rid of duplicate locations
+distinctLocations = [... new Set(distinctLocations)];
 
-  // https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
-  // Remove null (May keep replace with no location)
-  distinctLocations = distinctLocations.filter(function (el) {
-    return el != null;
-  });
-  return distinctLocations;
+// https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
+// Remove null (May keep replace with no location)
+distinctLocations = distinctLocations.filter(function (el) {
+  return el != null;
+});
+return distinctLocations;
 }
 
   getDate() {
@@ -331,7 +331,7 @@ findDistinctLocations() {
           {" "} {new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.state.pin.DateObjectObserved)} HST </Grid.Row>
           <Grid.Row>{this.getType(this.state.pin.Animal)} {this.state.pin.BirdType || this.state.pin.TurtleType}</Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Tag Number:</Header> {this.handleFields(this.state.pin.xTagNumber, "tag number")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Location:</Header> {this.handleFields(this.state.pin.LocationName, "location")}</Grid.Row>
+          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Island:</Header> {this.state.pin.Island || this.state.pin.xIsland}</Grid.Row>
           <Grid.Row>{this.handleExtraFields("Location Notes: ")} {this.state.pin.LocationNotes} </Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Status:</Header> {this.handleFields(this.state.pin.Status, "status")}</Grid.Row>
           <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Size:</Header> {this.handleFields(this.state.pin.Size, "size")}</Grid.Row>

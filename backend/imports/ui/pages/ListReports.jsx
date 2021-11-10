@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Button, Table, Header, Dropdown, Loader } from 'semantic-ui-react';
+import { Container, Button, Icon, Table, Header, Dropdown, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
@@ -11,25 +11,7 @@ import { Others } from '../../api/other/Other';
 import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 import Sample from '../components/Sample';
-
-
-const locationOptions = ["ALA MOANA BEACH PARK","ALA WAI HARBOR","CHINA WALL","CLIFFS","COCKROACH COVE (KAUPO BEACH)","COLONY SURF","WAIKIKI","CONCESSIONS","CROMWELL'S","DIAMOND HEAD","ELK'S CLUB","WAIKIKI",
-"ETERNITY BEACH","FORT DERUSSY BEACH","HALONA BLOWHOLE","HANAUMA BAY","HAWAII KAI","HONOLULU HARBOR","IRMA'S","KAHALA BEACH","KAHALA MANDARIN HOTEL","KAHANAMOKU BEACH (HALE KOA HOTEL)","KAIMANA BEACH","WAIKIKI",
-"KALOKO BEACH (ALAN DAVIS BIRTH BEACH)","KEEHI LAGOON","KEWALO BASIN/HARBOR","KOKEE FLATS","KUHIO BEACH PARK","WAIKIKI","LANAI LOOKOUT","MAGIC ISLAND (TROUGH)","MAKAI PIER","MAKALEI BEACH PARK","MAKAPUU BEACH PARK",
-"OUTRIGGER CANOE CLUB","WAIKIKI","PEARL HARBOR","PELE'S CHAIR (ALAN DAVIS)","QUEEN'S BEACH","REEF RUNWAY","SAND ISLAND BEACH PARK","SANDY BEACH","SPITTING CAVES","SUICIDES","WAIKIKI","AKI'S BEACH","BARBER'S POINT",
-"CAMPBELL BOAT RAMP","CAMPBELL INDUSTRIAL PARK","DEPOTS BEACH","NANAKULI","ELECTRIC BEACH","EWA BEACH","GERMAIN'S LUAU","IROQUOIS POINT","IROQUOIS POINT (COVE 1)", "IROQUOIS POINT (COVE 2)", "IROQUOIS POINT (COVE 3)",
-"IROQUOIS POINT (COVE 4)","IROQUOIS POINT (COVE 5 - DOG BEACH)","IROQUOIS POINT (COVE 6)","IROQUOIS POINT (COVE 7)","IROQUOIS POINT (COVE 8)","KAENA POINT (LIGHT STATION)","KAENA POINT (WEST SIDE ARCH)","KAENA STATE PARK",
-"KAHE POINT","KALAELOA CAMPGROUNDS","KALAELOA HARBOR","KAUPUNI CANAL","KEAAU BEACH PARK (RANCHES)","KOOLINA","KOOLINA (LAGOON 1 - KOHOLA)","KOOLINA (LAGOON 2 - HONU)","KOOLINA (LAGOON 3 - NAIA)","KOOLINA (LAGOON 4 - ULUA)",
-"KOOLINA MARINA","LANIKOHONUA (LANI'S)","MAILI BEACH PARK","MAILI CANAL","MAILI GUARDRAILS","MAILI POINT","MAIPALAOA BEACH","MAIPALOA CANAL","MAKAHA BEACH PARK","MAKUA BEACH","MAKUA BEACH (PRAY FOR SETS/SEX)","MAKUA CLIFFS (PUKANO PT.)",
-"MAUNA LAHILAHI BEACH","NANAKULI BEACH (ZABLAN)","NANAKULI BEACH PARK","NIMITZ BEACH,NIMITZ COVE","ONEULA BEACH","PARADISE COVE","POKAI BAY","SECRET BEACH (KOOLINA)","TRACKS BEACH","ULEHAWA BEACH PARK (PUKA PANTS)","WAIANAE","WAIANAE BEACH (PUKA PANTS)",
-"WAIANAE BEACH PARK","WAIANAE BOAT HARBOR","WAIANAE CANAL","WHITE PLAINS BEACH","YOKOHAMA BEACH (KEAWAULA)","ALLIGATOR ROCK (HAUULA)","AUKAI BEACH (HAUULA FIRE STATION)","BATHTUB BEACH","LAIE","BELLOWS BEACH","ELBOW BEACH (KAHUKU POINT)","GOAT ISLAND",
-"HANAKAILIO BEACH (2ND BEACH / MARCONIS)","HAUULA BEACH PARK","HIGH ROCK","HUKILAU BEACH","JAMES CAMPBELL WILDLIFE REFUGE","KAAAWA BEACH","KAHUKU GOLF COURSE","KAIHALULU BEACH","KAILUA BEACH PARK","KAKELA BEACH","KAUPO BEACH PARK (BABY MAKAPUU)","KEIKI POOL",
-"KAIHALULU BEACH","KOKOLOLIO BEACH","KUALOA BEACH PARK","KUALOA RANCH BEACH","KUILIMA COVE","LAIE BEACH PARK (POUNDERS)","LANIKAI BEACH","MALAEKAHANA BAY","MCBH - CABINS BEACH","MCBH - FORT HASE BEACH","MCBH - HALEKOA BEACH","MCBH - NORTH BEACH",
-"MCBH - PYRAMID ROCK","MCKENZIES BEACH (KAIHALULU BEACH)","MOKU IKI ISLAND","MOKU MANU","MOKU NUI ISLAND","MOKULUA ISLANDS","PUNALUU BEACH PARK","RABBIT ISLAND","RIGHT SPOTS SPOT (KAIHALULU BEACH)","TEMPLE BEACH (LAIE)","TURTLE BAY (STABLES)","WAIMANALO BAY BEACH PARK","WAIMANALO BEACH",
-"ALII BEACH PARK","HALEIWA","ALLIGATOR ROCK (NORTH SHORE)","ARMY BEACH","HALEIWA","ARMY BEACH","MOKULEIA","CAMP ERDMAN","CAMP MOKULEIA","EHUKAI BEACH PARK (PIPELINES)","HALEIWA BEACH PARK","HIDDEN BEACH","KAENA POINT","KAENA POINT","KAENA POINT (10 MINUTE BEACH)","KAENA POINT (HIDDEN BEACH)",
-"KAENA POINT (LIGHT STATION)","LANIAKEA BEACH","MOKULEIA BEACH PARK","PAHIPAHIALUA BEACH","PAPAILOA BEACH","PUAENA POINT","HALEIWA","PUPUKEA (GAS CHAMBERS)","PUU NENUE POINT","ROCKY POINT","SHARK'S COVE","SUNSET BEACH PARK","TABLES BEACH","MOKULEIA","THREE TABLES","VELZYLAND","WAIALEE BEACH PARK",
-"WAIALUA BEACH","WAIMEA BAY BEACH PARK"];
-
+import { Link } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ListReports extends React.Component {
@@ -87,6 +69,9 @@ class ListReports extends React.Component {
     const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
     const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
     const others = this.props.others.map(report => ({...report, type: "Other"}));
+   
+    console.log([...turtles, ...birds, ...seals, ...others]);
+
     // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
     return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
       // Turn your strings into dates, and then subtract them
@@ -147,12 +132,11 @@ return distinctAnimals;
   handleReset() {
     this.setState({results: this.getReports()});
     this.resetState();
-    this.clearDropdown();
   }
+
   handleClick() {
     this.setState({searchPressed: true, results: this.filter(this.state.filteredLocationReports, this.state.filteredAnimalReports)});
     console.log(this.state.results);
-
   }
 
   getDate() {
@@ -266,6 +250,7 @@ return distinctAnimals;
         <Dropdown
             placeholder='Location'
             floated
+            style={{marginRight: 20, marginBottom: 20 }}
             multiple
             defaultValue={this.state.filteredLocationReports}
             search
@@ -282,16 +267,26 @@ return distinctAnimals;
             options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
             selection
           />
-          <Sample/>
-          Unconfirmed: {this.props.unConfirmedRelated}
-
           <Button 
           onClick={() => this.handleClick()}
+          style={{marginLeft: 20, marginTop: 20 }}
           primary>Search</Button>
        <Button 
        negative
           onClick={() => this.handleReset()}
           primary>Reset</Button>
+                    <Link to="/listRelated">
+         <Button
+          color='red'
+          content='Related Sightings'
+          icon='bell'
+          style={{marginBottom: 20}}
+          label={{ basic: true, color: 'red', pointing: 'left', content: this.props.unConfirmedRelated }}
+        />      
+        </Link>
+                
+         <Sample/>
+                   
                     {this.state.noResults ? 
         <Header as="h1"> No results found. </Header> :
         <Table celled striped>
@@ -301,7 +296,7 @@ return distinctAnimals;
               <Table.HeaderCell>Time</Table.HeaderCell>
               <Table.HeaderCell>Animal</Table.HeaderCell>
               <Table.HeaderCell>Sector</Table.HeaderCell>
-              <Table.HeaderCell>Location</Table.HeaderCell>
+              <Table.HeaderCell>Island</Table.HeaderCell>
               <Table.HeaderCell>Size</Table.HeaderCell>
               <Table.HeaderCell>MainIdentification</Table.HeaderCell>
               <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
