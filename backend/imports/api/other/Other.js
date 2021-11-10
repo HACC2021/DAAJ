@@ -70,11 +70,11 @@ Meteor.methods({
     console.log("In meteor method updateMatchingOthers");
     console.log("relatedId is: " + relatedId);
     // For all others that have xRelated with this ID, change its confirmRelated to 1
-    Others.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: 1,
-      }
-    }, err => {
+    Others.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {
@@ -87,13 +87,11 @@ Meteor.methods({
     console.log("In meteor method reverseMatchingOthers");
     console.log("relatedId is: " + relatedId);
     // For all others that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
-    Others.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: "",
-        xRelated: "",
-        xSightings: 1,
-      }
-    }, err => {
+    Others.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {
