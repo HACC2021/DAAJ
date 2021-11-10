@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Table, Header, Dropdown, Loader } from 'semantic-ui-react';
+import { Container, Button, Table, Header, Dropdown, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
@@ -10,6 +10,7 @@ import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
 import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
+import Sample from '../components/Sample';
 
 
 const locationOptions = ["ALA MOANA BEACH PARK","ALA WAI HARBOR","CHINA WALL","CLIFFS","COCKROACH COVE (KAUPO BEACH)","COLONY SURF","WAIKIKI","CONCESSIONS","CROMWELL'S","DIAMOND HEAD","ELK'S CLUB","WAIKIKI",
@@ -35,50 +36,40 @@ class ListReports extends React.Component {
   constructor(props) {
     console.log("In the constructor");
     super(props);
-    this.state = {
-      fullData: this.getReports(),
-      filteredData: [],
-      searchPressed: false,
-      filteredLocationReports: [], //the locations user chooses
-    };
+    this.state = this.getInitialState();
+
   }
 
-/*
-  componentDidMount() {
-    let result = this.getReports();
-    this.setState({fullData: result});
-    console.log("compontdid moujnt" + this.state.fullData);
+  getInitialState = () => ({
+      results: [],
+      filteredAnimalReports: [],
+      searchPressed: false,
+      filteredLocationReports: [], //the locations user chooses
+      noResults: false,
+   })
 
-  }*/
-  
+   resetState = () => {
+    this.setState(this.getInitialState());
+ }
+
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
     return (this.props.ready && this.props.sealReady && this.props.turtleReady && this.props.birdReady && this.props.otherReady) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-    // reformats location data to standard captialization
-    reformatLocation() {
-      let filteredLocationOptions=  [...new Set(locationOptions)].sort();
-      let lowercased = filteredLocationOptions.map(name => name.toLowerCase());
-      let upperCaseFirstLetter = lowercased.map(name => 
-        name.split(' ').map(word => 
-          word[0].toUpperCase() + word.slice(1).toLowerCase()
-        ).join(' '));
-      return upperCaseFirstLetter;
-    }
-   
-    // returns only objects in the array that matches the location value of the user's selceted locations
-    filterByValue(array, value) {
-      return array.filter((data) =>  JSON.stringify(data).toLowerCase().indexOf(value.toLowerCase()) !== -1);
-    }
-  
     // updates user's selected location choices
-    handleChange = (e, {value}) => {
-     // this.setState({searchPressed: true, filteredLocationReports: value});
+    handleLocationChange = (e, {value}) => {
+      this.setState({ filteredLocationReports: value});
       console.log("clicked locations: " + this.state.filteredLocationReports);
-      this.compareLocations();
     }
 
+
+    // updates user's selected location choices
+    handleAnimalChange = (e, {value}) => {
+    this.setState({ filteredAnimalReports: value});
+    console.log("clicked animals: " + this.state.filteredAnimalReports);
+  }
+  
   getReports() {
 /*
     console.log("turtles");
@@ -90,9 +81,6 @@ class ListReports extends React.Component {
     console.log("others");
     console.log(this.props.others);
     */
-    console.log("combined");
-    console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
-
     // adding fields to each array to indicate the animal of the report
     //const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
     const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
@@ -108,33 +96,204 @@ class ListReports extends React.Component {
     ;
   }
 
-  // compares user's selected location to the fullData
-  compareLocations() { // suffers from input lag
-    for (let i = 0; i < this.state.filteredLocationReports.length; i++) {
-      console.log(this.filterByValue(this.state.fullData, this.state.filteredLocationReports[i]));
-   //   this.setState({ filteredPins: this.filterByValue(this.state.fullData, this.state.filteredLocationReports[i])})
-    }
+  findDistinctAnimals() {
+      // Find distinct animals:
+  let distinctAnimals = ["Seal", "Turtle", "Bird"];
+  let otherAnimals = Others.find({}, { fields: { 'Animal': 1 } }).fetch();
+  
+  otherAnimals.forEach(report => {
+    distinctAnimals.push(report.Animal);
+  });
+
+  // Use a set to get rid of duplicate animals
+  distinctAnimals = [... new Set(distinctAnimals)];
+
+  // Remove null
+  distinctAnimals = distinctAnimals.filter(function (el) {
+    return el != null;
+  });
+
+return distinctAnimals;
   }
 
+  findDistinctLocations() {
+    let sealLocations = Seals.find({}, { fields: { 'LocationName': 1 } }).fetch();
+    let turtleLocations = Turtles.find({}, { fields: { 'LocationName': 1 } }).fetch();
+    let birdLocations = Birds.find({}, { fields: { 'LocationName': 1 } }).fetch();
+    let otherLocations = Others.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  
+      // Combine all of the report objects into one array
+  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
+
+  // For each report object, get the text in the locationName field
+  let distinctLocations = [];
+  allLocations.forEach(report => {
+    distinctLocations.push(report.LocationName);
+  });
+
+  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+  // Use a set to get rid of duplicate locations
+  distinctLocations = [... new Set(distinctLocations)];
+
+  // https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
+  // Remove null (May keep replace with no location)
+  distinctLocations = distinctLocations.filter(function (el) {
+    return el != null;
+  });
+  return distinctLocations;
+
+  }
+
+  handleReset() {
+    this.setState({results: this.getReports()});
+    this.resetState();
+    this.clearDropdown();
+  }
+  handleClick() {
+    this.setState({searchPressed: true, results: this.filter(this.state.filteredLocationReports, this.state.filteredAnimalReports)});
+    console.log(this.state.results);
+
+  }
+
+  getDate() {
+    let inputGroups = document.getElementsByClassName("react-datetimerange-picker__inputGroup");
+    // console.log(JSON.stringify("inputGroups: " + inputGroups));
+    // console.log("splitting: " + JSON.stringify(inputGroups[0].innerHTML.split('"')[11]));
+    // console.log("splitting: " + JSON.stringify(inputGroups[1].innerHTML.split('"')[11]));
+    let from = new Date(inputGroups[0].innerHTML.split('"')[11]);
+    let to = new Date(inputGroups[1].innerHTML.split('"')[11]);
+
+     console.log("from: " + from);
+     console.log("to: " + to);
+    
+    return [from, to];
+  }
+
+  /*
+   * locationFilter : array of locations to include 
+   * animalFilter : array of the animals (i.e. Seal, Turtle, Bird, and Other which can have multiple things) to include
+   */
+  filter(locationFilter, animalFilter) {
+    // Filters: Time, Location, Animal
+
+    // Get the date and time chosen from the react-datetimerange picker
+    let fromTo = this.getDate();
+    let from = new Date(fromTo[0]);
+    let to = new Date(fromTo[1]);
+
+    /* To implement after
+    $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'Animal' : { $in : otherAnimalFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]
+    */
+    // Default empty arrays
+    let turtlesFiltered = [];
+    let birdsFiltered = [];
+    let sealsFiltered = [];
+    let othersFiltered = [];
+
+    
+    if (animalFilter.length == 0 ) {
+      animalFilter = this.findDistinctAnimals();
+   }
+
+   if (locationFilter.length == 0) {
+     locationFilter = this.findDistinctLocations();
+   }
+
+    // Turtle filtering
+    if (animalFilter.includes("Turtle")) {
+      turtlesFiltered = Turtles.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]      }).fetch();
+    } 
+
+    // Bird filtering
+    if (animalFilter.includes("Bird")) {
+      birdsFiltered = Birds.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]      }).fetch();
+    }
+
+    // Seal filtering
+    if (animalFilter.includes("Seal")) {
+      sealsFiltered = Seals.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]      }).fetch();
+    }
+
+    // Others filtering
+    let otherAnimalFilter = animalFilter.filter(function (el) {
+      return (el !== "Turtle") && (el !== "Seal") && el !== "Bird";
+    });
+    if (otherAnimalFilter.length > 0) {
+      othersFiltered = Others.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'Animal' : { $in : otherAnimalFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]
+      }).fetch();
+    }
+
+    // Combine the animals using a set thing that Abdullah did
+    let filteredResults = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
+    console.log("filteredResults: " + JSON.stringify(filteredResults));
+
+    if (filteredResults.length == 0) {
+      this.setState({noResults: true});
+    }
+
+    return filteredResults;
+  }
   // dkdkd
 
-  //dd
+  // SAY NO RESULTS FOUNDS
   // Render the page once subscriptions have been received.
   renderPage() {
-    console.log("renderPage" + this.state.filteredData);
+    console.log("WAAAA" + this.state.filteredAnimalReports);
     return (
-      <Container>
+        <Container>      
         <Header as="h2" textAlign="center">Latest Reports</Header>
         <Dropdown
             placeholder='Location'
             floated
             multiple
+            defaultValue={this.state.filteredLocationReports}
             search
-            onChange={this.handleChange.bind(this)}
-            options={this.reformatLocation().map(location =>({key: location, text:location, value: location }))}
+            onChange={this.handleLocationChange.bind(this)}
+            options={this.findDistinctLocations().map(location =>({key: location, text:location, value: location }))}
             selection
           />
+          <Dropdown
+            placeholder='Animal'
+            floated
+            multiple
+            search
+            onChange={this.handleAnimalChange.bind(this)}
+            options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
+            selection
+          />
+          <Sample/>
           Unconfirmed: {this.props.unConfirmedRelated}
+
+          <Button 
+          onClick={() => this.handleClick()}
+          primary>Search</Button>
+       <Button 
+       negative
+          onClick={() => this.handleReset()}
+          primary>Reset</Button>
+                    {this.state.noResults ? 
+        <Header as="h1"> No results found. </Header> :
         <Table celled striped>
           <Table.Header>
             <Table.Row>
@@ -152,11 +311,13 @@ class ListReports extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-          
-            {this.getReports().map((report) => <ReportItem key={report._id} report={report} />)}
-            
+          {!this.state.searchPressed ? 
+            (this.getReports().map((report) => <ReportItem key={report._id} report={report} />))
+                      :
+            (this.state.results.map((report) => <ReportItem key={report._id} report={report} />))
+          }
           </Table.Body>
-        </Table>
+        </Table>}
       </Container>
     );
   }
