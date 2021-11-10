@@ -61,6 +61,7 @@ class Export extends React.Component {
         <Grid.Column>
           <Sample />
           <Header as="h2" textAlign="center">Export</Header>
+          Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
             <Segment>
               <SubmitField value='Submit' />
