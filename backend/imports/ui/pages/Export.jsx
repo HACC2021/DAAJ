@@ -61,7 +61,7 @@ class Export extends React.Component {
         <Grid.Column>
           <Sample />
           <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Export</Header>
-           Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.
+           <div style={{fontSize: 18, textAlign: 'center'}}>Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.</div>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
             <Segment>
               <SubmitField style={{fontFamily: 'Poppins'}} value='Submit' />

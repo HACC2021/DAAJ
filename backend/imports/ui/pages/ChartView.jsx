@@ -7,7 +7,7 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryPie, VictoryBar } from 'victory';
+import { VictoryChart, VictoryLabel, VictoryAxis, VictoryTheme, VictoryLine, VictoryPie, VictoryBar } from 'victory';
 import Sample from '../components/Sample';
 
 
@@ -36,18 +36,48 @@ class ChartView extends React.Component {
     return (
       <Grid container centered>
         <Grid.Row>
-          <Grid.Column>
             <Sample />
             <Button style={{fontFamily: 'Poppins'}} onClick={() => this.handleClick()} className="ui olive basic button">Filter</Button>
+
+            </Grid.Row>
+
+            <Grid.Row>
             <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Dashboard</Header>
+            </Grid.Row>
+<Grid.Row>
+  <div style={{fontSize: 20, paddingTop: 20, marginBottom: -30}}> Breakdown of Animals</div>
+<VictoryPie  height={200} width={200} theme={VictoryTheme.material}
+            data={[
+              { x: "Turtles", y: this.props.turtles.length },
+              { x: "Seals", y: this.props.seals.length },
+              { x: "Birds", y: this.props.birds.length },
+              { x: "Others", y: this.props.others.length }]}
+          />
+  </Grid.Row>
+<Grid.Row>
+  <Grid.Column width={8}>
             {/* Female vs male seals*/}
+
+            <VictoryChart>
+            <VictoryLabel text="Female vs. Male" x={225} y={30} textAnchor="middle"/>
             <VictoryBar theme={VictoryTheme.material}
               data={[
                 { x: "Females", y: this.props.sexes[0] },
                 { x: "Males", y: this.props.sexes[1] }]}
                 labels={({ datum }) => `y: ${datum.y}`}
             />
+             <VictoryAxis
+          // tickValues specifies both the number of ticks and where
+          // they are placed on the axis
+          tickValues={[1, 2]}
+          tickFormat={["Female", "Male"]}/>
+              </VictoryChart>
+          </Grid.Column>
+          <Grid.Column width={8}>
             {/* Tagged animals*/}
+            <VictoryChart>
+            <VictoryLabel text="Tagged Animals" x={225} y={30} textAnchor="middle"/>
+
             <VictoryBar theme={VictoryTheme.material}
               data={[
                 { x: "Seals", y: this.props.taggedSeals },
@@ -55,20 +85,17 @@ class ChartView extends React.Component {
                 { x: "Birds", y: this.props.taggedBirds },
                 { x: "Others", y: this.props.taggedOthers }]}
                 labels={({ datum }) => `y: ${datum.y}`}
-            />
-          </Grid.Column>
-        </Grid.Row>
+                />
+                <VictoryAxis
+                // tickValues specifies both the number of ticks and where
+                // they are placed on the axis
+                tickValues={[1, 2, 3, 4]}
+                tickFormat={["Seals", "Turtles", "Birds", "Others"]}/>
+</VictoryChart>
+</Grid.Column>
+</Grid.Row>
+   
 
-        <Grid.Row>
-          <VictoryPie theme={VictoryTheme.material}
-            data={[
-              { x: "Turtles", y: this.props.turtles.length },
-              { x: "Seals", y: this.props.seals.length },
-              { x: "Birds", y: this.props.birds.length },
-              { x: "Others", y: this.props.others.length }]}
-          />
-
-        </Grid.Row>
       </Grid>
     );
   }

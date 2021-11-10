@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Button, Icon, Table, Header, Dropdown, Loader } from 'semantic-ui-react';
+import { Container, Button, Icon, Table, Header, Dropdown, Loader, Grid } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
@@ -12,6 +12,7 @@ import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 import Sample from '../components/Sample';
 import { Link } from 'react-router-dom';
+import { GroundOverlay } from '@react-google-maps/api';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ListReports extends React.Component {
@@ -246,18 +247,23 @@ return distinctAnimals;
     console.log("WAAAA" + this.state.filteredAnimalReports);
     return (
         <Container style={{fontFamily: 'Poppins'}}>      
-        <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as="h2" textAlign="center">Latest Reports</Header>
-        <Dropdown
+
+       <Header style={{fontFamily: 'Poppins', marginTop: 20}} as="h2" textAlign="center">Latest Reports</Header>
+        <Grid columns={4} >
+        <Grid.Row>
+          <Grid.Column width={8}>
+                <Dropdown
             placeholder='Location'
             floated
-            style={{marginRight: 20, marginBottom: 20 }}
             multiple
+            style={{marginRight: 20}}
             defaultValue={this.state.filteredLocationReports}
             search
             onChange={this.handleLocationChange.bind(this)}
             options={this.findDistinctLocations().map(location =>({key: location, text:location, value: location }))}
             selection
           />
+
           <Dropdown
             placeholder='Animal'
             floated
@@ -267,26 +273,36 @@ return distinctAnimals;
             options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
             selection
           />
-          <Button 
+          </Grid.Column>
+                    <Grid.Column width={8}>
+         <Sample/>
+         </Grid.Column>
+         </Grid.Row>
+         <Grid.Row>
+         <Grid.Column floated='left' width={8}>
+         <Button 
           onClick={() => this.handleClick()}
-          style={{fontFamily: 'Poppins', marginLeft: 20, marginTop: 20 }}
+          style={{fontFamily: 'Poppins'}}
           primary>Search</Button>
        <Button 
        negative
        style={{fontFamily: 'Poppins'}}
           onClick={() => this.handleReset()}
           primary>Reset</Button>
-                    <Link to="/listRelated">
+          </Grid.Column>
+          <Grid.Column floated='right' width={8}>
+      <Link to="/listRelated">
          <Button
-          color='red'
+          color='blue'
           content='Related Sightings'
           icon='bell'
-          style={{marginBottom: 20, fontFamily: 'Poppins'}}
-          label={{ basic: true, color: 'red', pointing: 'left', content: this.props.unConfirmedRelated }}
+          style={{ fontFamily: 'Poppins'}}
+          label={{ basic: true, color: 'blue', pointing: 'left', content: this.props.unConfirmedRelated }}
         />      
         </Link>
-                
-         <Sample/>
+         </Grid.Column>
+         </Grid.Row>
+         </Grid>
                    
                     {this.state.noResults ? 
         <Header as="h1"> No results found. </Header> :
