@@ -788,6 +788,7 @@ Meteor.startup(() => {
       Island: "Oahu",
       MainIdentification: "T",
       OtherNotes: "",
+      xRelated: "",
       xSightings: 1,
       xLatitude: 21.27518,
       xLongitude: -157.69368,
