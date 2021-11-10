@@ -46,9 +46,9 @@ class Landing extends React.Component {
         </Grid.Column>
         <Grid.Column width={8}>
           <h1>E komo mai!</h1>
-         <p>Wahi is a two part system that enables you contribute to help Hawaii's preserve and recover Hawaii's marine protected species.</p>
+         <p>Wahi is a two part system that enables the general public and H-MAR volunteers and staff to help preserve and recover Hawaii's marine protected species.</p>
            <p>Wahi Web displays the table of reports in a list view and a map view. Statistics are also visualized on the charts view page. </p>
-          <p>Whi Mobile allows you to report sightings of animals or call the hotline when you see an animal in distress.</p>
+          <p>Wahi Mobile allows you to report sightings of animals or call the hotline when you see an animal in distress.</p>
         </Grid.Column>
         </Grid.Row>
         
