@@ -348,17 +348,21 @@ return distinctLocations;
         <Grid.Column width={12}>
           <Grid.Row style={{backgroundColor: '#02c0e8', paddingLeft: 20, paddingTop: 20, marginTop: -10, paddingBottom: 20}}>
           
-          <Dropdown
-            style={{marginRight: 20, marginBottom: 20 }}
+          <Grid columns={4} >
+        <Grid.Row>
+          <Grid.Column width={8}>
+                <Dropdown
             placeholder='Location'
             floated
             multiple
+            style={{marginRight: 20}}
             defaultValue={this.state.filteredLocationReports}
             search
             onChange={this.handleLocationChange.bind(this)}
             options={this.findDistinctLocations().map(location =>({key: location, text:location, value: location }))}
             selection
           />
+
           <Dropdown
             placeholder='Animal'
             floated
@@ -368,16 +372,27 @@ return distinctLocations;
             options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
             selection
           />
-          <Sample/>
-          <Button 
+          </Grid.Column>
+                    <Grid.Column width={8}>
+         <Sample/>
+         </Grid.Column>
+         </Grid.Row>
+         <Grid.Row>
+         <Grid.Column floated='left' width={8}>
+         <Button 
           onClick={() => this.handleClick()}
-          primary  style={{marginTop: 20, fontFamily: 'Poppins'}}>Search</Button>
+          style={{fontFamily: 'Poppins'}}
+          primary>Search</Button>
        <Button 
        negative
        style={{fontFamily: 'Poppins'}}
           onClick={() => this.handleReset()}
           primary>Reset</Button>
-          </Grid.Row>
+          </Grid.Column>
+         </Grid.Row>
+         </Grid>
+         </Grid.Row>
+
           <LoadScript
             googleMapsApiKey='AIzaSyDy4lATc_hd8VHpkRBfDYUgfD3pGNQtdXA'>
            <GoogleMap
