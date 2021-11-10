@@ -155,8 +155,10 @@ class MapView extends React.Component {
         }
       }
 
-      handleExtraFields(text) {
+      handleExtraFields(text, isFieldPresent) {
+        if (isFieldPresent) {
         return <Header style={{paddingTop: 20}} as='h3'>{text}</Header>;
+        }
       }
 
         /*
@@ -322,25 +324,25 @@ return distinctLocations;
     let fRef = null;
 
     return (
-      <Grid>
+      <Grid style={{fontFamily: 'Poppins'}}>
         {this.state.pinPressed ?
-        <Grid.Column  textAlign='center' width={4}>
+        <Grid.Column textAlign='center' width={4}>
           <Grid.Row> <Image src='/images/logo.jpg' size='medium' rounded /></Grid.Row>
-          <Grid.Row> <Header textAlign='center' as='h1'>{this.handleFields(this.state.pin.Animal, "animal")}</Header> </Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Observed:</Header> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.state.pin.DateObjectObserved)} 
+          <Grid.Row> <Header style={{fontFamily: 'Poppins'}} textAlign='center' as='h1'>{this.handleFields(this.state.pin.Animal, "animal")}</Header> </Grid.Row>
+          <Grid.Row> <Header style={{ fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Observed:</Header> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.state.pin.DateObjectObserved)} 
           {" "} {new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.state.pin.DateObjectObserved)} HST </Grid.Row>
           <Grid.Row>{this.getType(this.state.pin.Animal)} {this.state.pin.BirdType || this.state.pin.TurtleType}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Tag Number:</Header> {this.handleFields(this.state.pin.xTagNumber, "tag number")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Island:</Header> {this.state.pin.Island || this.state.pin.xIsland}</Grid.Row>
-          <Grid.Row>{this.handleExtraFields("Location Notes: ")} {this.state.pin.LocationNotes} </Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Status:</Header> {this.handleFields(this.state.pin.Status, "status")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Size:</Header> {this.handleFields(this.state.pin.Size, "size")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Behavior:</Header> {this.handleFields(this.state.pin.xAnimalBehavior, "animal behavior")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Images</Header> {this.handleImage(this.state.pin.xImages)}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Tag Number:</Header> {this.handleFields(this.state.pin.xTagNumber, "tag number")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Island:</Header> {this.state.pin.Island || this.state.pin.xIsland}</Grid.Row>
+          <Grid.Row>{this.handleExtraFields("Location Notes: ", this.state.pin.LocationNotes)} {this.state.pin.LocationNotes} </Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Status:</Header> {this.handleFields(this.state.pin.Status, "status")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Size:</Header> {this.handleFields(this.state.pin.Size, "size")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Behavior:</Header> {this.handleFields(this.state.pin.xAnimalBehavior, "animal behavior")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Images</Header> {this.handleImage(this.state.pin.xImages)}</Grid.Row>
         </Grid.Column> :
          <Grid.Column width={4}>
          <Grid.Row> <Image src='/images/logo.jpg' size='medium' rounded /></Grid.Row>
-         <Grid.Row> <Header style={{paddingTop: 20}} textAlign='center' as='h2'>Click on a pin to get started! </Header> </Grid.Row>
+         <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} textAlign='center' as='h2'>Click on a pin to get started! </Header> </Grid.Row>
         </Grid.Column>
          }
         <Grid.Column width={12}>
@@ -369,9 +371,10 @@ return distinctLocations;
           <Sample/>
           <Button 
           onClick={() => this.handleClick()}
-          primary  style={{marginTop: 20 }}>Search</Button>
+          primary  style={{marginTop: 20, fontFamily: 'Poppins'}}>Search</Button>
        <Button 
        negative
+       style={{fontFamily: 'Poppins'}}
           onClick={() => this.handleReset()}
           primary>Reset</Button>
           </Grid.Row>

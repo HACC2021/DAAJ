@@ -164,8 +164,8 @@ class ListRelated extends React.Component {
       Meteor.call('addBird', birdTest);
     }
     return (
-      <Container>
-        <Header as="h2" textAlign="center">Confirm Related Sightings</Header>
+      <Container style={{fontFamily: 'Poppins'}}>
+        <Header as="h2" style={{fontFamily: 'Poppins', paddingTop: 20}} textAlign="center">Confirm Related Sightings</Header>
         <Table celled>
           <Table.Header>
             <Table.Row>

@@ -245,8 +245,8 @@ return distinctAnimals;
   renderPage() {
     console.log("WAAAA" + this.state.filteredAnimalReports);
     return (
-        <Container>      
-        <Header as="h2" textAlign="center">Latest Reports</Header>
+        <Container style={{fontFamily: 'Poppins'}}>      
+        <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as="h2" textAlign="center">Latest Reports</Header>
         <Dropdown
             placeholder='Location'
             floated
@@ -269,10 +269,11 @@ return distinctAnimals;
           />
           <Button 
           onClick={() => this.handleClick()}
-          style={{marginLeft: 20, marginTop: 20 }}
+          style={{fontFamily: 'Poppins', marginLeft: 20, marginTop: 20 }}
           primary>Search</Button>
        <Button 
        negative
+       style={{fontFamily: 'Poppins'}}
           onClick={() => this.handleReset()}
           primary>Reset</Button>
                     <Link to="/listRelated">
@@ -280,7 +281,7 @@ return distinctAnimals;
           color='red'
           content='Related Sightings'
           icon='bell'
-          style={{marginBottom: 20}}
+          style={{marginBottom: 20, fontFamily: 'Poppins'}}
           label={{ basic: true, color: 'red', pointing: 'left', content: this.props.unConfirmedRelated }}
         />      
         </Link>

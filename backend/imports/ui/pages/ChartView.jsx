@@ -38,8 +38,8 @@ class ChartView extends React.Component {
         <Grid.Row>
           <Grid.Column>
             <Sample />
-            <Button onClick={() => this.handleClick()} className="ui olive basic button">Filter</Button>
-            <Header as="h2" textAlign="center">Dashboard</Header>
+            <Button style={{fontFamily: 'Poppins'}} onClick={() => this.handleClick()} className="ui olive basic button">Filter</Button>
+            <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Dashboard</Header>
             {/* Female vs male seals*/}
             <VictoryBar theme={VictoryTheme.material}
               data={[
