@@ -25,26 +25,50 @@ class ChartView extends React.Component {
         <Grid.Column>
           <Header as="h2" textAlign="center">Add Stuff</Header>
           <VictoryBar/>
-          {this.filter(["Dolphin"])}
+          {this.filter(new Date(), new Date(), ["Hanauma Bay"], ["Turtle", "Dolphin"])}
         </Grid.Column>
       </Grid>
     );
   }
 
-  filter(otherAnimalFilter) {
+  /*
+   * from : date object of what time to start from
+   * to : date object of what time to end to 
+   * location : array of locations to include 
+   * animalFilter : array of the animals (i.e. Seal, Turtle, Bird, and Other which can have multiple things) to include
+   */
+  filter(from, to, location, animalFilter) {
     // Filters needed: Time, Location, Animal
-    let turtlesFiltered = Turtles.find({}).fetch();
-    let birdsFiltered = Birds.find({}).fetch();
-    let sealsFiltered = Seals.find({}).fetch();
-    let otherAnimals = otherAnimalFilter;
-    let othersFiltered = Others.find({
-      'Animal' : { $in : otherAnimals }
-    }).fetch();
+    // Default empty arrays
+    let turtlesFiltered = [];
+    let birdsFiltered = [];
+    let sealsFiltered = [];
+    let othersFiltered = [];
 
-    console.log("turtlesFiltered: " + JSON.stringify(turtlesFiltered));
-    console.log("birdsFiltered: " + JSON.stringify(birdsFiltered));
-    console.log("sealsFiltered: " + JSON.stringify(sealsFiltered));
-    console.log("othersFiltered: " + JSON.stringify(othersFiltered));
+    // Turtle filtering
+    if (animalFilter.includes("Turtle")) {
+      turtlesFiltered = Turtles.find({}).fetch();
+    } 
+
+    // Bird filtering
+    if (animalFilter.includes("Bird")) {
+      birdsFiltered = Birds.find({}).fetch();
+    }
+
+    // Seal filtering
+    if (animalFilter.includes("Seal")) {
+      sealsFiltered = Seals.find({}).fetch();
+    }
+
+    // Others filtering
+    let otherAnimalFilter = animalFilter.filter(function (el) {
+      return (el !== "Turtle") && (el !== "Seal") && el !== "Bird";
+    });
+    if (otherAnimalFilter.length > 0) {
+      othersFiltered = Others.find({
+        'Animal' : { $in : otherAnimalFilter }
+      }).fetch();
+    }
 
     // Combine the animals using a set thing that Abdullah did
     let theSet = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
