@@ -7,7 +7,7 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryPie } from 'victory';
+import { VictoryChart, VictoryLabel, VictoryAxis, VictoryTheme, VictoryLine, VictoryPie, VictoryBar } from 'victory';
 import Sample from '../components/Sample';
 
 
@@ -21,112 +21,133 @@ class ChartView extends React.Component {
 
   renderPage() {
     let fRef = null;
-    let sealTimeSeries = this.getSealTimeSeriesData();
-    sealTimeSeries = Array.from(sealTimeSeries);
+    let sealTimeSeries = this.getTimeSeriesData(0);
     console.log("sealTimeSeries: " + JSON.stringify(sealTimeSeries));
+
+    let turtleTimeSeries = this.getTimeSeriesData(1);
+    console.log("turtleTimeSeries: " + JSON.stringify(turtleTimeSeries));
+
+    let birdTimeSeries = this.getTimeSeriesData(2);
+    console.log("birdTimeSeries: " + JSON.stringify(birdTimeSeries));
+
+    let otherTimeSeries = this.getTimeSeriesData(3);
+    console.log("otherTimeSeries: " + JSON.stringify(otherTimeSeries));
 
     return (
       <Grid container centered>
-        <Grid.Row>
-        <Grid.Column>
-          <Sample />
-          <Button onClick={() => this.handleClick()} className="ui olive basic button">Filter</Button>
-          <Header as="h2" textAlign="center">Dashboard</Header>
-          <VictoryChart width={600}
-            theme={VictoryTheme.material}
-          >
-            <VictoryLine
-              style={{
-                data: { stroke: "#c43a31" },
-                parent: { border: "1px solid #ccc" }
-              }}
-              // Seal
-              data={[
-                { x: new Date("11-02-21"), y: 2 },
-                { x: new Date("11-03-21"), y: 3 },
-                { x: new Date("11-04-21"), y: 4 },
-                { x: new Date("11-05-21"), y: 5 },
-                { x: new Date("11-01-21"), y: 6 },
-              ]}
-            />
-            <VictoryLine
-              style={{
-                data: { stroke: "#c43a31" },
-                parent: { border: "1px solid #ccc" }
-              }}
-              // Turtle
-              data={[
-                { x: new Date("11-02-21"), y: 2 },
-                { x: new Date("11-03-21"), y: 3 },
-                { x: new Date("11-04-21"), y: 4 },
-                { x: new Date("11-05-21"), y: 5 },
-                { x: new Date("11-01-21"), y: 6 },
-              ]}
-            />
-            <VictoryLine
-              style={{
-                data: { stroke: "#c43a31" },
-                parent: { border: "1px solid #ccc" }
-              }}
-              // Bird
-              data={[
-                { x: new Date("11-02-21"), y: 2 },
-                { x: new Date("11-03-21"), y: 3 },
-                { x: new Date("11-04-21"), y: 4 },
-                { x: new Date("11-05-21"), y: 5 },
-                { x: new Date("11-01-21"), y: 6 },
-              ]}
-            />
-          </VictoryChart>
-          </Grid.Column>
-      </Grid.Row>
+        <Grid.Row style={{marginTop: 20}}> 
+            <Sample />
+            <Button style={{fontFamily: 'Poppins'}} onClick={() => this.handleClick()} style={{marginLeft: 20}} className="ui blue basic button">Filter</Button>
 
-      <Grid.Row>
-          <VictoryPie theme={VictoryTheme.material} 
-          data={[
-            { x: "Turtles", y: this.props.turtles.length },
-            { x: "Seals", y: this.props.seals.length  },
-            { x: "Birds", y: this.props.birds.length  },
-            { x: "Others", y: this.props.others.length  }]}
+            </Grid.Row>
+
+            <Grid.Row>
+            <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Dashboard</Header>
+            </Grid.Row>
+<Grid.Row>
+  <div style={{fontSize: 20, paddingTop: 20, marginBottom: -30}}> Breakdown of Animals</div>
+<VictoryPie  height={200} width={200} theme={VictoryTheme.material}
+            data={[
+              { x: "Turtles", y: this.props.turtles.length },
+              { x: "Seals", y: this.props.seals.length },
+              { x: "Birds", y: this.props.birds.length },
+              { x: "Others", y: this.props.others.length }]}
           />
+  </Grid.Row>
+<Grid.Row>
+  <Grid.Column width={8}>
+            {/* Female vs male seals*/}
 
-      </Grid.Row>
+            <VictoryChart>
+            <VictoryLabel text="Female vs. Male" x={225} y={30} textAnchor="middle"/>
+            <VictoryBar theme={VictoryTheme.material}
+              data={[
+                { x: "Females", y: this.props.sexes[0] },
+                { x: "Males", y: this.props.sexes[1] }]}
+                labels={({ datum }) => `y: ${datum.y}`}
+            />
+             <VictoryAxis
+          // tickValues specifies both the number of ticks and where
+          // they are placed on the axis
+          tickValues={[1, 2]}
+          tickFormat={["Female", "Male"]}/>
+              </VictoryChart>
+          </Grid.Column>
+          <Grid.Column width={8}>
+            {/* Tagged animals*/}
+            <VictoryChart>
+            <VictoryLabel text="Tagged Animals" x={225} y={30} textAnchor="middle"/>
+
+            <VictoryBar theme={VictoryTheme.material}
+              data={[
+                { x: "Seals", y: this.props.taggedSeals },
+                { x: "Turtles", y: this.props.taggedTurtles },
+                { x: "Birds", y: this.props.taggedBirds },
+                { x: "Others", y: this.props.taggedOthers }]}
+                labels={({ datum }) => `y: ${datum.y}`}
+                />
+                <VictoryAxis
+                // tickValues specifies both the number of ticks and where
+                // they are placed on the axis
+                tickValues={[1, 2, 3, 4]}
+                tickFormat={["Seals", "Turtles", "Birds", "Others"]}/>
+</VictoryChart>
+</Grid.Column>
+</Grid.Row>
+   
+
       </Grid>
     );
   }
 
-  getSealTimeSeriesData() {
-    console.log("in getSealTimeSeriesData");
-    
-    // Grab the DateObjectObserved field
-    let sealsDates = Seals.find({}, {field : { DateObjectObserved : 1 }}).fetch();
+  getTimeSeriesData(Animal) {
+    console.log("in getTimeSeriesData");
 
-    console.log("sealsDates: " + JSON.stringify(sealsDates));
+    // Grab the DateObserved field
+    let animalDates;
+    switch (Animal) {
+      case (0):
+        animalDates = Seals.find({}, { field: { DateObserved: 1 } }).fetch();
+        break;
+      case (1):
+        animalDates = Turtles.find({}, { field: { DateObserved: 1 } }).fetch();
+      case (2):
+        animalDates = Birds.find({}, { field: { DateObserved: 1 } }).fetch();
+      case (3):
+        animalDates = Others.find({}, { field: { DateObserved: 1 } }).fetch();
+    }
+    // console.log("sealsDates: " + JSON.stringify(animalDates));
 
     // Grab each date and put it into the array
     let allDates = [];
-    sealsDates.forEach(seal => {
-      allDates.push(new Date(seal.DateObjectObserved));
+    animalDates.forEach(animal => {
+      allDates.push(animal.DateObserved);
     });
-    console.log("dateCounts: " + JSON.stringify(allDates));
-
-    // Get unique dates
-    let uniqueArray = allDates
-    .map(function (date) { return date.getTime() })
-    .filter(function (date, i, array) {
-        return array.indexOf(date) === i;
-    })
-    .map(function (time) { return new Date(time); });
-
-    console.log("uniqueArray: " + JSON.stringify(uniqueArray));
+    // console.log("dateCounts: " + JSON.stringify(allDates));
 
     // Create an object where each item is a date and it's equal to the count of it in the array above
     let counts = {};
     allDates.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
     console.log("counts: " + JSON.stringify(counts));
-    console.log("counts['Tue Nov 09 2021 18:52:39 GMT-1000 (Hawaii-Aleutian Standard Time)]: " + counts['Tue Nov 09 2021 18:52:39 GMT-1000 (Hawaii-Aleutian Standard Time)']);
 
-    return counts;
+    // For each date, convert it into the form Victory chart wants it
+    let result = [];
+    allDates.forEach(aDate => {
+      result.push({ x: "", y: "" });
+    });
+
+    for (let index = 0; index < allDates.length; index++) {
+      let formatted = allDates[index].substring(0, 2) + "-" + allDates[index].substring(2, 4) + "-" + allDates[index].substring(4, 6);
+      result[index].x = new Date(formatted);
+      result[index].y = counts[allDates[index]];
+    }
+
+    console.log("result: " + JSON.stringify(result));
+
+
+    // console.log("counts['Tue Nov 09 2021 18:52:39 GMT-1000 (Hawaii-Aleutian Standard Time)]: " + counts['Tue Nov 09 2021 18:52:39 GMT-1000 (Hawaii-Aleutian Standard Time)']);
+
+    return result;
   }
 
   getDate() {
@@ -155,6 +176,12 @@ ChartView.propTypes = {
 
   others: PropTypes.array.isRequired,
   otherReady: PropTypes.bool.isRequired,
+
+  sexes: PropTypes.array.isRequired,
+  taggedSeals: PropTypes.number.isRequired,
+  taggedTurtles: PropTypes.number.isRequired,
+  taggedBirds: PropTypes.number.isRequired,
+  taggedOthers: PropTypes.number.isRequired
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -173,6 +200,17 @@ export default withTracker(() => {
   const others = Others.find({}).fetch();
 
   // Calculations for the graphs:
+  // Male Female seals
+  let sealFemale = Seals.find({ Sex : "F" }).count();
+  let sealMale = Seals.find({ Sex : "M" }).count();
+  let sexes = [sealFemale, sealMale]
+  console.log("sealSexes: " + JSON.stringify(sealMale));
+
+  // Tagged animals
+  let taggedSeals = Seals.find({ xTagYN : "Y" }).count();
+  let taggedTurtles = Turtles.find({ xTagYN : "Y" }).count();
+  let taggedBirds = Birds.find({ xTagYN : "Y" }).count()
+  let taggedOthers = Others.find({ xTagYN : "Y" }).count();
 
 
   return {
@@ -184,5 +222,70 @@ export default withTracker(() => {
     seals,
     otherReady,
     others,
+    sexes,
+    taggedSeals,
+    taggedTurtles,
+    taggedBirds,
+    taggedOthers
   };
 })(ChartView);
+
+// <VictoryChart width={600}
+//               theme={VictoryTheme.material}
+//             >
+//               <VictoryLine
+//                 style={{
+//                   data: { stroke: "#c43a31" },
+//                   parent: { border: "1px solid #ccc" }
+//                 }}
+//                 // Seal
+//                 data={
+//                   sealTimeSeries
+//                 }
+//               />
+//             </VictoryChart>
+
+//             <VictoryChart width={600}
+//               theme={VictoryTheme.material}
+//             >
+//               <VictoryLine
+//                 style={{
+//                   data: { stroke: "#c43a31" },
+//                   parent: { border: "1px solid #ccc" }
+//                 }}
+//                 // Seal
+//                 data={
+//                   turtleTimeSeries
+//                 }
+//               />
+//             </VictoryChart>
+
+//             <VictoryChart width={600}
+//               theme={VictoryTheme.material}
+//             >
+//               <VictoryLine
+//                 style={{
+//                   data: { stroke: "#c43a31" },
+//                   parent: { border: "1px solid #ccc" }
+//                 }}
+//                 // Seal
+//                 data={
+//                   birdTimeSeries
+//                 }
+//               />
+//             </VictoryChart>
+
+//             <VictoryChart width={600}
+//               theme={VictoryTheme.material}
+//             >
+//               <VictoryLine
+//                 style={{
+//                   data: { stroke: "#c43a31" },
+//                   parent: { border: "1px solid #ccc" }
+//                 }}
+//                 // Seal
+//                 data={
+//                   otherTimeSeries
+//                 }
+//               />
+//             </VictoryChart>

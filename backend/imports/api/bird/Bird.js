@@ -151,6 +151,8 @@ function findRelatedBird(newBirdID) {
       'Sector': 1,
       'LocationName': 1,
       'LocationNotes': 1,
+      'xLatitude' : 1,
+      'xLongitude': 1,
       // Species
       'BirdType': 1,
       'xRelated': 1,
@@ -159,7 +161,7 @@ function findRelatedBird(newBirdID) {
   }).fetch();
 
   console.log("oldBirds: " + JSON.stringify(oldBirds)); // All of the birds in the collection beside the newly added one
-  let newBird = Birds.find({ '_id': newBirdID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'BirdType': 1, 'xSightings': 1 } }).fetch()[0];
+  let newBird = Birds.find({ '_id': newBirdID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'xLatitude' : 1, 'xLongitude': 1, 'BirdType': 1, 'xSightings': 1 } }).fetch()[0];
 
   // Weights to adjust
   const TIMING_WEIGHT = 0.25;
@@ -204,13 +206,28 @@ function findRelatedBird(newBirdID) {
     identifyingCharsScore = identifyingCharsScore / 6;
     console.log("identifyingCharsScore:" + identifyingCharsScore);
 
-    // Check location
+    // Check location: 
     let locationScore = 0;
+    // Sector
     if (newBird.Sector === oldBird.Sector) locationScore++;
-    if (newBird.LocationName === oldBird.LocationName) locationScore++;
-    if (newBird.LocationNotes === oldBird.LocationNotes) locationScore++;
-    locationScore = locationScore / 3;
-    console.log("locationScore: " + locationScore);
+    // if (newBird.LocationName === oldBird.LocationName) locationScore++;
+
+    // GPS coordinates
+    let newBirdCoords = Math.abs(newBird.xLatitude + newBird.xLongitude);
+    let oldBirdCoords = Math.abs(oldBird.xLatitude + oldBird.xLongitude);
+    // console.log("newBirdCoords" + newBirdCoords);
+    // console.log("oldBirdCoords" + oldBirdCoords);
+    let difference = Math.abs(newBirdCoords - oldBirdCoords);
+    // console.log("difference: " + difference);
+    // 0.001 degrees = 111 meters = 0.0689722 miles
+    if (difference <= 0.001) {
+      locationScore++;
+    } else if (difference <= 0.005) {
+      locationScore = locationScore + 0.5;
+    } else if (difference <= 0.01) {
+      locationScore = locationScore + 0.25;
+    }
+
 
     // Check species
     let speciesScore = 0;

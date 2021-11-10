@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Button, Table, Header, Dropdown, Loader } from 'semantic-ui-react';
+import { Container, Button, Icon, Table, Header, Dropdown, Loader, Grid } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
@@ -11,25 +11,8 @@ import { Others } from '../../api/other/Other';
 import ReportItem from '../components/ReportItem';
 //import { getReports }  from '../../startup/server/GetReports';
 import Sample from '../components/Sample';
-
-
-const locationOptions = ["ALA MOANA BEACH PARK","ALA WAI HARBOR","CHINA WALL","CLIFFS","COCKROACH COVE (KAUPO BEACH)","COLONY SURF","WAIKIKI","CONCESSIONS","CROMWELL'S","DIAMOND HEAD","ELK'S CLUB","WAIKIKI",
-"ETERNITY BEACH","FORT DERUSSY BEACH","HALONA BLOWHOLE","HANAUMA BAY","HAWAII KAI","HONOLULU HARBOR","IRMA'S","KAHALA BEACH","KAHALA MANDARIN HOTEL","KAHANAMOKU BEACH (HALE KOA HOTEL)","KAIMANA BEACH","WAIKIKI",
-"KALOKO BEACH (ALAN DAVIS BIRTH BEACH)","KEEHI LAGOON","KEWALO BASIN/HARBOR","KOKEE FLATS","KUHIO BEACH PARK","WAIKIKI","LANAI LOOKOUT","MAGIC ISLAND (TROUGH)","MAKAI PIER","MAKALEI BEACH PARK","MAKAPUU BEACH PARK",
-"OUTRIGGER CANOE CLUB","WAIKIKI","PEARL HARBOR","PELE'S CHAIR (ALAN DAVIS)","QUEEN'S BEACH","REEF RUNWAY","SAND ISLAND BEACH PARK","SANDY BEACH","SPITTING CAVES","SUICIDES","WAIKIKI","AKI'S BEACH","BARBER'S POINT",
-"CAMPBELL BOAT RAMP","CAMPBELL INDUSTRIAL PARK","DEPOTS BEACH","NANAKULI","ELECTRIC BEACH","EWA BEACH","GERMAIN'S LUAU","IROQUOIS POINT","IROQUOIS POINT (COVE 1)", "IROQUOIS POINT (COVE 2)", "IROQUOIS POINT (COVE 3)",
-"IROQUOIS POINT (COVE 4)","IROQUOIS POINT (COVE 5 - DOG BEACH)","IROQUOIS POINT (COVE 6)","IROQUOIS POINT (COVE 7)","IROQUOIS POINT (COVE 8)","KAENA POINT (LIGHT STATION)","KAENA POINT (WEST SIDE ARCH)","KAENA STATE PARK",
-"KAHE POINT","KALAELOA CAMPGROUNDS","KALAELOA HARBOR","KAUPUNI CANAL","KEAAU BEACH PARK (RANCHES)","KOOLINA","KOOLINA (LAGOON 1 - KOHOLA)","KOOLINA (LAGOON 2 - HONU)","KOOLINA (LAGOON 3 - NAIA)","KOOLINA (LAGOON 4 - ULUA)",
-"KOOLINA MARINA","LANIKOHONUA (LANI'S)","MAILI BEACH PARK","MAILI CANAL","MAILI GUARDRAILS","MAILI POINT","MAIPALAOA BEACH","MAIPALOA CANAL","MAKAHA BEACH PARK","MAKUA BEACH","MAKUA BEACH (PRAY FOR SETS/SEX)","MAKUA CLIFFS (PUKANO PT.)",
-"MAUNA LAHILAHI BEACH","NANAKULI BEACH (ZABLAN)","NANAKULI BEACH PARK","NIMITZ BEACH,NIMITZ COVE","ONEULA BEACH","PARADISE COVE","POKAI BAY","SECRET BEACH (KOOLINA)","TRACKS BEACH","ULEHAWA BEACH PARK (PUKA PANTS)","WAIANAE","WAIANAE BEACH (PUKA PANTS)",
-"WAIANAE BEACH PARK","WAIANAE BOAT HARBOR","WAIANAE CANAL","WHITE PLAINS BEACH","YOKOHAMA BEACH (KEAWAULA)","ALLIGATOR ROCK (HAUULA)","AUKAI BEACH (HAUULA FIRE STATION)","BATHTUB BEACH","LAIE","BELLOWS BEACH","ELBOW BEACH (KAHUKU POINT)","GOAT ISLAND",
-"HANAKAILIO BEACH (2ND BEACH / MARCONIS)","HAUULA BEACH PARK","HIGH ROCK","HUKILAU BEACH","JAMES CAMPBELL WILDLIFE REFUGE","KAAAWA BEACH","KAHUKU GOLF COURSE","KAIHALULU BEACH","KAILUA BEACH PARK","KAKELA BEACH","KAUPO BEACH PARK (BABY MAKAPUU)","KEIKI POOL",
-"KAIHALULU BEACH","KOKOLOLIO BEACH","KUALOA BEACH PARK","KUALOA RANCH BEACH","KUILIMA COVE","LAIE BEACH PARK (POUNDERS)","LANIKAI BEACH","MALAEKAHANA BAY","MCBH - CABINS BEACH","MCBH - FORT HASE BEACH","MCBH - HALEKOA BEACH","MCBH - NORTH BEACH",
-"MCBH - PYRAMID ROCK","MCKENZIES BEACH (KAIHALULU BEACH)","MOKU IKI ISLAND","MOKU MANU","MOKU NUI ISLAND","MOKULUA ISLANDS","PUNALUU BEACH PARK","RABBIT ISLAND","RIGHT SPOTS SPOT (KAIHALULU BEACH)","TEMPLE BEACH (LAIE)","TURTLE BAY (STABLES)","WAIMANALO BAY BEACH PARK","WAIMANALO BEACH",
-"ALII BEACH PARK","HALEIWA","ALLIGATOR ROCK (NORTH SHORE)","ARMY BEACH","HALEIWA","ARMY BEACH","MOKULEIA","CAMP ERDMAN","CAMP MOKULEIA","EHUKAI BEACH PARK (PIPELINES)","HALEIWA BEACH PARK","HIDDEN BEACH","KAENA POINT","KAENA POINT","KAENA POINT (10 MINUTE BEACH)","KAENA POINT (HIDDEN BEACH)",
-"KAENA POINT (LIGHT STATION)","LANIAKEA BEACH","MOKULEIA BEACH PARK","PAHIPAHIALUA BEACH","PAPAILOA BEACH","PUAENA POINT","HALEIWA","PUPUKEA (GAS CHAMBERS)","PUU NENUE POINT","ROCKY POINT","SHARK'S COVE","SUNSET BEACH PARK","TABLES BEACH","MOKULEIA","THREE TABLES","VELZYLAND","WAIALEE BEACH PARK",
-"WAIALUA BEACH","WAIMEA BAY BEACH PARK"];
-
+import { Link } from 'react-router-dom';
+import { GroundOverlay } from '@react-google-maps/api';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ListReports extends React.Component {
@@ -87,6 +70,9 @@ class ListReports extends React.Component {
     const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
     const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
     const others = this.props.others.map(report => ({...report, type: "Other"}));
+   
+    console.log([...turtles, ...birds, ...seals, ...others]);
+
     // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
     return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
       // Turn your strings into dates, and then subtract them
@@ -147,12 +133,11 @@ return distinctAnimals;
   handleReset() {
     this.setState({results: this.getReports()});
     this.resetState();
-    this.clearDropdown();
   }
+
   handleClick() {
     this.setState({searchPressed: true, results: this.filter(this.state.filteredLocationReports, this.state.filteredAnimalReports)});
     console.log(this.state.results);
-
   }
 
   getDate() {
@@ -261,18 +246,24 @@ return distinctAnimals;
   renderPage() {
     console.log("WAAAA" + this.state.filteredAnimalReports);
     return (
-        <Container>      
-        <Header as="h2" textAlign="center">Latest Reports</Header>
-        <Dropdown
+        <Container style={{fontFamily: 'Poppins'}}>      
+
+       <Header style={{fontFamily: 'Poppins', marginTop: 20}} as="h2" textAlign="center">Latest Reports</Header>
+        <Grid columns={4} >
+        <Grid.Row>
+          <Grid.Column width={8}>
+                <Dropdown
             placeholder='Location'
             floated
             multiple
+            style={{marginRight: 20}}
             defaultValue={this.state.filteredLocationReports}
             search
             onChange={this.handleLocationChange.bind(this)}
             options={this.findDistinctLocations().map(location =>({key: location, text:location, value: location }))}
             selection
           />
+
           <Dropdown
             placeholder='Animal'
             floated
@@ -282,16 +273,37 @@ return distinctAnimals;
             options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
             selection
           />
-          <Sample/>
-          Unconfirmed: {this.props.unConfirmedRelated}
-
-          <Button 
+          </Grid.Column>
+                    <Grid.Column width={8}>
+         <Sample/>
+         </Grid.Column>
+         </Grid.Row>
+         <Grid.Row>
+         <Grid.Column floated='left' width={8}>
+         <Button 
           onClick={() => this.handleClick()}
+          style={{fontFamily: 'Poppins'}}
           primary>Search</Button>
        <Button 
        negative
+       style={{fontFamily: 'Poppins'}}
           onClick={() => this.handleReset()}
           primary>Reset</Button>
+          </Grid.Column>
+          <Grid.Column floated='right' width={8}>
+      <Link to="/listRelated">
+         <Button
+          color='blue'
+          content='Related Sightings'
+          icon='bell'
+          style={{ fontFamily: 'Poppins'}}
+          label={{ basic: true, color: 'blue', pointing: 'left', content: this.props.unConfirmedRelated }}
+        />      
+        </Link>
+         </Grid.Column>
+         </Grid.Row>
+         </Grid>
+                   
                     {this.state.noResults ? 
         <Header as="h1"> No results found. </Header> :
         <Table celled striped>
@@ -301,7 +313,7 @@ return distinctAnimals;
               <Table.HeaderCell>Time</Table.HeaderCell>
               <Table.HeaderCell>Animal</Table.HeaderCell>
               <Table.HeaderCell>Sector</Table.HeaderCell>
-              <Table.HeaderCell>Location</Table.HeaderCell>
+              <Table.HeaderCell>Island</Table.HeaderCell>
               <Table.HeaderCell>Size</Table.HeaderCell>
               <Table.HeaderCell>MainIdentification</Table.HeaderCell>
               <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
@@ -353,16 +365,16 @@ export default withTracker(() => {
   const stuffs = Stuffs.collection.find({}).fetch();
   const turtleSubscription = Meteor.subscribe('TurtlesCollection');
   const turtleReady = turtleSubscription.ready();
-  const turtles = Turtles.find({}).fetch();
+  const turtles = Turtles.find({ xSightings: { $gte : 1 } }).fetch();
   const birdSubscription = Meteor.subscribe('BirdsCollection');
   const birdReady = birdSubscription.ready();
-  const birds = Birds.find({}).fetch();
+  const birds = Birds.find({ xSightings: { $gte : 1 } }).fetch();
   const sealSubscription = Meteor.subscribe('SealsCollection');
   const sealReady = sealSubscription.ready();
-  const seals = Seals.find({}).fetch();
+  const seals = Seals.find({ xSightings: { $gte : 1 } }).fetch();
   const otherSubscription = Meteor.subscribe('OthersCollection');
   const otherReady = otherSubscription.ready();
-  const others = Others.find({}).fetch();
+  const others = Others.find({ xSightings: { $gte : 1 } }).fetch();
 
   // Find counts of xConfirmRelated that is == to 0:
   let unConfirmedRelated = Seals.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Turtles.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Birds.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count();

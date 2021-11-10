@@ -155,8 +155,10 @@ class MapView extends React.Component {
         }
       }
 
-      handleExtraFields(text) {
+      handleExtraFields(text, isFieldPresent) {
+        if (isFieldPresent) {
         return <Header style={{paddingTop: 20}} as='h3'>{text}</Header>;
+        }
       }
 
         /*
@@ -282,24 +284,24 @@ findDistinctLocations() {
   let otherLocations = Others.find({}, { fields: { 'LocationName': 1 } }).fetch();
 
     // Combine all of the report objects into one array
-  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
+let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
 
-  // For each report object, get the text in the locationName field
-  let distinctLocations = [];
-  allLocations.forEach(report => {
-    distinctLocations.push(report.LocationName);
-  });
+// For each report object, get the text in the locationName field
+let distinctLocations = [];
+allLocations.forEach(report => {
+  distinctLocations.push(report.LocationName);
+});
 
-  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
-  // Use a set to get rid of duplicate locations
-  distinctLocations = [... new Set(distinctLocations)];
+// https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+// Use a set to get rid of duplicate locations
+distinctLocations = [... new Set(distinctLocations)];
 
-  // https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
-  // Remove null (May keep replace with no location)
-  distinctLocations = distinctLocations.filter(function (el) {
-    return el != null;
-  });
-  return distinctLocations;
+// https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
+// Remove null (May keep replace with no location)
+distinctLocations = distinctLocations.filter(function (el) {
+  return el != null;
+});
+return distinctLocations;
 }
 
   getDate() {
@@ -322,41 +324,45 @@ findDistinctLocations() {
     let fRef = null;
 
     return (
-      <Grid>
+      <Grid style={{fontFamily: 'Poppins'}}>
         {this.state.pinPressed ?
-        <Grid.Column  textAlign='center' width={4}>
+        <Grid.Column textAlign='center' width={4}>
           <Grid.Row> <Image src='/images/logo.jpg' size='medium' rounded /></Grid.Row>
-          <Grid.Row> <Header textAlign='center' as='h1'>{this.handleFields(this.state.pin.Animal, "animal")}</Header> </Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Observed:</Header> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.state.pin.DateObjectObserved)} 
+          <Grid.Row> <Header style={{fontFamily: 'Poppins'}} textAlign='center' as='h1'>{this.handleFields(this.state.pin.Animal, "animal")}</Header> </Grid.Row>
+          <Grid.Row> <Header style={{ fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Observed:</Header> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.state.pin.DateObjectObserved)} 
           {" "} {new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.state.pin.DateObjectObserved)} HST </Grid.Row>
           <Grid.Row>{this.getType(this.state.pin.Animal)} {this.state.pin.BirdType || this.state.pin.TurtleType}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Tag Number:</Header> {this.handleFields(this.state.pin.xTagNumber, "tag number")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Location:</Header> {this.handleFields(this.state.pin.LocationName, "location")}</Grid.Row>
-          <Grid.Row>{this.handleExtraFields("Location Notes: ")} {this.state.pin.LocationNotes} </Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Status:</Header> {this.handleFields(this.state.pin.Status, "status")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Size:</Header> {this.handleFields(this.state.pin.Size, "size")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Behavior:</Header> {this.handleFields(this.state.pin.xAnimalBehavior, "animal behavior")}</Grid.Row>
-          <Grid.Row> <Header style={{paddingTop: 20}} as='h3'>Images</Header> {this.handleImage(this.state.pin.xImages)}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Tag Number:</Header> {this.handleFields(this.state.pin.xTagNumber, "tag number")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Island:</Header> {this.state.pin.Island || this.state.pin.xIsland}</Grid.Row>
+          <Grid.Row>{this.handleExtraFields("Location Notes: ", this.state.pin.LocationNotes)} {this.state.pin.LocationNotes} </Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Status:</Header> {this.handleFields(this.state.pin.Status, "status")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Size:</Header> {this.handleFields(this.state.pin.Size, "size")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Behavior:</Header> {this.handleFields(this.state.pin.xAnimalBehavior, "animal behavior")}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Images</Header> {this.handleImage(this.state.pin.xImages)}</Grid.Row>
         </Grid.Column> :
          <Grid.Column width={4}>
          <Grid.Row> <Image src='/images/logo.jpg' size='medium' rounded /></Grid.Row>
-         <Grid.Row> <Header style={{paddingTop: 20}} textAlign='center' as='h2'>Click on a pin to get started! </Header> </Grid.Row>
+         <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} textAlign='center' as='h2'>Click on a pin to get started! </Header> </Grid.Row>
         </Grid.Column>
          }
         <Grid.Column width={12}>
           <Grid.Row style={{backgroundColor: '#02c0e8', paddingLeft: 20, paddingTop: 20, marginTop: -10, paddingBottom: 20}}>
           
-          <Dropdown
-            style={{marginRight: 20, marginBottom: 20 }}
+          <Grid columns={4} >
+        <Grid.Row>
+          <Grid.Column width={8}>
+                <Dropdown
             placeholder='Location'
             floated
             multiple
+            style={{marginRight: 20}}
             defaultValue={this.state.filteredLocationReports}
             search
             onChange={this.handleLocationChange.bind(this)}
             options={this.findDistinctLocations().map(location =>({key: location, text:location, value: location }))}
             selection
           />
+
           <Dropdown
             placeholder='Animal'
             floated
@@ -366,15 +372,25 @@ findDistinctLocations() {
             options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
             selection
           />
-          <Sample/>
-          <Button 
+          </Grid.Column>
+                    <Grid.Column width={8}>
+         <Sample/>
+         </Grid.Column>
+         </Grid.Row>
+         <Grid.Column style={{marginTop: -15}}floated='left' width={8}>
+         <Button 
           onClick={() => this.handleClick()}
-          primary  style={{marginTop: 20 }}>Search</Button>
+          style={{fontFamily: 'Poppins'}}
+          primary>Search</Button>
        <Button 
        negative
+       style={{fontFamily: 'Poppins'}}
           onClick={() => this.handleReset()}
           primary>Reset</Button>
-          </Grid.Row>
+          </Grid.Column>
+         </Grid>
+         </Grid.Row>
+
           <LoadScript
             googleMapsApiKey='AIzaSyDy4lATc_hd8VHpkRBfDYUgfD3pGNQtdXA'>
            <GoogleMap

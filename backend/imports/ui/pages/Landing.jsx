@@ -24,7 +24,7 @@ class Landing extends React.Component {
       image: '/images/seabird.jpeg',
     },
     {
-      header: 'Spinner dolphins',
+      header: 'Spinner Dolphins',
       description: 'The spinner dolphin (nai’a or ka nai’a) is not currently listed under the Endangered Species Act but is protected under the Marine Mammal Protection Act.',
       image: '/images/dolphins.jpeg',
     },
@@ -45,7 +45,7 @@ class Landing extends React.Component {
           <Image size='huge' circular src="/images/logo.jpg"/>
         </Grid.Column>
         <Grid.Column width={8}>
-          <h1>E komo mai!</h1>
+          <h1 style={{fontFamily: 'Poppins'}}>E komo mai!</h1>
          <p>Wahi is a two part system that enables anyone to help preserve and recover Hawaii's marine protected species.</p>
            <p>Wahi Web displays the table of reports in a list view and a map view. Statistics are also visualized on the charts view page. </p>
           <p>Wahi Mobile allows you to report sightings of animals or call the hotline when you see an animal in distress.</p>
@@ -53,11 +53,11 @@ class Landing extends React.Component {
         </Grid.Row>
         
         <Grid.Row>
-          <h2>Types of Species</h2>
+          <h2 style={{fontFamily: 'Poppins'}}>Types of Species</h2>
         </Grid.Row>
         <Grid.Row>
           <Container>
-          <Card.Group centered items={this.items} ></Card.Group>
+          <Card.Group style={{fontFamily: 'Poppins'}} centered items={this.items} ></Card.Group>
           </Container>
         </Grid.Row>
       </Grid>
