@@ -43,40 +43,16 @@ class ListReports extends React.Component {
     };
   }
 
-/*
-  componentDidMount() {
-    let result = this.getReports();
-    this.setState({fullData: result});
-    console.log("compontdid moujnt" + this.state.fullData);
-
-  }*/
-  
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
     return (this.props.ready && this.props.sealReady && this.props.turtleReady && this.props.birdReady && this.props.otherReady) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-    // reformats location data to standard captialization
-    reformatLocation() {
-      let filteredLocationOptions=  [...new Set(locationOptions)].sort();
-      let lowercased = filteredLocationOptions.map(name => name.toLowerCase());
-      let upperCaseFirstLetter = lowercased.map(name => 
-        name.split(' ').map(word => 
-          word[0].toUpperCase() + word.slice(1).toLowerCase()
-        ).join(' '));
-      return upperCaseFirstLetter;
-    }
-   
-    // returns only objects in the array that matches the location value of the user's selceted locations
-    filterByValue(array, value) {
-      return array.filter((data) =>  JSON.stringify(data).toLowerCase().indexOf(value.toLowerCase()) !== -1);
-    }
-  
     // updates user's selected location choices
     handleChange = (e, {value}) => {
-     // this.setState({searchPressed: true, filteredLocationReports: value});
+      this.setState({searchPressed: true, filteredLocationReports: value});
       console.log("clicked locations: " + this.state.filteredLocationReports);
-      this.compareLocations();
+      this.setState({fullData: this.filterLocations(value)});
     }
 
   getReports() {
@@ -108,20 +84,71 @@ class ListReports extends React.Component {
     ;
   }
 
-  // compares user's selected location to the fullData
-  compareLocations() { // suffers from input lag
-    for (let i = 0; i < this.state.filteredLocationReports.length; i++) {
-      console.log(this.filterByValue(this.state.fullData, this.state.filteredLocationReports[i]));
-   //   this.setState({ filteredPins: this.filterByValue(this.state.fullData, this.state.filteredLocationReports[i])})
-    }
+  findDistinctAnimals() {
+      // Find distinct animals:
+  let distinctAnimals = ["Seal", "Turtle", "Bird"];
+  let otherAnimals = Others.find({}, { fields: { 'Animal': 1 } }).fetch();
+  
+  otherAnimals.forEach(report => {
+    distinctAnimals.push(report.Animal);
+  });
+
+  // Use a set to get rid of duplicate animals
+  distinctAnimals = [... new Set(distinctAnimals)];
+
+  // Remove null
+  distinctAnimals = distinctAnimals.filter(function (el) {
+    return el != null;
+  });
+
+return distinctAnimals;
   }
 
+  findDistinctLocations() {
+    let sealLocations = Seals.find({}, { fields: { 'LocationName': 1 } }).fetch();
+    let turtleLocations = Turtles.find({}, { fields: { 'LocationName': 1 } }).fetch();
+    let birdLocations = Birds.find({}, { fields: { 'LocationName': 1 } }).fetch();
+    let otherLocations = Others.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  
+      // Combine all of the report objects into one array
+  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
+
+  // For each report object, get the text in the locationName field
+  let distinctLocations = [];
+  allLocations.forEach(report => {
+    distinctLocations.push(report.LocationName);
+  });
+
+  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+  // Use a set to get rid of duplicate locations
+  distinctLocations = [... new Set(distinctLocations)];
+
+  // https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
+  // Remove null (May keep replace with no location)
+  distinctLocations = distinctLocations.filter(function (el) {
+    return el != null;
+  });
+  return distinctLocations;
+
+  }
+
+  filterLocations(locationName) {
+    let sealLocations = Seals.find({}, { fields: { 'LocationName': locationName} }).fetch();
+    let turtleLocations = Turtles.find({}, { fields: { 'LocationName': locationName } }).fetch();
+    let birdLocations = Birds.find({}, { fields: { 'LocationName': locationName } }).fetch();
+    let otherLocations = Others.find({}, { fields: { 'LocationName': locationName } }).fetch();
+  
+      // Combine all of the report objects into one array
+  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
+
+  return allLocations;
+
+  }
   // dkdkd
 
   //dd
   // Render the page once subscriptions have been received.
   renderPage() {
-    console.log("renderPage" + this.state.filteredData);
     return (
       <Container>
         <Header as="h2" textAlign="center">Latest Reports</Header>
@@ -131,7 +158,16 @@ class ListReports extends React.Component {
             multiple
             search
             onChange={this.handleChange.bind(this)}
-            options={this.reformatLocation().map(location =>({key: location, text:location, value: location }))}
+            options={this.findDistinctLocations().map(location =>({key: location, text:location, value: location }))}
+            selection
+          />
+          <Dropdown
+            placeholder='Animal'
+            floated
+            multiple
+            search
+            onChange={this.handleChange.bind(this)}
+            options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
             selection
           />
           Unconfirmed: {this.props.unConfirmedRelated}
