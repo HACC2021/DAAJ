@@ -3,7 +3,7 @@
 
 # Deployed app 
 - https://daaj.meteorapp.com/
-- Link to video: 
+- Link to video: https://www.youtube.com/watch?v=GasJApIWsFk
 - The mobile app was built with Expo and can be previewed in the video
 
 
