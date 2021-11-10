@@ -377,8 +377,7 @@ return distinctLocations;
          <Sample/>
          </Grid.Column>
          </Grid.Row>
-         <Grid.Row>
-         <Grid.Column floated='left' width={8}>
+         <Grid.Column style={{marginTop: -15}}floated='left' width={8}>
          <Button 
           onClick={() => this.handleClick()}
           style={{fontFamily: 'Poppins'}}
@@ -389,7 +388,6 @@ return distinctLocations;
           onClick={() => this.handleReset()}
           primary>Reset</Button>
           </Grid.Column>
-         </Grid.Row>
          </Grid>
          </Grid.Row>
 
