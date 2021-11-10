@@ -158,7 +158,7 @@ Meteor.startup(() => {
       xSightings: 1,
       xRelated: "",
       xConfirmRelated: "",
-      xChecked: "0",
+      xChecked: 0,
     });
 
     insertSeal({
@@ -208,7 +208,7 @@ Meteor.startup(() => {
       xSightings: 1,
       xRelated: "",
       xConfirmRelated: "",
-      xChecked: "0",
+      xChecked: 0,
     });
 
     insertSeal({
@@ -258,7 +258,7 @@ Meteor.startup(() => {
       xSightings: 1,
       xRelated: "",
       xConfirmRelated: "",
-      xChecked: "0",
+      xChecked: 0,
     });
 
     insertSeal({
@@ -308,7 +308,7 @@ Meteor.startup(() => {
       xSightings: 1,
       xRelated: "",
       xConfirmRelated: "",
-      xChecked: "0",
+      xChecked: 0,
     });
 
     // insertSeal({
@@ -360,7 +360,7 @@ Meteor.startup(() => {
       // xSightings: 1,
       // xRelated: "",
       // xConfirmRelated: "",
-      // xChecked: "0",
+      // xChecked: 0,
     // });
 
   }
@@ -788,6 +788,7 @@ Meteor.startup(() => {
       Island: "Oahu",
       MainIdentification: "T",
       OtherNotes: "",
+      xRelated: "",
       xSightings: 1,
       xLatitude: 21.27518,
       xLongitude: -157.69368,

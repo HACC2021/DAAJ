@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import ListStuff from '../pages/ListStuff';
 import ListReports from '../pages/ListReports';
+import ListRelated from '../pages/ListRelated';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
 import EditStuff from '../pages/EditStuff';
@@ -18,7 +19,6 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import MapView from '../pages/MapView';
 import ChartView from '../pages/ChartView';
-import TableView from '../pages/TableView';
 import Export from '../pages/Export';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -36,6 +36,7 @@ class App extends React.Component {
             <ProtectedRoute path="/list" component={ListReports}/>
             <ProtectedRoute path="/mapview" component={MapView}/>
             <ProtectedRoute path="/chartview" component={ChartView}/>
+            <ProtectedRoute path="/listrelated" component={ListRelated}/>
             <ProtectedRoute path="/export" component={Export}/>
             <ProtectedRoute path="/add" component={AddStuff}/>
             <ProtectedRoute path="/edit/:_id" component={EditStuff}/>

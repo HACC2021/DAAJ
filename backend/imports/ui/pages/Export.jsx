@@ -61,6 +61,7 @@ class Export extends React.Component {
         <Grid.Column>
           <Sample />
           <Header as="h2" textAlign="center">Export</Header>
+          Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
             <Segment>
               <SubmitField value='Submit' />
@@ -72,6 +73,21 @@ class Export extends React.Component {
     );
   }
 
+  /*
+   * data : data from collection
+   * whichOne : which aggregation to be done
+   */
+  combine(data, whichOne) {
+    // console.log("In combine");
+    switch (whichOne) {
+      case (0):
+        // console.log("GPS");
+        return "Latitude: " + data[0] + "; Longitude: " + data[1] + "; On the island of " + data[2];
+    }
+
+  }
+
+
   exportSealData(data, ref) {
     console.log("in exportSealData");
     // Grab the date range that the user selected
@@ -81,7 +97,7 @@ class Export extends React.Component {
     
     // Problems with: "ID Temp (Bleach #)" , "# of Volunteers Engaged"
     // Headers copied from Sightings Data Template
-    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Sector", "Location", "Location Notes", "Seal Present?", "Size", "Sex", "Beach Position", "How Identified?", "ID Temp", "Tag Number", "Tag Side", "Tag Color", "ID Perm", "Molt", "Additional Notes on ID", "ID Verified By", "Seal Logging", "Mom & Pup Pair", "SRA Set Up", "SRA Set By", "Num of Volunteers Engaged", "Seal Depart Info Avail?", "Seal Departed Date", "Seal Departed Time", "Number of Calls Received", "Other Notes"]
+    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Sector", "Location", "Location Notes", "Seal Present?", "Size", "Sex", "Beach Position", "How Identified?", "ID Temp", "Tag Number", "Tag Side", "Tag Color", "ID Perm", "Molt", "Additional Notes on ID", "ID Verified By", "Seal Logging", "Mom & Pup Pair", "SRA Set Up", "SRA Set By", "Num of Volunteers Engaged", "Seal Depart Info Avail?", "Seal Departed Date", "Seal Departed Time", "Number of Calls Received", "Other Notes", "Images", "RelatedID"]
 
     // Get everything in the Seals collection (after filtering)
     let sealsToExport = Seals.find({
@@ -91,22 +107,71 @@ class Export extends React.Component {
         $lte : to,
       }
     }).fetch(); // an array of seal objects
-    console.log("sealsToExport after filtering: " + JSON.stringify(sealsToExport));
+    // console.log("sealsToExport after filtering: " + JSON.stringify(sealsToExport));
 
     // For each seal, put its fields into an array 
     let rows = []
     // Push the headers on 
     rows.push(theHeaders);
+    // console.log("before putting data in");
     for (let index = 0; index < sealsToExport.length; index++) {
       // Initialize an empty array for this seal
       rows.push([]);
       // Grab the fields from the collection to put into the array
+      rows[index + 1].push(sealsToExport[index].DateObserved);
+      rows[index + 1].push(sealsToExport[index].TimeObserved);
+      rows[index + 1].push(sealsToExport[index].TicketNumber);
+      rows[index + 1].push(sealsToExport[index].HotlineOpInitials);
+      rows[index + 1].push(sealsToExport[index].TicketType);
       rows[index + 1].push(sealsToExport[index].ObserverName);
       rows[index + 1].push(sealsToExport[index].ObserverPhone);
-      rows[index + 1].push(sealsToExport[index].DateObjectObserved);
+      rows[index + 1].push(sealsToExport[index].ObserverInitials);
+      rows[index + 1].push(sealsToExport[index].ObserverType);
+      rows[index + 1].push(sealsToExport[index].Sector);
+      rows[index + 1].push(sealsToExport[index].LocationName);
+      rows[index + 1].push(this.combine([sealsToExport[index].xLatitude, sealsToExport[index].xLongitude, sealsToExport[index].xIsland], 0));
+      rows[index + 1].push(sealsToExport[index].SealPresent);
+      rows[index + 1].push(sealsToExport[index].Size);
+      rows[index + 1].push(sealsToExport[index].Sex);
+      rows[index + 1].push(sealsToExport[index].BeachPosition);
+      rows[index + 1].push(sealsToExport[index].MainIdentification);
+      rows[index + 1].push("");
+      rows[index + 1].push(sealsToExport[index].TagNumber);
+      rows[index + 1].push(sealsToExport[index].TagSide);
+      rows[index + 1].push(sealsToExport[index].TagColor);
+      rows[index + 1].push(sealsToExport[index].IDPerm);
+      rows[index + 1].push(sealsToExport[index].Molt);
+      rows[index + 1].push(sealsToExport[index].AdditionalNotesOnID);
+      rows[index + 1].push(sealsToExport[index].IDVerifiedBy);
+      rows[index + 1].push(sealsToExport[index].SealLogging);
+      rows[index + 1].push(sealsToExport[index].MomPup);
+      rows[index + 1].push(sealsToExport[index].SRASetBy);
+      rows[index + 1].push(sealsToExport[index].SRASetBy);
+      rows[index + 1].push(sealsToExport[index].NumVolunteers);
+      rows[index + 1].push(sealsToExport[index].SealDepart);
+      rows[index + 1].push(sealsToExport[index].SealDepartDate);
+      rows[index + 1].push(sealsToExport[index].SealDepartTime);
+      rows[index + 1].push(sealsToExport[index].xSightings);
+
+      // Other notes:
+      let data = [sealsToExport[index].xBandYN, sealsToExport[index].xBandColor, sealsToExport[index].xBleachMarkYN, sealsToExport[index].xScarsYN];
+      let notes = []
+      let labels = ["Band: ", "Band color: ", "Bleachmark: ", "Scar: ", "Number of people within 100ft: " + "Animal behavior: "];
+      for (let index = 0; index < data.length; index++) {
+          (data[index] === "" || data[index] === undefined) ? notes.push("") : notes.push(labels[index] + data[index]);
+        }
+      (sealsToExport[index].xNumHundredFt === "" ? notes.push("") : notes.push("Number of people within 100ft: " + sealsToExport[index].xNumHundredFt));
+      (sealsToExport[index].xAnimalBehavior === "" ? notes.push("") : notes.push("Animal behavior: " + sealsToExport[index].xAnimalBehavior));
+      notes =  notes.join(" | ");
+      rows[index + 1].push(notes);
+
+      // Images: 
+      let images = sealsToExport[index].xImages.join(" | ");
+      rows[index + 1].push(images);
+      rows[index + 1].push(sealsToExport[index].xRelated);
     }
 
-    console.log("exporting result: " + JSON.stringify(rows));
+    // console.log("exporting result: " + JSON.stringify(rows));
     // const rows = [
     //   theHeaders,
     //   ["name1", "city1", "some other info"],
@@ -121,7 +186,7 @@ class Export extends React.Component {
     // encodeURI doesn't encode: , / ? : @ & = + $ # ()
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI <- figure out how to encode it by replacing it or using encodeURIComponent?
     var encodedUri = encodeURI(csvContent);
-    // window.open(encodedUri);
+    window.open(encodedUri);
   }
 }
 
