@@ -84,6 +84,41 @@ Meteor.methods({
     })
   },
 
+  updateMatchingTurtles( relatedId ) {
+    console.log("In meteor method updateMatchingTurtles");
+    console.log("relatedId is: " + relatedId);
+    // For all turtles that have xRelated with this ID, change its confirmRelated to 1
+    Turtles.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  },
+
+  reverseMatchingTurtles( relatedId ) {
+    console.log("In meteor method reverseMatchingTurtles");
+    console.log("relatedId is: " + relatedId);
+    // For all turtles that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
+    Turtles.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  }
+
+
 })
 
 // Publications = will need admin and regular user later?

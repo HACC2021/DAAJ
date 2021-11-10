@@ -11,14 +11,15 @@ class NavBar extends React.Component {
   render() {
     const menuStyle = { marginBottom: '10px' };
     return (
-      <Menu style={menuStyle} attached="top" borderless inverted>
+      <Menu style={menuStyle} attached="top" borderless inverted color="blue">
         <Menu.Item as={NavLink} activeClassName="" exact to="/">
-          <Header inverted as='h1'>meteor-application-template</Header>
+          <Header inverted as='h1'>Wahi</Header>
         </Menu.Item>
         {this.props.currentUser ? (
           [<Menu.Item as={NavLink} activeClassName="active" exact to="/list" key='list'>List View</Menu.Item>,
+          <Menu.Item as={NavLink} activeClassName="active" exact to="/listrelated" key='listrelated'>Confirm Related Sightings</Menu.Item>,
+          <Menu.Item as={NavLink} activeClassName="active" exact to="/mapview" key='mapview'>Map View</Menu.Item>,
             <Menu.Item as={NavLink} activeClassName="active" exact to="/chartview" key='chartview'>Charts View</Menu.Item>,
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/mapview" key='mapview'>Map View</Menu.Item>,
             <Menu.Item as={NavLink} activeClassName="active" exact to="/export" key='export'>Export</Menu.Item>
           ]
         ) : ''}
