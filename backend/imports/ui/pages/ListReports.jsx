@@ -134,6 +134,7 @@ class ListReports extends React.Component {
             options={this.reformatLocation().map(location =>({key: location, text:location, value: location }))}
             selection
           />
+          Unconfirmed: {this.props.unConfirmedRelated}
         <Table celled striped>
           <Table.Header>
             <Table.Row>
@@ -177,6 +178,8 @@ ListReports.propTypes = {
 
   others: PropTypes.array.isRequired,
   otherReady: PropTypes.bool.isRequired,
+
+  unConfirmedRelated: PropTypes.number.isRequired,
 };
 
 // withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -200,6 +203,55 @@ export default withTracker(() => {
   const otherReady = otherSubscription.ready();
   const others = Others.find({}).fetch();
 
+  // Find counts of xConfirmRelated that is == to 0:
+  let unConfirmedRelated = Seals.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Turtles.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Birds.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count();
+  console.log("unConfirmedRelated:" + unConfirmedRelated);
+  
+  // Find distinct locations:
+  let sealLocations = Seals.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  let turtleLocations = Turtles.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  let birdLocations = Birds.find({}, { fields: { 'LocationName': 1 } }).fetch();
+  let otherLocations = Others.find({}, { fields: { 'LocationName': 1 } }).fetch();
+
+  // Combine all of the report objects into one array
+  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
+
+  // For each report object, get the text in the locationName field
+  let distinctLocations = [];
+  allLocations.forEach(report => {
+    distinctLocations.push(report.LocationName);
+  });
+
+  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+  // Use a set to get rid of duplicate locations
+  distinctLocations = [... new Set(distinctLocations)];
+
+  // https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
+  // Remove null (May keep replace with no location)
+  distinctLocations = distinctLocations.filter(function (el) {
+    return el != null;
+  });
+
+  console.log("distinctLocations:" + distinctLocations);
+
+  // Find distinct animals:
+  let distinctAnimals = ["Seal", "Turtle", "Bird"];
+  let otherAnimals = Others.find({}, { fields: { 'Animal': 1 } }).fetch();
+  
+  otherAnimals.forEach(report => {
+    distinctAnimals.push(report.Animal);
+  });
+
+  // Use a set to get rid of duplicate animals
+  distinctAnimals = [... new Set(distinctAnimals)];
+
+  // Remove null
+  distinctAnimals = distinctAnimals.filter(function (el) {
+    return el != null;
+  });
+
+  console.log("distinctAnimals: " + distinctAnimals);
+
   return {
     stuffs,
     ready,
@@ -210,6 +262,7 @@ export default withTracker(() => {
     sealReady,
     seals,
     otherReady,
-    others
+    others,
+    unConfirmedRelated,
   };
 })(ListReports);
