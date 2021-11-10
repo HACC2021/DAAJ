@@ -120,6 +120,8 @@ function findRelatedTurtle(newTurtleID) {
       'Sector': 1,
       'LocationName': 1,
       'LocationNotes': 1,
+      'xLatitude': 1,
+      'xLongitude': 1,
       // Species
       'TurtleType': 1,
       'xRelated': 1,
@@ -128,7 +130,7 @@ function findRelatedTurtle(newTurtleID) {
   }).fetch();
 
   console.log("oldTurtles: " + JSON.stringify(oldTurtles)); // All of the turtles in the collection beside the newly added one
-  let newTurtle = Turtles.find({ '_id': newTurtleID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'xAmpFlipper': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'TurtleType': 1, 'xSightings': 1 } }).fetch()[0];
+  let newTurtle = Turtles.find({ '_id': newTurtleID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'xAmpFlipper': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'xLatitude' : 1, 'xLongitude': 1, 'TurtleType': 1, 'xSightings': 1 } }).fetch()[0];
 
   // Weights to adjust
   const TIMING_WEIGHT = 0.25;
@@ -174,13 +176,28 @@ function findRelatedTurtle(newTurtleID) {
     identifyingCharsScore = identifyingCharsScore / 7;
     console.log("identifyingCharsScore:" + identifyingCharsScore);
 
-    // Check location
+    // Check location: 
     let locationScore = 0;
+    // Sector
     if (newTurtle.Sector === oldTurtle.Sector) locationScore++;
-    if (newTurtle.LocationName === oldTurtle.LocationName) locationScore++;
-    if (newTurtle.LocationNotes === oldTurtle.LocationNotes) locationScore++;
-    locationScore = locationScore / 3;
-    console.log("locationScore: " + locationScore);
+    // if (newTurtle.LocationName === oldTurtle.LocationName) locationScore++;
+
+    // GPS coordinates
+    let newTurtleCoords = Math.abs(newTurtle.xLatitude + newTurtle.xLongitude);
+    let oldTurtleCoords = Math.abs (oldTurtle.xLatitude + oldTurtle.xLongitude);
+    // console.log("newTurtleCoords" + newTurtleCoords);
+    // console.log( oldTurtleCoords" + oldTurtleCoords);
+    let difference = Math.abs(newTurtleCoords - oldTurtleCoords);
+    // console.log("difference: " + difference);
+    // 0.001 degrees = 111 meters = 0.0689722 miles
+    if (difference <= 0.001) {
+      locationScore++;
+    } else if (difference <= 0.005) {
+      locationScore = locationScore + 0.5;
+    } else if (difference <= 0.01) {
+      locationScore = locationScore + 0.25;
+    }
+
 
     // Check species
     let speciesScore = 0;

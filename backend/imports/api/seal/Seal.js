@@ -122,13 +122,15 @@ function findRelatedSeal(newSealID) {
       // Location
       'Sector': 1,
       'LocationName': 1,
+      'xLatitude': 1,
+      'xLongitude': 1,
       'xRelated': 1,
       'xSightings': 1,
     }
   }).fetch();
 
   console.log("oldSeals: " + JSON.stringify(oldSeals)); // All of the seals in the collection beside the newly added one
-  let newSeal = Seals.find({ '_id': newSealID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'xSightings': 1 } }).fetch()[0];
+  let newSeal = Seals.find({ '_id': newSealID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'xLatitude' : 1, 'xLongitude': 1, 'xSightings': 1 } }).fetch()[0];
 
   // Weights to adjust
   const TIMING_WEIGHT = 0.25;
@@ -173,10 +175,28 @@ function findRelatedSeal(newSealID) {
     identifyingCharsScore = identifyingCharsScore / 7;
     console.log("identifyingCharsScore:" + identifyingCharsScore);
 
-    // Check location
+    // Check location: 
     let locationScore = 0;
+    // Sector
     if (newSeal.Sector === oldSeal.Sector) locationScore++;
-    if (newSeal.LocationName === oldSeal.LocationName) locationScore++;
+    // if (newSeal.LocationName === oldSeal.LocationName) locationScore++;
+
+    // GPS coordinates
+    let newSealCoords = Math.abs(newSeal.xLatitude + newSeal.xLongitude);
+    let oldSealCoords = Math.abs(oldSeal.xLatitude + oldSeal.xLongitude);
+    // console.log("newSealCoords" + newSealCoords);
+    // console.log("oldSealCoords" + oldSealCoords);
+    let difference = Math.abs(newSealCoords - oldSealCoords);
+    // console.log("difference: " + difference);
+    // 0.001 degrees = 111 meters = 0.0689722 miles
+    if (difference <= 0.001) {
+      locationScore++;
+    } else if (difference <= 0.005) {
+      locationScore = locationScore + 0.5;
+    } else if (difference <= 0.01) {
+      locationScore = locationScore + 0.25;
+    }
+
     locationScore = locationScore / 2;
     console.log("locationScore: " + locationScore);
 
@@ -220,5 +240,7 @@ function findRelatedSeal(newSealID) {
         xConfirmRelated: 0,
       }
     })
+  } else {
+    console.log("No match!");
   }
 }
