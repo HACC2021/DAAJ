@@ -7,7 +7,7 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import { VictoryChart, VictoryTheme, VictoryLine } from 'victory';
+import { VictoryChart, VictoryTheme, VictoryLine, VictoryPie } from 'victory';
 import Sample from '../components/Sample';
 
 
@@ -24,13 +24,15 @@ class ChartView extends React.Component {
     let sealTimeSeries = this.getSealTimeSeriesData();
     sealTimeSeries = Array.from(sealTimeSeries);
     console.log("sealTimeSeries: " + JSON.stringify(sealTimeSeries));
+
     return (
       <Grid container centered>
+        <Grid.Row>
         <Grid.Column>
           <Sample />
           <Button onClick={() => this.handleClick()} className="ui olive basic button">Filter</Button>
           <Header as="h2" textAlign="center">Dashboard</Header>
-          <VictoryChart
+          <VictoryChart width={600}
             theme={VictoryTheme.material}
           >
             <VictoryLine
@@ -76,8 +78,19 @@ class ChartView extends React.Component {
               ]}
             />
           </VictoryChart>
+          </Grid.Column>
+      </Grid.Row>
 
-        </Grid.Column>
+      <Grid.Row>
+          <VictoryPie theme={VictoryTheme.material} 
+          data={[
+            { x: "Turtles", y: this.props.turtles.length },
+            { x: "Seals", y: this.props.seals.length  },
+            { x: "Birds", y: this.props.birds.length  },
+            { x: "Others", y: this.props.others.length  }]}
+          />
+
+      </Grid.Row>
       </Grid>
     );
   }
