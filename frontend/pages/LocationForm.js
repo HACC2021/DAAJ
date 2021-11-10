@@ -60,7 +60,7 @@ export class LocationForm extends React.Component {
       xlatitude: this.state.xlatitude, 
       xlongitude: this.state.xlongitude,
       xisland: this.state.q1display,
-      sector: this.state.q2display,
+      xsector: this.state.q2display,
     };
 
     this.props.navigation.navigate('ContactInfo', 

@@ -39,7 +39,7 @@ const FormSeal2 = (props) => {
           contactInfoData: props.route.params.contactInfoData,
           formAllData: props.route.params.formAllData,
           formAll2Data: props.route.params.formAll2Data,
-          sex: props.route.params.q1display,
+          sex: props.route.params.sex,
           formSeal2Data: formSeal2Data,
         });
     };
