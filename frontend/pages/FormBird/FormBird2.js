@@ -20,16 +20,13 @@ const FormBird2 = (props) => {
     observerPhone: props.route.params.contactInfoData.observerPhone,
     observerInitials: props.route.params.contactInfoData.observerInitials,
     observerType: props.route.params.contactInfoData.observerType,
-    sector: props.route.params.locationData.sector,
-    size: props.route.params.formSeal2Data.size,
-    sex:props.route.params.sex,
-    beachPosition: props.route.params.formSeal2Data.beachPosition,
-    mainIdentification: props.route.params.formAll2Data.mainIdentification,
-    bleachNumber: props.route.params.formAllData.bleachNumber,
-    tagNumber: props.route.params.formAllData.tagNumber,
-    tagSide: props.route.params.formAllData.tagSide,
-    tagColor: props.route.params.formAllData.tagColor,
-    momPup: props.route.params.formSeal2Data.momPup,
+    sector: props.route.params.locationData.xsector,
+    birdType: props.route.params.birdType,
+    xmainIdentification: props.route.params.formAll2Data.mainIdentification,
+    xBleachMarkNum: props.route.params.formAllData.bleachNumber,
+    xtagNumber: props.route.params.formAllData.tagNumber,
+    xtagSide: props.route.params.formAllData.tagSide,
+    xtagColor: props.route.params.formAllData.tagColor,
     otherNotes: "",
     xlatitude: props.route.params.locationData.xlatitude,
     xlongitude: props.route.params.locationData.xlongitude,
@@ -42,18 +39,24 @@ const FormBird2 = (props) => {
     xscarsYN: props.route.params.formAllData.xscarsYN,
     xscarsLocation: props.route.params.formAllData.xscarsLocation,
     ximages: props.route.params.ximages,
-    xisland: props.route.params.locationData.xisland,
+    xIsland: props.route.params.locationData.xisland,
   };
 
   for (const property in data) {
     if (data[property] == undefined) {
       data[property] = '';
     }
+    if (data[property] == NaN) {
+      data[property] = '';
+    }
+    if (data[property] == null) {
+      data[property] = '';
+    }
   }
     
 
   const submitForm = () => {
-      Meteor.call('addSeal', data, err => {
+      Meteor.call('addBird', data, err => {
         if (err) {
           console.log(err)
         } else {

@@ -2,11 +2,68 @@ import React from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { View, ScrollView, FlatList, Image  } from 'react-native';
 import { LocationView } from '../../components/LocationView';
+import Meteor from '@meteorrn/core';
+
+Meteor.connect('ws://localhost:3000/websocket')
 
 
 const FormOther2 = (props) => {
 
   const dateObj = new Date();
+
+
+
+  let data = {
+    dateObjectObserved: dateObj,
+    observerName: props.route.params.contactInfoData.observerName,
+    observerPhone: props.route.params.contactInfoData.observerPhone,
+    observerInitials: props.route.params.contactInfoData.observerInitials,
+    observerType: props.route.params.contactInfoData.observerType,
+    sector: props.route.params.locationData.xsector,
+    animal: props.route.params.formOther1Data.animal,
+    identification: props.route.params.formAll2Data.mainIdentification,
+    BleachMarkNum: props.route.params.formAllData.fbleachNumber,
+    xtagNumber: props.route.params.formAllData.tagNumber,
+    xtagSide: props.route.params.formAllData.tagSide,
+    xtagColor: props.route.params.formAllData.tagColor,
+    otherNotes: props.route.params.formOther1Data.otherNotes,
+    xlatitude: props.route.params.locationData.xlatitude,
+    xlongitude: props.route.params.locationData.xlongitude,
+    numHundredFt: props.route.params.formAll2Data.xnumHundredFt,
+    animalBehavior: props.route.params.formAll2Data.xanimalBehavior,
+    TagYN: props.route.params.formAllData.xTagYN,
+    BandYN: props.route.params.formAllData.xBandYN,
+    bandColor: props.route.params.formAllData.xbandColor,
+    bleachMarkYN: props.route.params.formAllData.xbleachMarkYN,
+    xscarsYN: props.route.params.formAllData.xscarsYN,
+    xscarsLocation: props.route.params.formAllData.xscarsLocation,
+    ximages: props.route.params.ximages,
+    xIsland: props.route.params.locationData.xisland,
+  };
+
+  for (const property in data) {
+    if (data[property] == undefined) {
+      data[property] = '';
+    }
+    if (data[property] == NaN) {
+      data[property] = '';
+    }
+    if (data[property] == null) {
+      data[property] = '';
+    }
+  }
+    
+
+  const submitForm = () => {
+      Meteor.call('addOther', data, err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("Submitted report from App.")
+        }
+      }) 
+      props.navigation.navigate('ThankYou');
+  };
 
   const renderLocView = () => {
       if (props.route.params.locationData.xlatitude!=null) {
@@ -59,7 +116,7 @@ const FormOther2 = (props) => {
       
       {renderLocView()}
 
-      <Button style={{marginTop: 10}} status='info'>Submit</Button>
+      <Button onPress={submitForm} style={{marginTop: 10}} status='info'>Submit</Button>
 
 
 

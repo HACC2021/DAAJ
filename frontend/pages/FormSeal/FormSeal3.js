@@ -17,7 +17,7 @@ const FormSeal3 = (props) => {
     observerPhone: props.route.params.contactInfoData.observerPhone,
     observerInitials: props.route.params.contactInfoData.observerInitials,
     observerType: props.route.params.contactInfoData.observerType,
-    sector: props.route.params.locationData.sector,
+    sector: props.route.params.locationData.xsector,
     size: props.route.params.formSeal2Data.size,
     sex:props.route.params.sex,
     beachPosition: props.route.params.formSeal2Data.beachPosition,
@@ -44,6 +44,12 @@ const FormSeal3 = (props) => {
 
   for (const property in data) {
     if (data[property] == undefined) {
+      data[property] = '';
+    }
+    if (data[property] == NaN) {
+      data[property] = '';
+    }
+    if (data[property] == null) {
       data[property] = '';
     }
   }
