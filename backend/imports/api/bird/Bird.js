@@ -81,6 +81,41 @@ Meteor.methods({
     })
   },
 
+  updateMatchingBirds( relatedId ) {
+    console.log("In meteor method updateMatchingBirds");
+    console.log("relatedId is: " + relatedId);
+    // For all birds that have xRelated with this ID, change its confirmRelated to 1
+    Birds.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  },
+
+  reverseMatchingBirds( relatedId ) {
+    console.log("In meteor method reverseMatchingBirds");
+    console.log("relatedId is: " + relatedId);
+    // For all birds that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
+    Birds.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  }
+
+
 })
 
 // Publications = will need admin and regular user later?

@@ -54,9 +54,13 @@ class RelatedReportItem extends React.Component {
           <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
           <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
           <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
-          {this.props.report.xSightings !== 0 ? <Table.Cell><Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
-            Confirm</Button></Table.Cell> : <Table.Cell><Button negative value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 0)}>
-            Deny</Button></Table.Cell>}
+          <Table.Cell><Button.Group>
+            <Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
+            Confirm</Button>
+            <Button.Or />
+            <Button negative value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 0)}>
+            Deny</Button>
+          </Button.Group></Table.Cell>
         </Table.Row> 
       );
     } else {
@@ -74,9 +78,13 @@ class RelatedReportItem extends React.Component {
           <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
           <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
           <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
-          {this.props.report.xSightings !== 0 ? <Table.Cell><Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
-            Confirm</Button></Table.Cell> : <Table.Cell><Button negative value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 0)}>
-            Deny</Button></Table.Cell>}
+          <Table.Cell><Button.Group>
+            <Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
+            Confirm</Button>
+            <Button.Or />
+            <Button negative value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 0)}>
+            Deny</Button>
+          </Button.Group></Table.Cell>
         </Table.Row>
       );
   
