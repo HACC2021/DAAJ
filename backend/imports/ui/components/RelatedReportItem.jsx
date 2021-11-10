@@ -6,31 +6,31 @@ import { withRouter, Link } from 'react-router-dom';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class RelatedReportItem extends React.Component {
   findFunction(relatedID, animal, mode) {
-    if (mode === 1){
-      if (animal === "Seal"){
+    if (mode === 1) {
+      if (animal === "Seal") {
         Meteor.call('updateMatchingSeals', relatedID)
       }
-      if (animal === "Bird"){
+      if (animal === "Bird") {
         Meteor.call('updateMatchingBirds', relatedID)
       }
-      if (animal === "Turtle"){
+      if (animal === "Turtle") {
         Meteor.call('updateMatchingTurtles', relatedID)
       }
-      if (animal === "Other"){
+      if (animal === "Other") {
         Meteor.call('updateMatchingOthers', relatedID)
       }
     }
-    else if (mode === 0){
+    else if (mode === 0) {
       if (animal === "Seal"){
         Meteor.call('reverseMatchingSeals', relatedID)
       }
-      if (animal === "Bird"){
+      if (animal === "Bird") {
         Meteor.call('reverseMatchingBirds', relatedID)
       }
-      if (animal === "Turtle"){
+      if (animal === "Turtle") {
         Meteor.call('reverseMatchingTurtles', relatedID)
       }
-      if (animal === "Other"){
+      if (animal === "Other") {
         Meteor.call('reverseMatchingOthers', relatedID)
       }
   
