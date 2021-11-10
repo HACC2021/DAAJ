@@ -7,7 +7,7 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
-import { VictoryBar } from 'victory';
+import { VictoryChart, VictoryTheme, VictoryLine } from 'victory';
 import Sample from '../components/Sample';
 
 
@@ -21,83 +21,99 @@ class ChartView extends React.Component {
 
   renderPage() {
     let fRef = null;
+    let sealTimeSeries = this.getSealTimeSeriesData();
+    sealTimeSeries = Array.from(sealTimeSeries);
+    console.log("sealTimeSeries: " + JSON.stringify(sealTimeSeries));
     return (
       <Grid container centered>
         <Grid.Column>
-          <Sample/>
-          <Button className="ui olive basic button">Filter</Button>
+          <Sample />
+          <Button onClick={() => this.handleClick()} className="ui olive basic button">Filter</Button>
           <Header as="h2" textAlign="center">Dashboard</Header>
-          <VictoryBar/>
-          {/*JSON.stringify(this.filter(new Date(), new Date(), ["Turtle Bay"], ["Bird", "Dolphin"]))*/}
+          <VictoryChart
+            theme={VictoryTheme.material}
+          >
+            <VictoryLine
+              style={{
+                data: { stroke: "#c43a31" },
+                parent: { border: "1px solid #ccc" }
+              }}
+              // Seal
+              data={[
+                { x: new Date("11-02-21"), y: 2 },
+                { x: new Date("11-03-21"), y: 3 },
+                { x: new Date("11-04-21"), y: 4 },
+                { x: new Date("11-05-21"), y: 5 },
+                { x: new Date("11-01-21"), y: 6 },
+              ]}
+            />
+            <VictoryLine
+              style={{
+                data: { stroke: "#c43a31" },
+                parent: { border: "1px solid #ccc" }
+              }}
+              // Turtle
+              data={[
+                { x: new Date("11-02-21"), y: 2 },
+                { x: new Date("11-03-21"), y: 3 },
+                { x: new Date("11-04-21"), y: 4 },
+                { x: new Date("11-05-21"), y: 5 },
+                { x: new Date("11-01-21"), y: 6 },
+              ]}
+            />
+            <VictoryLine
+              style={{
+                data: { stroke: "#c43a31" },
+                parent: { border: "1px solid #ccc" }
+              }}
+              // Bird
+              data={[
+                { x: new Date("11-02-21"), y: 2 },
+                { x: new Date("11-03-21"), y: 3 },
+                { x: new Date("11-04-21"), y: 4 },
+                { x: new Date("11-05-21"), y: 5 },
+                { x: new Date("11-01-21"), y: 6 },
+              ]}
+            />
+          </VictoryChart>
+
         </Grid.Column>
       </Grid>
     );
   }
 
-  /*
-   * locationFilter : array of locations to include 
-   * animalFilter : array of the animals (i.e. Seal, Turtle, Bird, and Other which can have multiple things) to include
-   */
-  filter(locationFilter, animalFilter) {
-    // Filters: Time, Location, Animal
+  getSealTimeSeriesData() {
+    console.log("in getSealTimeSeriesData");
+    
+    // Grab the DateObjectObserved field
+    let sealsDates = Seals.find({}, {field : { DateObjectObserved : 1 }}).fetch();
 
-    // Get the date and time chosen from the react-datetimerange picker
-    let fromTo = this.getDate();
-    let from = new Date(fromTo[0]);
-    let to = new Date(fromTo[1]);
+    console.log("sealsDates: " + JSON.stringify(sealsDates));
 
-    /* To implement after
-    $and : [
-          {'LocationName' : { $in : locationFilter }},
-          {'Animal' : { $in : otherAnimalFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
-        ]
-    */
-    // Default empty arrays
-    let turtlesFiltered = [];
-    let birdsFiltered = [];
-    let sealsFiltered = [];
-    let othersFiltered = [];
-
-    // Turtle filtering
-    if (animalFilter.includes("Turtle")) {
-      turtlesFiltered = Turtles.find({
-        'LocationName' : { $in : locationFilter}
-      }).fetch();
-    } 
-
-    // Bird filtering
-    if (animalFilter.includes("Bird")) {
-      birdsFiltered = Birds.find({
-        'LocationName' : { $in : locationFilter}
-      }).fetch();
-    }
-
-    // Seal filtering
-    if (animalFilter.includes("Seal")) {
-      sealsFiltered = Seals.find({
-        'LocationName' : { $in : locationFilter}
-      }).fetch();
-    }
-
-    // Others filtering
-    let otherAnimalFilter = animalFilter.filter(function (el) {
-      return (el !== "Turtle") && (el !== "Seal") && el !== "Bird";
+    // Grab each date and put it into the array
+    let allDates = [];
+    sealsDates.forEach(seal => {
+      allDates.push(new Date(seal.DateObjectObserved));
     });
-    if (otherAnimalFilter.length > 0) {
-      othersFiltered = Others.find({
-        $and : [
-          {'LocationName' : { $in : locationFilter}},
-          {'Animal' : { $in : otherAnimalFilter }}
-        ]
-      }).fetch();
-    }
+    console.log("dateCounts: " + JSON.stringify(allDates));
 
-    // Combine the animals using a set thing that Abdullah did
-    let filteredResults = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
-    console.log("filteredResults: " + JSON.stringify(filteredResults));
+    // Get unique dates
+    let uniqueArray = allDates
+    .map(function (date) { return date.getTime() })
+    .filter(function (date, i, array) {
+        return array.indexOf(date) === i;
+    })
+    .map(function (time) { return new Date(time); });
 
-    return filteredResults;
+    console.log("uniqueArray: " + JSON.stringify(uniqueArray));
+
+    // Create an object where each item is a date and it's equal to the count of it in the array above
+    let counts = {};
+    allDates.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+    console.log("counts: " + JSON.stringify(counts));
+    console.log("counts['Tue Nov 09 2021 18:52:39 GMT-1000 (Hawaii-Aleutian Standard Time)]: " + counts['Tue Nov 09 2021 18:52:39 GMT-1000 (Hawaii-Aleutian Standard Time)']);
+
+    return counts;
   }
 
   getDate() {
@@ -110,7 +126,6 @@ class ChartView extends React.Component {
 
     // console.log("from: " + from);
     // console.log("to: " + to);
-    
     return [from, to];
   }
 }
@@ -145,7 +160,7 @@ export default withTracker(() => {
   const others = Others.find({}).fetch();
 
   // Calculations for the graphs:
-  
+
 
   return {
     turtleReady,
