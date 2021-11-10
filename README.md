@@ -1,7 +1,13 @@
 # DAAJ
 
-# from rn-test3
- 
+
+# Deployed app 
+- https://daaj.meteorapp.com/
+- Link to video: 
+- The mobile app was built with Expo and can be previewed in the video
+
+
+ # in development
  my specs: (I'm using a node version manager [nvm] helps with node versioning errors)
 - node v16.13.0
 - npm 8.1.2
