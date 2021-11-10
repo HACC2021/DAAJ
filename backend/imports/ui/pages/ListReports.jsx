@@ -47,6 +47,7 @@ class ListReports extends React.Component {
       filteredAnimalReports: [],
       searchPressed: false,
       filteredLocationReports: [], //the locations user chooses
+      noResults: false,
    })
 
    resetState = () => {
@@ -249,6 +250,10 @@ return distinctAnimals;
     let filteredResults = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
     console.log("filteredResults: " + JSON.stringify(filteredResults));
 
+    if (filteredResults.length == 0) {
+      this.setState({noResults: true});
+    }
+
     return filteredResults;
   }
   // dkdkd
@@ -258,7 +263,7 @@ return distinctAnimals;
   renderPage() {
     console.log("WAAAA" + this.state.filteredAnimalReports);
     return (
-      <Container>
+        <Container>      
         <Header as="h2" textAlign="center">Latest Reports</Header>
         <Dropdown
             placeholder='Location'
@@ -289,6 +294,8 @@ return distinctAnimals;
        negative
           onClick={() => this.handleReset()}
           primary>Reset</Button>
+                    {this.state.noResults ? 
+        <Header as="h1"> No results found. </Header> :
         <Table celled striped>
           <Table.Header>
             <Table.Row>
@@ -312,7 +319,7 @@ return distinctAnimals;
             (this.state.results.map((report) => <ReportItem key={report._id} report={report} />))
           }
           </Table.Body>
-        </Table>
+        </Table>}
       </Container>
     );
   }
