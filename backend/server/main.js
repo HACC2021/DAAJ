@@ -154,7 +154,7 @@ Meteor.startup(() => {
       xScarsYN: "N",
       xScarsLocation: "",
       xImages: ["askfajhienxfbiq.jpeg", "hbetysdfihqwjeh.jpeg"],
-      xIsland: "_Oahu__",
+      xIsland: "Oahu",
       xSightings: 1,
       xRelated: "",
       xConfirmRelated: "",

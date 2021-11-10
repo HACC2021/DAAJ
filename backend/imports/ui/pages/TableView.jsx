@@ -68,7 +68,7 @@ class TableView extends React.Component {
       Meteor.call('addBird', birdTest);
     }
     return (
-      <h1> {/* <Container>
+      <h4> {/* <Container>
         <Header as="h2" textAlign="center">List Stuff</Header>
         <Table celled>
           <Table.Header>
@@ -84,7 +84,7 @@ class TableView extends React.Component {
           </Table.Body>
         </Table>
       </Container> */}
-      {JSON.stringify(this.props.birds)}<br></br></h1>
+      {JSON.stringify(this.props.seals)}<br></br></h4>
     );
   }
 }

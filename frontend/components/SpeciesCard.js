@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as eva from '@eva-design/eva';
 import { StyleSheet, TouchableOpacity, ImageBackground, View } from 'react-native';
 import { Text } from '@ui-kitten/components';
 
@@ -10,7 +9,6 @@ export class SpeciesCard extends React.Component {
   constructor(props) {
     super(props);
   }
-
 
   render() {
     return (
@@ -51,14 +49,14 @@ function elevationShadowStyle(elevation) {
 
 const styles = StyleSheet.create({
 container: {
-    height: 140,
-    padding: 16,
+    height: 160,
+    padding: 10,
     borderRadius: 12,
     justifyContent: 'center',
     alignContent: 'center',
     overflow: 'hidden',
     flexDirection: 'row',
-    marginVertical: 8,
+    marginVertical: 5,
     ...elevationShadowStyle(5)
   },
 levelLabel: {
@@ -86,7 +84,7 @@ chipContainer: {
     borderRadius: 100,
   },
 overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.40)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'column',
     justifyContent: 'flex-end',

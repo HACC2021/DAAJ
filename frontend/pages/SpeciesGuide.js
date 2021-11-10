@@ -1,5 +1,4 @@
 import React from 'react';
-import * as eva from '@eva-design/eva';
 import {  Layout, Text } from '@ui-kitten/components';
 import { View, ScrollView  } from 'react-native';
 import { SpeciesCard } from '../components/SpeciesCard';
@@ -43,7 +42,7 @@ export class SpeciesGuide extends React.Component {
       <Layout style={{flex: 1,}}>
       <ScrollView style={{flex:5}} bounces={false} bouncesZoom={false} 
           alwaysBounceVertical={false} alwaysBounceHorizontal={false}>
-        <Text  style={{marginTop: 10}} category='h5'>Learn more about...</Text>
+        <Text  style={{marginTop: 10, marginLeft:20 }} category='h5'>Learn more about...</Text>
         <View style={{ paddingHorizontal: 16, paddingVertical: 8}}>
          {speciesList.map( (item, index) => {
            return (<SpeciesCard key={index}
