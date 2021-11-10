@@ -88,11 +88,11 @@ Meteor.methods({
     console.log("In meteor method updateMatchingTurtles");
     console.log("relatedId is: " + relatedId);
     // For all turtles that have xRelated with this ID, change its confirmRelated to 1
-    Turtles.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: 1,
-      }
-    }, err => {
+    Turtles.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {
@@ -105,13 +105,11 @@ Meteor.methods({
     console.log("In meteor method reverseMatchingTurtles");
     console.log("relatedId is: " + relatedId);
     // For all turtles that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
-    Turtles.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: "",
-        xRelated: "",
-        xSightings: 1,
-      }
-    }, err => {
+    Turtles.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {
