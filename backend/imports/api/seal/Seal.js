@@ -92,11 +92,11 @@ Meteor.methods({
     console.log("In meteor method updateMatchingSeals");
     console.log("relatedId is: " + relatedId);
     // For all seals that have xRelated with this ID, change its confirmRelated to 1
-    Seals.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: 1,
-      }
-    }, err => {
+    Seals.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {
@@ -109,13 +109,11 @@ Meteor.methods({
     console.log("In meteor method reverseMatchingSeals");
     console.log("relatedId is: " + relatedId);
     // For all seals that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
-    Seals.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: "",
-        xRelated: "",
-        xSightings: 1,
-      }
-    }, err => {
+    Seals.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {

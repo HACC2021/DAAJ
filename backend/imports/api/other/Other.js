@@ -66,6 +66,42 @@ Meteor.methods({
     })
   },
 
+  updateMatchingOthers( relatedId ) {
+    console.log("In meteor method updateMatchingOthers");
+    console.log("relatedId is: " + relatedId);
+    // For all others that have xRelated with this ID, change its confirmRelated to 1
+    Others.update({ 'xRelated': relatedId }, {
+      $set: {
+        xConfirmRelated: 1,
+      }
+    }, err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  },
+
+  reverseMatchingOthers( relatedId ) {
+    console.log("In meteor method reverseMatchingOthers");
+    console.log("relatedId is: " + relatedId);
+    // For all others that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
+    Others.update({ 'xRelated': relatedId }, {
+      $set: {
+        xConfirmRelated: "",
+        xRelated: "",
+        xSightings: 1,
+      }
+    }, err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  }
+
 })
 
 // Publications = will need admin and regular user later?

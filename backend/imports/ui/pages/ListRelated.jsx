@@ -36,7 +36,7 @@ class ListRelated extends React.Component {
     // (this means there exists a related sighting for this report)
     // then sorting on that xRelated field to group the related sightings together
     const filteredAndSorted = [...turtles, ...birds, ...seals, ...others].filter(report => {
-      return (typeof report.xRelated !== 'undefined' && report.xRelated !== '');
+      return (typeof report.xRelated !== 'undefined' && report.xRelated !== '' && report.xConfirmRelated !== 1);
   }).sort((a,b) => (a.xRelated > b.xRelated) ? 1 : ((b.xRelated > a.xRelated) ? -1 : 0));
 
     console.log("filtered");
@@ -55,7 +55,8 @@ class ListRelated extends React.Component {
       filteredAndSorted.splice(0, oneGroupWithColor.length);
       arrayOfGroupings.push(oneGroupWithColor);
     }
-
+    console.log("groups of related reports");
+    console.log(arrayOfGroupings);
     return arrayOfGroupings;
   }
   // Render the page once subscriptions have been received.
@@ -180,6 +181,7 @@ class ListRelated extends React.Component {
               <Table.HeaderCell>Band present?</Table.HeaderCell>
               <Table.HeaderCell>Bleach mark present?</Table.HeaderCell>
               <Table.HeaderCell>Scars present?</Table.HeaderCell>
+              <Table.HeaderCell>Confirm/Deny group</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

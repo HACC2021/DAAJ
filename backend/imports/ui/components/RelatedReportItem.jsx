@@ -1,10 +1,43 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class RelatedReportItem extends React.Component {
+  findFunction(relatedID, animal, mode) {
+    if (mode === 1) {
+      if (animal === "Seal") {
+        Meteor.call('updateMatchingSeals', relatedID)
+      }
+      if (animal === "Bird") {
+        Meteor.call('updateMatchingBirds', relatedID)
+      }
+      if (animal === "Turtle") {
+        Meteor.call('updateMatchingTurtles', relatedID)
+      }
+      if (animal === "Other") {
+        Meteor.call('updateMatchingOthers', relatedID)
+      }
+    }
+    else if (mode === 0) {
+      if (animal === "Seal"){
+        Meteor.call('reverseMatchingSeals', relatedID)
+      }
+      if (animal === "Bird") {
+        Meteor.call('reverseMatchingBirds', relatedID)
+      }
+      if (animal === "Turtle") {
+        Meteor.call('reverseMatchingTurtles', relatedID)
+      }
+      if (animal === "Other") {
+        Meteor.call('reverseMatchingOthers', relatedID)
+      }
+  
+    }
+
+  }
+
   render() {
     if (this.props.report.color === true){
       return (        
@@ -21,6 +54,13 @@ class RelatedReportItem extends React.Component {
           <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
           <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
           <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
+          <Table.Cell><Button.Group>
+            <Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
+            Confirm</Button>
+            <Button.Or />
+            <Button negative value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 0)}>
+            Deny</Button>
+          </Button.Group></Table.Cell>
         </Table.Row> 
       );
     } else {
@@ -38,6 +78,13 @@ class RelatedReportItem extends React.Component {
           <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
           <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
           <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
+          <Table.Cell><Button.Group>
+            <Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
+            Confirm</Button>
+            <Button.Or />
+            <Button negative value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 0)}>
+            Deny</Button>
+          </Button.Group></Table.Cell>
         </Table.Row>
       );
   
@@ -64,8 +111,8 @@ RelatedReportItem.propTypes = {
     xBandYN: PropTypes.string,
     xBleachMarkYN: PropTypes.string,
     xScarsYN: PropTypes.string,
-    xSightings: PropTypes.string,
-    xConfirmRelated: PropTypes.string,
+    xSightings: PropTypes.number,
+    xConfirmRelated: PropTypes.number,
   }).isRequired,
 };
 
