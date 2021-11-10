@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, Header, Loader } from 'semantic-ui-react';
+import { Grid, Segment, Header, Loader, Button } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -24,23 +24,35 @@ class ChartView extends React.Component {
     return (
       <Grid container centered>
         <Grid.Column>
-          <Header as="h2" textAlign="center">Add Stuff</Header>
+          <Sample/>
+          <Button className="ui olive basic button">Filter</Button>
+          <Header as="h2" textAlign="center">Dashboard</Header>
           <VictoryBar/>
-          {JSON.stringify(this.filter(new Date(), new Date(), ["Turtle Bay"], ["Bird", "Dolphin"]))}
+          {/*JSON.stringify(this.filter(new Date(), new Date(), ["Turtle Bay"], ["Bird", "Dolphin"]))*/}
         </Grid.Column>
       </Grid>
     );
   }
 
   /*
-   * from : date object of what time to start from
-   * to : date object of what time to end to 
    * locationFilter : array of locations to include 
    * animalFilter : array of the animals (i.e. Seal, Turtle, Bird, and Other which can have multiple things) to include
    */
-  filter(from, to, locationFilter, animalFilter) {
-    console.log("locationFilter: " + locationFilter);
-    // Filters needed: Time, Location, Animal
+  filter(locationFilter, animalFilter) {
+    // Filters: Time, Location, Animal
+
+    // Get the date and time chosen from the react-datetimerange picker
+    let fromTo = this.getDate();
+    let from = new Date(fromTo[0]);
+    let to = new Date(fromTo[1]);
+
+    /* To implement after
+    $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'Animal' : { $in : otherAnimalFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]
+    */
     // Default empty arrays
     let turtlesFiltered = [];
     let birdsFiltered = [];
@@ -87,6 +99,20 @@ class ChartView extends React.Component {
 
     return filteredResults;
   }
+
+  getDate() {
+    let inputGroups = document.getElementsByClassName("react-datetimerange-picker__inputGroup");
+    // console.log(JSON.stringify("inputGroups: " + inputGroups));
+    // console.log("splitting: " + JSON.stringify(inputGroups[0].innerHTML.split('"')[11]));
+    // console.log("splitting: " + JSON.stringify(inputGroups[1].innerHTML.split('"')[11]));
+    let from = new Date(inputGroups[0].innerHTML.split('"')[11]);
+    let to = new Date(inputGroups[1].innerHTML.split('"')[11]);
+
+    // console.log("from: " + from);
+    // console.log("to: " + to);
+    
+    return [from, to];
+  }
 }
 
 ChartView.propTypes = {
@@ -107,7 +133,7 @@ ChartView.propTypes = {
 export default withTracker(() => {
   const turtleSubscription = Meteor.subscribe('TurtlesCollection');
   const turtleReady = turtleSubscription.ready();
-  const turtles = Turtles.find({});
+  const turtles = Turtles.find({}).fetch();
   const birdSubscription = Meteor.subscribe('BirdsCollection');
   const birdReady = birdSubscription.ready();
   const birds = Birds.find({}).fetch();
@@ -132,13 +158,3 @@ export default withTracker(() => {
     others,
   };
 })(ChartView);
-
-// int days : the number of days to go forward or back. Positive number for forward; negative for backward
-// int minutes : the number of minutes to go forward or back. Positive number for forward; negative for backward
-//               can go beyond 60 mins
-function chooseTime (days = 0, minutes = 0) {
-  let time = new Date();
-  time.setDate(time.getDate() + days); // Change the date
-  time.setMinutes(time.getMinutes() + minutes); // Change the time
-  return time;
-}
