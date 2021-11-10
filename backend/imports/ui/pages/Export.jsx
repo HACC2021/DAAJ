@@ -58,17 +58,17 @@ class Export extends React.Component {
     let fRef = null;
     return (
       <Grid style={{fontFamily: 'Poppins'}} container centered>
-        <Grid.Column>
-          <Sample />
+        <Grid.Row style={{marginTop: 20}}>
+        <Sample  />
+
+          </Grid.Row>
+
           <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Export</Header>
            <div style={{fontSize: 18, textAlign: 'center'}}>Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.</div>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
-            <Segment>
-              <SubmitField style={{fontFamily: 'Poppins'}} value='Submit' />
+              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Submit' />
               <ErrorsField />
-            </Segment>
           </AutoForm>
-        </Grid.Column>
       </Grid>
     );
   }

@@ -35,9 +35,9 @@ class ChartView extends React.Component {
 
     return (
       <Grid container centered>
-        <Grid.Row>
+        <Grid.Row style={{marginTop: 20}}> 
             <Sample />
-            <Button style={{fontFamily: 'Poppins'}} onClick={() => this.handleClick()} className="ui olive basic button">Filter</Button>
+            <Button style={{fontFamily: 'Poppins'}} onClick={() => this.handleClick()} style={{marginLeft: 20}} className="ui blue basic button">Filter</Button>
 
             </Grid.Row>
 
