@@ -55,7 +55,8 @@ class ListRelated extends React.Component {
       filteredAndSorted.splice(0, oneGroupWithColor.length);
       arrayOfGroupings.push(oneGroupWithColor);
     }
-
+    console.log("groups of related reports");
+    console.log(arrayOfGroupings);
     return arrayOfGroupings;
   }
   // Render the page once subscriptions have been received.
@@ -180,6 +181,8 @@ class ListRelated extends React.Component {
               <Table.HeaderCell>Band present?</Table.HeaderCell>
               <Table.HeaderCell>Bleach mark present?</Table.HeaderCell>
               <Table.HeaderCell>Scars present?</Table.HeaderCell>
+              <Table.HeaderCell>Confirm/Deny related</Table.HeaderCell>
+
             </Table.Row>
           </Table.Header>
           <Table.Body>
