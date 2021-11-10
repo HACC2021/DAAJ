@@ -41,9 +41,7 @@ class ListReports extends React.Component {
   }
 
   getInitialState = () => ({
-      test: "hi",
       results: [],
-      filteredData: [],
       filteredAnimalReports: [],
       searchPressed: false,
       filteredLocationReports: [], //the locations user chooses
