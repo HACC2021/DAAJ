@@ -9,6 +9,7 @@ import '/imports/startup/server/Accounts';
 import '/imports/startup/server/Publications';
 import '/imports/startup/server/Mongo';
 import { getLocationName } from '../imports/api/maps/Maps';
+import _, { pluck } from 'underscore';
 
 
 // int days : the number of days to go forward or back. Positive number for forward; negative for backward
@@ -869,11 +870,8 @@ Meteor.startup(() => {
     // });
   }
 
-  let result = getLocationName(21.2911, -157.8435);
-  result.then(v => console.log("Location Name: " + v.data.result.name));
-  // result.then((v) => {
-  //   let filteredData = v.data.results.filter(obj => obj.geometry.location_type == "APPROXIMATE")[0].place_id;
-  //   console.log(filteredData);
-  // });
+  getLocationName(21.27019, -157.82231)
+  .then(item => console.log(_.pluck(_.pluck(item.data.features, 'attributes'), 'name')))
+  .catch(error => console.log(error));
 });
 
