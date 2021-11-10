@@ -155,75 +155,105 @@ return distinctAnimals;
     console.log(this.state.results);
 
   }
-    /*
-   * from : date object of what time to start from
-   * to : date object of what time to end to 
+
+  getDate() {
+    let inputGroups = document.getElementsByClassName("react-datetimerange-picker__inputGroup");
+    // console.log(JSON.stringify("inputGroups: " + inputGroups));
+    // console.log("splitting: " + JSON.stringify(inputGroups[0].innerHTML.split('"')[11]));
+    // console.log("splitting: " + JSON.stringify(inputGroups[1].innerHTML.split('"')[11]));
+    let from = new Date(inputGroups[0].innerHTML.split('"')[11]);
+    let to = new Date(inputGroups[1].innerHTML.split('"')[11]);
+
+     console.log("from: " + from);
+     console.log("to: " + to);
+    
+    return [from, to];
+  }
+
+  /*
    * locationFilter : array of locations to include 
    * animalFilter : array of the animals (i.e. Seal, Turtle, Bird, and Other which can have multiple things) to include
    */
-    filter(locationFilter, animalFilter) {
-      console.log("locationFilter: " + locationFilter);
+  filter(locationFilter, animalFilter) {
+    // Filters: Time, Location, Animal
 
-      console.log("animalFitler: " + animalFilter);
-      // Filters needed: Time, Location, Animal
-      // Default empty arrays
-      let turtlesFiltered = [];
-      let birdsFiltered = [];
-      let sealsFiltered = [];
-      let othersFiltered = [];
-  
-      if (animalFilter.length == 0 ) {
-         animalFilter = this.findDistinctAnimals();
-      }
+    // Get the date and time chosen from the react-datetimerange picker
+    let fromTo = this.getDate();
+    let from = new Date(fromTo[0]);
+    let to = new Date(fromTo[1]);
 
-      if (locationFilter.length == 0) {
-        locationFilter = this.findDistinctLocations();
-      }
+    /* To implement after
+    $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'Animal' : { $in : otherAnimalFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]
+    */
+    // Default empty arrays
+    let turtlesFiltered = [];
+    let birdsFiltered = [];
+    let sealsFiltered = [];
+    let othersFiltered = [];
 
-      // Turtle filtering
-      if (animalFilter.includes("Turtle")) {
-        turtlesFiltered = Turtles.find({
-          'LocationName' : { $in : locationFilter}
-        }).fetch();
-      } 
-  
-      // Bird filtering
-      if (animalFilter.includes("Bird")) {
-        birdsFiltered = Birds.find({
-          'LocationName' : { $in : locationFilter}
-        }).fetch();
-      }
-  
-      // Seal filtering
-      if (animalFilter.includes("Seal")) {
-        sealsFiltered = Seals.find({
-          'LocationName' : { $in : locationFilter}
-        }).fetch();
-      }
-  
-      // Others filtering
-      let otherAnimalFilter = animalFilter.filter(function (el) {
-        return (el !== "Turtle") && (el !== "Seal") && el !== "Bird";
-      });
-      if (otherAnimalFilter.length > 0) {
-        othersFiltered = Others.find({
-          $and : [
-            {'LocationName' : { $in : locationFilter}},
-            {'Animal' : { $in : otherAnimalFilter }}
-          ]
-        }).fetch();
-      }
-  
-      // Combine the animals using a set thing that Abdullah did
-      let filteredResults = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
-      console.log("filteredResults: " + JSON.stringify(filteredResults));
-  
-      return filteredResults;
+    
+    if (animalFilter.length == 0 ) {
+      animalFilter = this.findDistinctAnimals();
+   }
+
+   if (locationFilter.length == 0) {
+     locationFilter = this.findDistinctLocations();
+   }
+
+    // Turtle filtering
+    if (animalFilter.includes("Turtle")) {
+      turtlesFiltered = Turtles.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]      }).fetch();
+    } 
+
+    // Bird filtering
+    if (animalFilter.includes("Bird")) {
+      birdsFiltered = Birds.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]      }).fetch();
     }
 
+    // Seal filtering
+    if (animalFilter.includes("Seal")) {
+      sealsFiltered = Seals.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]      }).fetch();
+    }
+
+    // Others filtering
+    let otherAnimalFilter = animalFilter.filter(function (el) {
+      return (el !== "Turtle") && (el !== "Seal") && el !== "Bird";
+    });
+    if (otherAnimalFilter.length > 0) {
+      othersFiltered = Others.find({
+        $and : [
+          {'LocationName' : { $in : locationFilter }},
+          {'Animal' : { $in : otherAnimalFilter }},
+          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        ]
+      }).fetch();
+    }
+
+    // Combine the animals using a set thing that Abdullah did
+    let filteredResults = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
+    console.log("filteredResults: " + JSON.stringify(filteredResults));
+
+    return filteredResults;
+  }
   // dkdkd
 
-  //dd
+  // SAY NO RESULTS FOUNDS
   // Render the page once subscriptions have been received.
   renderPage() {
     console.log("WAAAA" + this.state.filteredAnimalReports);
