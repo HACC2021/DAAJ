@@ -10,7 +10,7 @@ class ReportItem extends React.Component {
       <Table.Row>
         <Table.Cell>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
         <Table.Cell>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
-        <Table.Cell>{this.props.report.type}</Table.Cell>
+        <Table.Cell>{this.props.report.Animal}</Table.Cell>
         <Table.Cell>{this.props.report.Sector}</Table.Cell>
         <Table.Cell>{this.props.report.LocationName}</Table.Cell>
         <Table.Cell>{this.props.report.Size}</Table.Cell>

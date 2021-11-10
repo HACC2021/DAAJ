@@ -41,7 +41,7 @@ class MapView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pin: {},
+      pin: this.getReports(),
       pinPressed: false,
       isOpen: false,
       filteredLocationReports: [], 
@@ -182,7 +182,7 @@ class MapView extends React.Component {
               zoom={7}
               center={defaultCenter}
             >
-            {this.getReports().map(report => {
+            {this.state.pin.map(report => {
               return <Marker onClick={() => {this.pinPressed(report); this.handleToggleOpen()}} strokeColor="#2383ab"position={{lat: report.xLatitude, lng:report.xLongitude}} key={report._id}>
      </Marker>
            })}
