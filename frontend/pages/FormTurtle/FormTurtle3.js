@@ -4,7 +4,7 @@ import { View, ScrollView, FlatList, Image  } from 'react-native';
 import { LocationView } from '../../components/LocationView';
 import Meteor from '@meteorrn/core';
 
-Meteor.connect('ws://localhost:3000/websocket')
+Meteor.connect('wss://daaj.meteorapp.com/websocket')
 
 
 const FormTurtle3 = (props) => {
