@@ -81,8 +81,10 @@ class ChartView extends React.Component {
     }
 
     // Combine the animals using a set thing that Abdullah did
-    let theSet = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
-    console.log("theSet: " + JSON.stringify(theSet));
+    let filteredResults = [...turtlesFiltered, ...birdsFiltered, ...sealsFiltered, ...othersFiltered]
+    console.log("filteredResults: " + JSON.stringify(filteredResults));
+
+    return filteredResults;
   }
 }
 
