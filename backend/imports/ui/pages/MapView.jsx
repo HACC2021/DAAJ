@@ -447,16 +447,16 @@ return distinctLocations;
     const stuffs = Stuffs.collection.find({}).fetch();
     const turtleSubscription = Meteor.subscribe('TurtlesCollection');
     const turtleReady = turtleSubscription.ready();
-    const turtles = Turtles.find({}).fetch();
+    const turtles = Turtles.find({ xSightings: { $gte : 1 } }).fetch();
     const birdSubscription = Meteor.subscribe('BirdsCollection');
     const birdReady = birdSubscription.ready();
-    const birds = Birds.find({}).fetch();
+    const birds = Birds.find({ xSightings: { $gte : 1 } }).fetch();
     const sealSubscription = Meteor.subscribe('SealsCollection');
     const sealReady = sealSubscription.ready();
-    const seals = Seals.find({}).fetch();
+    const seals = Seals.find({ xSightings: { $gte : 1 } }).fetch();
     const otherSubscription = Meteor.subscribe('OthersCollection');
     const otherReady = otherSubscription.ready();
-    const others = Others.find({}).fetch();
+    const others = Others.find({ xSightings: { $gte : 1 } }).fetch();
   
     // Find counts of xConfirmRelated that is == to 0:
     let unConfirmedRelated = Seals.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Turtles.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Birds.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count();
