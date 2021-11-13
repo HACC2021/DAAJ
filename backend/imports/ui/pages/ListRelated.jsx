@@ -21,7 +21,7 @@ class ListRelated extends React.Component {
   }
 
   getReports() {
-    console.log("combined");
+    console.log("combined (table view)");
     console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
 
     // adding fields to each array to indicate the animal of the report
