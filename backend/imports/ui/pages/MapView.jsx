@@ -87,6 +87,9 @@ class MapView extends React.Component {
         const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
         const others = this.props.others.map(report => ({...report, type: "Other"}));
         // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
+        console.log("combined");
+        console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
+    
         return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
           // Turn your strings into dates, and then subtract them
           // to get a value that is either negative, positive, or zero.
