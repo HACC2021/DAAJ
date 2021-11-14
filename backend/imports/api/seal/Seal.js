@@ -120,6 +120,21 @@ Meteor.methods({
         return null
       }
     })
+  },
+
+  checkSealReport( sealId ) {
+    console.log("In meteor method checkSealReport");
+    console.log("Id is: " + sealId);
+    Seals.update(
+      { '_id': { $eq: sealId } },
+      { $set: { xChecked: 1 } }, 
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
   }
 
 })

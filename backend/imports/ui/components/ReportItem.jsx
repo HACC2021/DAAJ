@@ -1,10 +1,25 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class ReportItem extends React.Component {
+  findCheck(animalId, animal) {
+    if (animal === "Seal") {
+      Meteor.call('checkSealReport', animalId)
+    }
+    if (animal === "Bird") {
+      Meteor.call('checkBirdReport', animalId)
+    }
+    if (animal === "Turtle") {
+      Meteor.call('checkTurtleReport', animalId)
+    }
+    if (animal === "Other") {
+      Meteor.call('checkOtherReport', animalId)
+    }
+  }
+
   render() {
     return (
       <Table.Row>
@@ -17,10 +32,10 @@ class ReportItem extends React.Component {
         <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
         <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
         <Table.Cell>{this.props.report.xSightings}</Table.Cell>
-        {this.props.report.xChecked === 1 ? <Table.Cell>Yes</Table.Cell> : <Table.Cell>No</Table.Cell>}
-        {/* {!this.props.report.xChecked &&
-        <Table.Cell>No</Table.Cell>} */}
         <Table.Cell>{this.props.report.ObserverPhone}</Table.Cell>
+        {this.props.report.xChecked === 1 ? <Table.Cell><button class="ui disabled button" disabled="" tabindex="-1">Resolved</button></Table.Cell>
+         : <Table.Cell><Button positive value={this.props.report.xChecked} onClick={e => this.findCheck(this.props.report._id, this.props.report.type)}>Resolve</Button>
+</Table.Cell>}
       </Table.Row>
     );
   }

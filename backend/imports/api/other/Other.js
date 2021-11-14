@@ -98,6 +98,21 @@ Meteor.methods({
         return null
       }
     })
+  },
+
+  checkOtherReport( otherId ) {
+    console.log("In meteor method checkOtherReport");
+    console.log("Id is: " + otherId);
+    Others.update(
+      { '_id': { $eq: otherId } },
+      { $set: { xChecked: 1 } }, 
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
   }
 
 })

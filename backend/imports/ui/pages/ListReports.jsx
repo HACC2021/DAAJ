@@ -78,7 +78,7 @@ class ListReports extends React.Component {
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
       return new Date(b.DateObjectObserved) - new Date(a.DateObjectObserved);
-    });
+    }).sort((a,b) => (a.xChecked > b.xChecked) ? 1 : ((b.xChecked > a.xChecked) ? -1 : 0));
     ;
   }
 
@@ -318,8 +318,8 @@ return distinctAnimals;
               <Table.HeaderCell>MainIdentification</Table.HeaderCell>
               <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
               <Table.HeaderCell>#Reports</Table.HeaderCell>
-              <Table.HeaderCell>Checked?</Table.HeaderCell>
               <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
+              <Table.HeaderCell>Resolved?</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

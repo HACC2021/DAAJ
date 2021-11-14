@@ -116,8 +116,22 @@ Meteor.methods({
         return null
       }
     })
-  }
+  }, 
 
+  checkTurtleReport( turtleId ) {
+    console.log("In meteor method checkTurtleReport");
+    console.log("Id is: " + turtleId);
+    Turtles.update(
+      { '_id': { $eq: turtleId } },
+      { $set: { xChecked: 1 } }, 
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  }
 
 })
 

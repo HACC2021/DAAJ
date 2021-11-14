@@ -113,8 +113,22 @@ Meteor.methods({
         return null
       }
     })
-  }
+  },
 
+  checkBirdReport( birdId ) {
+    console.log("In meteor method checkBirdReport");
+    console.log("Id is: " + birdId);
+    Birds.update(
+      { '_id': { $eq: birdId } },
+      { $set: { xChecked: 1 } }, 
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  }
 
 })
 
