@@ -33,8 +33,8 @@ class ReportItem extends React.Component {
         <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
         <Table.Cell>{this.props.report.xSightings}</Table.Cell>
         <Table.Cell>{this.props.report.ObserverPhone}</Table.Cell>
-        {this.props.report.xChecked === 1 ? <Table.Cell><button class="ui disabled button" disabled="" tabindex="-1">Resolved</button></Table.Cell>
-         : <Table.Cell><Button positive value={this.props.report.xChecked} onClick={e => this.findCheck(this.props.report._id, this.props.report.type)}>Resolve</Button>
+        {this.props.report.xChecked === 1 ? <Table.Cell><button class="ui disabled button" disabled="" tabindex="-1">Closed</button></Table.Cell>
+         : <Table.Cell><Button positive value={this.props.report.xChecked} onClick={e => this.findCheck(this.props.report._id, this.props.report.type)}>Close</Button>
 </Table.Cell>}
       </Table.Row>
     );

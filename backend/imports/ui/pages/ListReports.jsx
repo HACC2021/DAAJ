@@ -319,7 +319,7 @@ return distinctAnimals;
               <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
               <Table.HeaderCell>#Reports</Table.HeaderCell>
               <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
-              <Table.HeaderCell>Resolved?</Table.HeaderCell>
+              <Table.HeaderCell>Close Report</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
