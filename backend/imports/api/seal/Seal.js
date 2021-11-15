@@ -77,15 +77,43 @@ Meteor.methods({
   },
 
   deleteSeal(theID) {
-    Seals.remove({
-      _id: theID,
-    }, err => {
-      if (err) {
-        return err
-      } else {
-        return null
+    console.log("In deleteSeal for the seal: " + theID);
+    let toBeDeleted = Seals.find({ _id: theID }, { fields: { xRelated: 1, xSightings: 1}}).fetch()[0];
+    console.log("toBeDeleted: " + JSON.stringify(toBeDeleted));
+    let relatedID = toBeDeleted.xRelated;
+    let allRelated = Seals.find({ 
+      $and: [
+        {xRelated: relatedID},
+        {_id: { $ne: theID }
+      }] 
+    }, {fields: {
+      xRelated: 1, xSightings: 1
+    }}).fetch();
+    console.log("allRelated: " + JSON.stringify(allRelated));
+    testing = false; 
+    if (testing) {
+      // Decrease the sightings count of the seal that represents all related sightings:
+      // if it's an older related sighting
+      if (toBeDeleted.xSightings === 0 ) {
+        Seals.find({ _id: theID }).fetch()
+      } else if (toBeDeleted.xSightings > 1) {
+      // if it's the one that represents them all
+
       }
-    })
+
+      else {
+        // If it's not related to any other seal
+      }
+      Seals.remove({
+        _id: theID,
+      }, err => {
+        if (err) {
+          return err
+        } else {
+          return null
+        }
+      })
+    }
   },
 
   updateMatchingSeals( relatedId ) {

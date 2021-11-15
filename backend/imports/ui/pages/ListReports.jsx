@@ -320,6 +320,7 @@ return distinctAnimals;
               <Table.HeaderCell>#Reports</Table.HeaderCell>
               <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
               <Table.HeaderCell>Close Report</Table.HeaderCell>
+              <Table.HeaderCell>Delete</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
