@@ -185,6 +185,10 @@ function findRelatedBird(newBirdID) {
   const FIRST_TIMING_CUTOFF = 30; // # of mins to have full weight
   const SECOND_TIMING_CUTOFF = 60; // # of mins to have 0.75 weight
   const THIRD_TIMING_CUTOFF = 60; // # of mins to have 0.50 weight
+  // GPS Coordinates: 0.001 degrees = 111 meters = 0.0689722 miles
+  const FIRST_GPS_CUTOFF = 0.001; // Total difference in GPS coordinates to have full weight 
+  const SECOND_GPS_CUTOFF = 0.005; // Total difference in GPS coordinates to have half weight 
+  const THIRD_GPS_CUTOFF = 0.01; // Total difference in GPS coordinates to have quarter weight 
   const CUTOFF_SCORE = 0.75;
 
   let bestMatchScore = 0;
@@ -234,12 +238,14 @@ function findRelatedBird(newBirdID) {
     let difference = Math.abs(newBirdCoords - oldBirdCoords);
     // console.log("difference: " + difference);
     // 0.001 degrees = 111 meters = 0.0689722 miles
-    if (difference <= 0.001) {
+    if (difference <= FIRST_GPS_CUTOFF) {
       locationScore++;
-    } else if (difference <= 0.005) {
+    } else if (difference <= SECOND_GPS_CUTOFF) {
       locationScore = locationScore + 0.5;
-    } else if (difference <= 0.01) {
+    } else if (difference <= THIRD_GPS_CUTOFF) {
       locationScore = locationScore + 0.25;
+    } else {
+      locationScore =+ 0;
     }
 
 
