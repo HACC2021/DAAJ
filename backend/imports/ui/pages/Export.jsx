@@ -66,7 +66,15 @@ class Export extends React.Component {
           <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Export</Header>
            <div style={{fontSize: 18, textAlign: 'center'}}>Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.</div>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
-              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Submit' />
+              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Export Seal Data' />
+              <ErrorsField />
+          </AutoForm>
+          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportBirdData(data, fRef)} >
+              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Export Sea Bird Data' />
+              <ErrorsField />
+          </AutoForm>
+          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportTurtleData(data, fRef)} >
+              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Export Turtle Data' />
               <ErrorsField />
           </AutoForm>
       </Grid>
@@ -171,6 +179,9 @@ class Export extends React.Component {
       rows[index + 1].push(sealsToExport[index].xRelated);
     }
 
+
+    
+
     // console.log("exporting result: " + JSON.stringify(rows));
     // const rows = [
     //   theHeaders,
@@ -188,6 +199,184 @@ class Export extends React.Component {
     var encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
   }
+
+  exportBirdData(data, ref) {
+    console.log("in exportBirdData");
+    // Grab the date range that the user selected
+    let fromTo = this.getDate();
+    let from = new Date(fromTo[0]);
+    let to = new Date(fromTo[1]);
+    
+    // Problems with: "ID Temp (Bleach #)" , "# of Volunteers Engaged"
+    // Headers copied from Sightings Data Template
+    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Sector", "Location", "Location Notes", "Type of Bird", "Number of Calls Received", "RelatedID", "Other Notes", "Images"]
+
+    // Get everything in the Seals collection (after filtering)
+    let birdsToExport = Birds.find({
+      // Filtering by date
+      DateObjectObserved : {
+        $gte : from,
+        $lte : to,
+      }
+    }).fetch(); // an array of seal objects
+    // console.log("birdsToExport after filtering: " + JSON.stringify(birdsToExport));
+
+    // For each seal, put its fields into an array 
+    let rows = []
+    // Push the headers on 
+    rows.push(theHeaders);
+    // console.log("before putting data in");
+    for (let index = 0; index < birdsToExport.length; index++) {
+      // Initialize an empty array for this seal
+      rows.push([]);
+      // Grab the fields from the collection to put into the array
+      rows[index + 1].push(birdsToExport[index].DateObserved);
+      rows[index + 1].push(birdsToExport[index].TimeObserved);
+      rows[index + 1].push(birdsToExport[index].TicketNumber);
+      rows[index + 1].push(birdsToExport[index].HotlineOpInitials);
+      rows[index + 1].push(birdsToExport[index].TicketType);
+      rows[index + 1].push(birdsToExport[index].ObserverName);
+      rows[index + 1].push(birdsToExport[index].ObserverPhone);
+      rows[index + 1].push(birdsToExport[index].ObserverInitials);
+      rows[index + 1].push(birdsToExport[index].ObserverType);
+      rows[index + 1].push(birdsToExport[index].Sector);
+      rows[index + 1].push(birdsToExport[index].LocationName);
+      rows[index + 1].push(this.combine([birdsToExport[index].xLatitude, birdsToExport[index].xLongitude, birdsToExport[index].xIsland], 0));
+      rows[index + 1].push(birdsToExport[index].LocationNotes);
+      rows[index + 1].push(birdsToExport[index].BirdType);
+      rows[index + 1].push("");
+      rows[index + 1].push(birdsToExport[index].xSightings);
+
+
+      // Other notes:
+      let data = [birdsToExport[index].xBandYN, birdsToExport[index].xBandColor, birdsToExport[index].xBleachMarkYN, birdsToExport[index].xScarsYN];
+      let notes = []
+      let labels = ["Band: ", "Band color: ", "Bleachmark: ", "Scar: ", "Number of people within 100ft: " + "Animal behavior: "];
+      for (let index = 0; index < data.length; index++) {
+          (data[index] === "" || data[index] === undefined) ? notes.push("") : notes.push(labels[index] + data[index]);
+        }
+      (birdsToExport[index].xNumHundredFt === "" ? notes.push("") : notes.push("Number of people within 100ft: " + birdsToExport[index].xNumHundredFt));
+      (birdsToExport[index].xAnimalBehavior === "" ? notes.push("") : notes.push("Animal behavior: " + birdsToExport[index].xAnimalBehavior));
+      notes =  notes.join(" | ");
+      rows[index + 1].push(notes);
+
+      // Images: 
+      let images = birdsToExport[index].xImages.join(" | ");
+      rows[index + 1].push(images);
+      rows[index + 1].push(birdsToExport[index].xRelated);
+    }
+
+
+    
+
+    // console.log("exporting result: " + JSON.stringify(rows));
+    // const rows = [
+    //   theHeaders,
+    //   ["name1", "city1", "some other info"],
+    //   ["name2", "city2", "more info"]
+    // ];
+
+    let csvContent = "data:text/csv;charset=utf-8,"
+      + rows.map(e => e.join(",")).join("\n");
+
+    console.log("csvContent:\n" + csvContent);
+
+    // encodeURI doesn't encode: , / ? : @ & = + $ # ()
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI <- figure out how to encode it by replacing it or using encodeURIComponent?
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  }
+
+  exportTurtleData(data, ref) {
+    console.log("in exportTurtleData");
+    // Grab the date range that the user selected
+    let fromTo = this.getDate();
+    let from = new Date(fromTo[0]);
+    let to = new Date(fromTo[1]);
+    
+    // Problems with: "ID Temp (Bleach #)" , "# of Volunteers Engaged"
+    // Headers copied from Sightings Data Template
+    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Island", "Sector", "Location", "Location Notes", "Type of Turtle", "Size", "Status", "Number of Calls Received", "Other Notes", "Images", "RelatedID"]
+
+    // Get everything in the Seals collection (after filtering)
+    let turtleToExport = Turtles.find({
+      // Filtering by date
+      DateObjectObserved : {
+        $gte : from,
+        $lte : to,
+      }
+    }).fetch(); // an array of seal objects
+    // console.log("turtleToExport after filtering: " + JSON.stringify(turtleToExport));
+
+    // For each seal, put its fields into an array 
+    let rows = []
+    // Push the headers on 
+    rows.push(theHeaders);
+    // console.log("before putting data in");
+    for (let index = 0; index < turtleToExport.length; index++) {
+      // Initialize an empty array for this seal
+      rows.push([]);
+      // Grab the fields from the collection to put into the array
+      rows[index + 1].push(turtleToExport[index].DateObserved);
+      rows[index + 1].push(turtleToExport[index].TimeObserved);
+      rows[index + 1].push(turtleToExport[index].TicketNumber);
+      rows[index + 1].push(turtleToExport[index].HotlineOpInitials);
+      rows[index + 1].push(turtleToExport[index].TicketType);
+      rows[index + 1].push(turtleToExport[index].ObserverName);
+      rows[index + 1].push(turtleToExport[index].ObserverPhone);
+      rows[index + 1].push(turtleToExport[index].ObserverInitials);
+      rows[index + 1].push(turtleToExport[index].ObserverType);
+      rows[index + 1].push(turtleToExport[index].Island);
+      rows[index + 1].push(turtleToExport[index].Sector);
+      rows[index + 1].push(turtleToExport[index].LocationName);
+      rows[index + 1].push(this.combine([turtleToExport[index].xLatitude, turtleToExport[index].xLongitude, turtleToExport[index].xIsland], 0));
+      rows[index + 1].push(turtleToExport[index].LocationNotes);
+      rows[index + 1].push(turtleToExport[index].TurtleType);
+      rows[index + 1].push(turtleToExport[index].Size);
+      rows[index + 1].push(turtleToExport[index].Status);
+      rows[index + 1].push("");
+      rows[index + 1].push(turtleToExport[index].xSightings);
+
+
+      // Other notes:
+      let data = [turtleToExport[index].xBandYN, turtleToExport[index].xBandColor, turtleToExport[index].xBleachMarkYN, turtleToExport[index].xScarsYN];
+      let notes = []
+      let labels = ["Band: ", "Band color: ", "Bleachmark: ", "Scar: ", "Number of people within 100ft: " + "Animal behavior: "];
+      for (let index = 0; index < data.length; index++) {
+          (data[index] === "" || data[index] === undefined) ? notes.push("") : notes.push(labels[index] + data[index]);
+        }
+      (turtleToExport[index].xNumHundredFt === "" ? notes.push("") : notes.push("Number of people within 100ft: " + turtleToExport[index].xNumHundredFt));
+      (turtleToExport[index].xAnimalBehavior === "" ? notes.push("") : notes.push("Animal behavior: " + turtleToExport[index].xAnimalBehavior));
+      notes =  notes.join(" | ");
+      rows[index + 1].push(notes);
+
+      // Images: 
+      let images = turtleToExport[index].xImages.join(" | ");
+      rows[index + 1].push(images);
+      rows[index + 1].push(turtleToExport[index].xRelated);
+    }
+
+
+    
+
+    // console.log("exporting result: " + JSON.stringify(rows));
+    // const rows = [
+    //   theHeaders,
+    //   ["name1", "city1", "some other info"],
+    //   ["name2", "city2", "more info"]
+    // ];
+
+    let csvContent = "data:text/csv;charset=utf-8,"
+      + rows.map(e => e.join(",")).join("\n");
+
+    console.log("csvContent:\n" + csvContent);
+
+    // encodeURI doesn't encode: , / ? : @ & = + $ # ()
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI <- figure out how to encode it by replacing it or using encodeURIComponent?
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  }
+
 }
 
 export default Export;
