@@ -66,7 +66,7 @@ Meteor.methods({
         return err
       } else {
         console.log("Successfully added a turtle");
-        findRelatedTurtle(newID);
+        // findRelatedTurtle(newID);
         return null
       }
     })
@@ -123,16 +123,18 @@ Meteor.methods({
     console.log("Id is: " + turtleId);
     Turtles.update(
       { '_id': { $eq: turtleId } },
-      { $set: { xChecked: 1 } }, 
-      err => {
-      if (err) {
-        return err
-      } else {
-        return null
+      { $set: { xChecked: 1 } }, function (err) {
+        if (err){
+          console.log(err);
+          return err
+        } else {
+          console.log("Checked turtle, now checking for related! w/id: " + turtleId);
+          findRelatedTurtle(turtleId);
+          return null;
+        }
       }
-    })
+    )
   }
-
 })
 
 // Publications = will need admin and regular user later?
@@ -152,7 +154,8 @@ function findRelatedTurtle(newTurtleID) {
   let oldTurtles = Turtles.find({
     //birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') },
     xSightings: { $gte: 1 },
-    _id: { $ne: newTurtleID }
+    _id: { $ne: newTurtleID },
+    xChecked: 1,
   }, {
     fields: {
       // Date/time
@@ -252,7 +255,8 @@ function findRelatedTurtle(newTurtleID) {
     } else {
       locationScore =+ 0;
     }
-
+    locationScore = locationScore / 2;
+    console.log("locationScore: " + locationScore);
 
     // Check species
     let speciesScore = 0;

@@ -63,7 +63,7 @@ Meteor.methods({
         return err
       } else {
         console.log("Successfully added a bird");
-        findRelatedBird(newID);
+        // findRelatedBird(newID);
         return null
       }
     })
@@ -120,14 +120,17 @@ Meteor.methods({
     console.log("Id is: " + birdId);
     Birds.update(
       { '_id': { $eq: birdId } },
-      { $set: { xChecked: 1 } }, 
-      err => {
-      if (err) {
-        return err
-      } else {
-        return null
+      { $set: { xChecked: 1 } }, function (err) {
+        if (err){
+          console.log(err);
+          return err
+        } else {
+          console.log("Checked bird, now checking for related! w/id: " + birdId);
+          findRelatedBird(birdId);
+          return null;
+        }
       }
-    })
+    )
   }
 
 })
@@ -149,7 +152,8 @@ function findRelatedBird(newBirdID) {
   let oldBirds = Birds.find({
     //birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') },
     xSightings: { $gte: 1 },
-    _id: { $ne: newBirdID }
+    _id: { $ne: newBirdID },
+    xChecked: 1,
   }, {
     fields: {
       // Date/time
@@ -247,7 +251,8 @@ function findRelatedBird(newBirdID) {
     } else {
       locationScore =+ 0;
     }
-
+    locationScore = locationScore / 2;
+    console.log("locationScore: " + locationScore);
 
     // Check species
     let speciesScore = 0;
