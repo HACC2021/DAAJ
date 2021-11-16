@@ -870,8 +870,6 @@ Meteor.startup(() => {
     // });
   }
 
-  getLocationName(21.27019, -157.82231)
-  .then(item => console.log(_.pluck(_.pluck(item.data.features, 'attributes'), 'name')))
-  .catch(error => console.log(error));
+  getLocationName(72.3, 74.3);
 });
 

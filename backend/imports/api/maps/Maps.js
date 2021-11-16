@@ -9,10 +9,16 @@ export function getLocationName(lat, lng) {
   // configure axios request
   var config = {
     method: 'get',
-    url: 'https://geodata.hawaii.gov/arcgis/rest/services/CoastalMarine/MapServer/25/query?where=%20(latitude%3E' + (lat - 0.001) + '%20AND%20latitude%3C' + (lat + 0.001) + '%20AND%20longitude%3C' + (lng + 0.001) + '%20AND%20longitude%3E' + (lng - 0.001) + ')%20&outFields=map_id,name,latitude,longitude,alt_name&outSR=&f=json',
+    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + Meteor.settings.google_api_key,
     headers: {}
   };
 
   // make the request
-  return axios(config);
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 }
