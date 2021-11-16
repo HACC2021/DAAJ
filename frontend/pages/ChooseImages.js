@@ -23,24 +23,42 @@ export class ChooseImages extends React.Component {
         }
       }
     }
-  
   }
 
   pickImage = async () => {
+    let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/ddaea15dq/upload';
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
 
-    
     this.state.ximages.push(result);
     if (!result.cancelled) {
       this.setState( { image: result.uri} );
     }
- 
+
+    let base64Img = `data:image/jpg;base64,${result.base64}`;
+
+    let data = {
+      "file": base64Img,
+      "upload_preset": "ezzda215",
+    }
+
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(async r => {
+      let data = await r.json()
+      this.state.ximages.push(data);
+    }).catch(err => console.log(err))
   };
+
 
 
   navigateForm = () => {
