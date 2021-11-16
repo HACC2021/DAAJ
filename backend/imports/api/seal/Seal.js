@@ -70,7 +70,7 @@ Meteor.methods({
         return err
       } else {
         console.log("Successfully added a seal");
-        findRelatedSeal(newID);
+        // findRelatedSeal(newID);
         return null;
       }
     })
@@ -127,16 +127,18 @@ Meteor.methods({
     console.log("Id is: " + sealId);
     Seals.update(
       { '_id': { $eq: sealId } },
-      { $set: { xChecked: 1 } }, 
-      err => {
-      if (err) {
-        return err
-      } else {
-        return null
+      { $set: { xChecked: 1 } }, function (err) {
+        if (err){
+          console.log(err);
+          return err
+        } else {
+          console.log("Checked seal, now checking for related! w/id: " + sealId);
+          findRelatedSeal(sealId);
+          return null;
+        }
       }
-    })
+    )
   }
-
 })
 
 // Publications = will need admin and regular user later?
@@ -156,7 +158,8 @@ function findRelatedSeal(newSealID) {
   let oldSeals = Seals.find({
     //birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') },
     xSightings: { $gte: 1 },
-    _id: { $ne: newSealID }
+    _id: { $ne: newSealID },
+    xChecked: 1,
   }, {
     fields: {
       // Date/time
