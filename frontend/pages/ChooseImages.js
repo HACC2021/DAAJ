@@ -59,6 +59,7 @@ export class ChooseImages extends React.Component {
       }).catch(err => console.log(err))
 
       url.then(r => this.state.ximages.push({imageUrl: r.url, key: r.public_id}));
+      // url.then(r => this.state.ximages.push(r.url));
     }
   };
 

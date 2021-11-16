@@ -67,7 +67,7 @@ function insertBird ({ artificialTime, Animal,	TicketNumber,	HotlineOpInitials,	
   Birds.insert({DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time, Animal,	TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	LocationName,	LocationNotes,	Size,	BirdType,	ResponderName,	Delivered,	WhereTo,	OutreachProvided,	NumCallsReceived,	OtherNotes,	xLatitude,	xLongitude,	xNumHundredFt,	xAnimalBehavior,	xTagYN,	xBandYN,	xBandColor,	xBleachMarkYN,	xBleachMarkNum,	xTagNumber,	xTagSide,	xTagColor,	xScarsYN,	xScarsLocation,	xImages,	MainIdentification,	xSightings,	xRelated,	xIsland,	xConfirmRelated,	xChecked})
 }
 
-function insertOther ({ artificialTime, Animal, TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	Size,	LocationName,	LocationNotes,	NumHundredFt,	xAnimalBehavior,	TagYN,	BandYN,	BandColor,	BleachMarkYN,	BleachMarkNum,	TagNumber,	TagSide,	TagColor,	ScarsYN,	ScarsLocation,	Images,	Island,	MainIdentification,	OtherNotes,	xSightings,	xLatitude,	xLongitude,	xChecked}) {
+function insertOther ({ artificialTime, Animal, TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	Size,	LocationName,	LocationNotes,	NumHundredFt,	xAnimalBehavior,	TagYN,	BandYN,	BandColor,	BleachMarkYN,	BleachMarkNum,	TagNumber,	TagSide,	TagColor,	ScarsYN,	ScarsLocation,	xImages,	Island,	MainIdentification,	OtherNotes,	xSightings,	xLatitude,	xLongitude,	xChecked}) {
   let aDate = artificialTime;
   let month = String(aDate.getMonth() + 1) 
   let day = String(aDate.getDate())
@@ -78,7 +78,7 @@ function insertOther ({ artificialTime, Animal, TicketNumber,	HotlineOpInitials,
   let date = month + day + year;
   let time = (aDate.toTimeString()).slice(0,5);
 
-  Others.insert({Animal, DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time, TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	Size,	LocationName,	LocationNotes,	NumHundredFt,	xAnimalBehavior,	TagYN,	BandYN,	BandColor,	BleachMarkYN,	BleachMarkNum,	TagNumber,	TagSide,	TagColor,	ScarsYN,	ScarsLocation,	Images,	Island,	MainIdentification,	OtherNotes,	xSightings,	xLatitude,	xLongitude,	xChecked})
+  Others.insert({Animal, DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time, TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	Size,	LocationName,	LocationNotes,	NumHundredFt,	xAnimalBehavior,	TagYN,	BandYN,	BandColor,	BleachMarkYN,	BleachMarkNum,	TagNumber,	TagSide,	TagColor,	ScarsYN,	ScarsLocation,	xImages,	Island,	MainIdentification,	OtherNotes,	xSightings,	xLatitude,	xLongitude,	xChecked})
 }
 
 
@@ -784,7 +784,7 @@ Meteor.startup(() => {
       TagColor: "R",
       ScarsYN: "N",
       ScarsLocation: "",
-      Images: ["../images/seed/dolphin.jpeg"],
+      xImages: ["../images/seed/dolphin.jpeg"],
       Island: "Oahu",
       MainIdentification: "T",
       OtherNotes: "",
@@ -821,7 +821,7 @@ Meteor.startup(() => {
       TagColor: "R",
       ScarsYN: "N",
       ScarsLocation: "",
-      Images: ["../images/seed/whale1.jpeg"],
+      xImages: ["../images/seed/whale1.jpeg"],
       Island: "Oahu",
       MainIdentification: "T",
       OtherNotes: "",
