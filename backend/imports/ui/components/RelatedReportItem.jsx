@@ -44,16 +44,16 @@ class RelatedReportItem extends React.Component {
         <Table.Row positive>
           <Table.Cell>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
           <Table.Cell>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
-          <Table.Cell>{this.props.report.type}</Table.Cell>
-          <Table.Cell>{this.props.report.Sector}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.type}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.Sector}</Table.Cell>
           <Table.Cell>{this.props.report.LocationName}</Table.Cell>
           <Table.Cell>{this.props.report.Size}</Table.Cell>
-          <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.MainIdentification}</Table.Cell>
           <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
-          <Table.Cell>{this.props.report.xTagYN}</Table.Cell>
-          <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
-          <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
-          <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xTagYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xBandYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xBleachMarkYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xScarsYN}</Table.Cell>
           <Table.Cell><Button.Group>
             <Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
             Confirm</Button>
@@ -68,16 +68,16 @@ class RelatedReportItem extends React.Component {
         <Table.Row warning>
           <Table.Cell>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
           <Table.Cell>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
-          <Table.Cell>{this.props.report.type}</Table.Cell>
-          <Table.Cell>{this.props.report.Sector}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.type}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.Sector}</Table.Cell>
           <Table.Cell>{this.props.report.LocationName}</Table.Cell>
           <Table.Cell>{this.props.report.Size}</Table.Cell>
-          <Table.Cell>{this.props.report.MainIdentification}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.MainIdentification}</Table.Cell>
           <Table.Cell>{this.props.report.xAnimalBehavior}</Table.Cell>
-          <Table.Cell>{this.props.report.xTagYN}</Table.Cell>
-          <Table.Cell>{this.props.report.xBandYN}</Table.Cell>
-          <Table.Cell>{this.props.report.xBleachMarkYN}</Table.Cell>
-          <Table.Cell>{this.props.report.xScarsYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xTagYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xBandYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xBleachMarkYN}</Table.Cell>
+          <Table.Cell className="center aligned">{this.props.report.xScarsYN}</Table.Cell>
           <Table.Cell><Button.Group>
             <Button positive value={this.props.report.xRelated} onClick={e => this.findFunction(this.props.report.xRelated, this.props.report.type, 1)}>
             Confirm</Button>

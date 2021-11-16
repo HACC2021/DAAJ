@@ -309,17 +309,17 @@ return distinctAnimals;
         <Table celled striped>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Date</Table.HeaderCell>
+              <Table.HeaderCell>Date of Sighting</Table.HeaderCell>
               <Table.HeaderCell>Time</Table.HeaderCell>
               <Table.HeaderCell>Animal</Table.HeaderCell>
               <Table.HeaderCell>Sector</Table.HeaderCell>
               <Table.HeaderCell>Island</Table.HeaderCell>
               <Table.HeaderCell>Size</Table.HeaderCell>
-              <Table.HeaderCell>MainIdentification</Table.HeaderCell>
-              <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
+              <Table.HeaderCell>Main</Table.HeaderCell>
+              <Table.HeaderCell>Animal Behavior</Table.HeaderCell>
               <Table.HeaderCell>#Reports</Table.HeaderCell>
               <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
-              <Table.HeaderCell>Close Report</Table.HeaderCell>
+              <Table.HeaderCell>Checked</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

@@ -169,19 +169,19 @@ class ListRelated extends React.Component {
         <Table celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Date</Table.HeaderCell>
+              <Table.HeaderCell className="center aligned">Date of Sighting</Table.HeaderCell>
               <Table.HeaderCell>Time</Table.HeaderCell>
               <Table.HeaderCell>Animal</Table.HeaderCell>
               <Table.HeaderCell>Sector</Table.HeaderCell>
               <Table.HeaderCell>Location</Table.HeaderCell>
               <Table.HeaderCell>Size</Table.HeaderCell>
-              <Table.HeaderCell>MainIdentification</Table.HeaderCell>
-              <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
-              <Table.HeaderCell>Tag present?</Table.HeaderCell>
-              <Table.HeaderCell>Band present?</Table.HeaderCell>
-              <Table.HeaderCell>Bleach mark present?</Table.HeaderCell>
-              <Table.HeaderCell>Scars present?</Table.HeaderCell>
-              <Table.HeaderCell>Confirm/Deny group</Table.HeaderCell>
+              <Table.HeaderCell>Main</Table.HeaderCell>
+              <Table.HeaderCell>Animal Behavior</Table.HeaderCell>
+              <Table.HeaderCell>Tag</Table.HeaderCell>
+              <Table.HeaderCell>Band</Table.HeaderCell>
+              <Table.HeaderCell className="center aligned">Bleach mark</Table.HeaderCell>
+              <Table.HeaderCell>Scars</Table.HeaderCell>
+              <Table.HeaderCell className="center aligned">Confirm/Deny group</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
