@@ -37,7 +37,7 @@ Meteor.methods({
         TagColor: data.tagColor, // R or N
         ScarsYN: data.scarsYN, // Yes or No
         ScarsLocation: data.scarsLocation, // String
-        Images: data.images, // array of links to images in cloud (?)
+        xImages: data.images, // array of links to images in cloud (?)
         Island: data.island, // Oahu, Maui, Hawaii, Kauai, Molokai
         MainIdentification: data.identification, // Tag, band, bleach markings, scars
         OtherNotes: data.otherNotes, // String
