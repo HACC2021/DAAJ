@@ -66,7 +66,7 @@ Meteor.methods({
         return err
       } else {
         console.log("Successfully added a turtle");
-        findRelatedTurtle(newID);
+        // findRelatedTurtle(newID);
         return null
       }
     })
@@ -84,6 +84,57 @@ Meteor.methods({
     })
   },
 
+  updateMatchingTurtles( relatedId ) {
+    console.log("In meteor method updateMatchingTurtles");
+    console.log("relatedId is: " + relatedId);
+    // For all turtles that have xRelated with this ID, change its confirmRelated to 1
+    Turtles.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  },
+
+  reverseMatchingTurtles( relatedId ) {
+    console.log("In meteor method reverseMatchingTurtles");
+    console.log("relatedId is: " + relatedId);
+    // For all turtles that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
+    Turtles.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  }, 
+
+  checkTurtleReport( turtleId ) {
+    console.log("In meteor method checkTurtleReport");
+    console.log("Id is: " + turtleId);
+    Turtles.update(
+      { '_id': { $eq: turtleId } },
+      { $set: { xChecked: 1 } }, function (err) {
+        if (err){
+          console.log(err);
+          return err
+        } else {
+          console.log("Checked turtle, now checking for related! w/id: " + turtleId);
+          findRelatedTurtle(turtleId);
+          return null;
+        }
+      }
+    )
+  }
 })
 
 // Publications = will need admin and regular user later?
@@ -103,7 +154,8 @@ function findRelatedTurtle(newTurtleID) {
   let oldTurtles = Turtles.find({
     //birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') },
     xSightings: { $gte: 1 },
-    _id: { $ne: newTurtleID }
+    _id: { $ne: newTurtleID },
+    xChecked: 1,
   }, {
     fields: {
       // Date/time
@@ -120,6 +172,8 @@ function findRelatedTurtle(newTurtleID) {
       'Sector': 1,
       'LocationName': 1,
       'LocationNotes': 1,
+      'xLatitude': 1,
+      'xLongitude': 1,
       // Species
       'TurtleType': 1,
       'xRelated': 1,
@@ -128,7 +182,7 @@ function findRelatedTurtle(newTurtleID) {
   }).fetch();
 
   console.log("oldTurtles: " + JSON.stringify(oldTurtles)); // All of the turtles in the collection beside the newly added one
-  let newTurtle = Turtles.find({ '_id': newTurtleID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'xAmpFlipper': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'TurtleType': 1, 'xSightings': 1 } }).fetch()[0];
+  let newTurtle = Turtles.find({ '_id': newTurtleID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'xAmpFlipper': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'xLatitude' : 1, 'xLongitude': 1, 'TurtleType': 1, 'xSightings': 1 } }).fetch()[0];
 
   // Weights to adjust
   const TIMING_WEIGHT = 0.25;
@@ -138,6 +192,10 @@ function findRelatedTurtle(newTurtleID) {
   const FIRST_TIMING_CUTOFF = 30; // # of mins to have full weight
   const SECOND_TIMING_CUTOFF = 60; // # of mins to have 0.75 weight
   const THIRD_TIMING_CUTOFF = 60; // # of mins to have 0.50 weight
+  // GPS Coordinates: 0.001 degrees = 111 meters = 0.0689722 miles
+  const FIRST_GPS_CUTOFF = 0.001; // Total difference in GPS coordinates to have full weight 
+  const SECOND_GPS_CUTOFF = 0.005; // Total difference in GPS coordinates to have half weight 
+  const THIRD_GPS_CUTOFF = 0.01; // Total difference in GPS coordinates to have quarter weight 
   const CUTOFF_SCORE = 0.75;
 
   let bestMatchScore = 0;
@@ -174,12 +232,30 @@ function findRelatedTurtle(newTurtleID) {
     identifyingCharsScore = identifyingCharsScore / 7;
     console.log("identifyingCharsScore:" + identifyingCharsScore);
 
-    // Check location
+    // Check location: 
     let locationScore = 0;
+    // Sector
     if (newTurtle.Sector === oldTurtle.Sector) locationScore++;
-    if (newTurtle.LocationName === oldTurtle.LocationName) locationScore++;
-    if (newTurtle.LocationNotes === oldTurtle.LocationNotes) locationScore++;
-    locationScore = locationScore / 3;
+    // if (newTurtle.LocationName === oldTurtle.LocationName) locationScore++;
+
+    // GPS coordinates
+    let newTurtleCoords = Math.abs(newTurtle.xLatitude + newTurtle.xLongitude);
+    let oldTurtleCoords = Math.abs (oldTurtle.xLatitude + oldTurtle.xLongitude);
+    // console.log("newTurtleCoords" + newTurtleCoords);
+    // console.log( oldTurtleCoords" + oldTurtleCoords);
+    let difference = Math.abs(newTurtleCoords - oldTurtleCoords);
+    // console.log("difference: " + difference);
+    // 0.001 degrees = 111 meters = 0.0689722 miles
+    if (difference <= FIRST_GPS_CUTOFF) {
+      locationScore++;
+    } else if (difference <= SECOND_GPS_CUTOFF) {
+      locationScore = locationScore + 0.5;
+    } else if (difference <= THIRD_GPS_CUTOFF) {
+      locationScore = locationScore + 0.25;
+    } else {
+      locationScore =+ 0;
+    }
+    locationScore = locationScore / 2;
     console.log("locationScore: " + locationScore);
 
     // Check species

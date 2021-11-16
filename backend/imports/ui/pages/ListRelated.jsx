@@ -21,7 +21,7 @@ class ListRelated extends React.Component {
   }
 
   getReports() {
-    console.log("combined");
+    console.log("combined (table view)");
     console.log([...this.props.turtles, ...this.props.birds, ...this.props.seals, ...this.props.others]);
 
     // adding fields to each array to indicate the animal of the report
@@ -36,7 +36,7 @@ class ListRelated extends React.Component {
     // (this means there exists a related sighting for this report)
     // then sorting on that xRelated field to group the related sightings together
     const filteredAndSorted = [...turtles, ...birds, ...seals, ...others].filter(report => {
-      return (typeof report.xRelated !== 'undefined' && report.xRelated !== '');
+      return (typeof report.xRelated !== 'undefined' && report.xRelated !== '' && report.xConfirmRelated !== 1);
   }).sort((a,b) => (a.xRelated > b.xRelated) ? 1 : ((b.xRelated > a.xRelated) ? -1 : 0));
 
     console.log("filtered");
@@ -55,7 +55,8 @@ class ListRelated extends React.Component {
       filteredAndSorted.splice(0, oneGroupWithColor.length);
       arrayOfGroupings.push(oneGroupWithColor);
     }
-
+    console.log("groups of related reports");
+    console.log(arrayOfGroupings);
     return arrayOfGroupings;
   }
   // Render the page once subscriptions have been received.
@@ -163,23 +164,24 @@ class ListRelated extends React.Component {
       Meteor.call('addBird', birdTest);
     }
     return (
-      <Container>
-        <Header as="h2" textAlign="center">Confirm Related Sightings</Header>
+      <Container style={{fontFamily: 'Poppins'}}>
+        <Header as="h2" style={{fontFamily: 'Poppins', paddingTop: 20}} textAlign="center">Confirm Related Sightings</Header>
         <Table celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Date</Table.HeaderCell>
+              <Table.HeaderCell className="center aligned">Date of Sighting</Table.HeaderCell>
               <Table.HeaderCell>Time</Table.HeaderCell>
               <Table.HeaderCell>Animal</Table.HeaderCell>
               <Table.HeaderCell>Sector</Table.HeaderCell>
               <Table.HeaderCell>Location</Table.HeaderCell>
               <Table.HeaderCell>Size</Table.HeaderCell>
-              <Table.HeaderCell>MainIdentification</Table.HeaderCell>
-              <Table.HeaderCell>AnimalBehavior</Table.HeaderCell>
-              <Table.HeaderCell>Tag present?</Table.HeaderCell>
-              <Table.HeaderCell>Band present?</Table.HeaderCell>
-              <Table.HeaderCell>Bleach mark present?</Table.HeaderCell>
-              <Table.HeaderCell>Scars present?</Table.HeaderCell>
+              <Table.HeaderCell>Main</Table.HeaderCell>
+              <Table.HeaderCell>Animal Behavior</Table.HeaderCell>
+              <Table.HeaderCell>Tag</Table.HeaderCell>
+              <Table.HeaderCell>Band</Table.HeaderCell>
+              <Table.HeaderCell className="center aligned">Bleach mark</Table.HeaderCell>
+              <Table.HeaderCell>Scars</Table.HeaderCell>
+              <Table.HeaderCell className="center aligned">Confirm/Deny group</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

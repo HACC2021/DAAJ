@@ -39,7 +39,6 @@ export class ChooseImages extends React.Component {
     this.state.images.push(result);
     
     if (!result.cancelled) {
-
       this.setState( { image: result.uri} );
 
       let base64Img = `data:image/jpg;base64,${result.base64}`;

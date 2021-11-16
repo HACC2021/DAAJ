@@ -63,7 +63,7 @@ Meteor.methods({
         return err
       } else {
         console.log("Successfully added a bird");
-        findRelatedBird(newID);
+        // findRelatedBird(newID);
         return null
       }
     })
@@ -80,6 +80,58 @@ Meteor.methods({
       }
     })
   },
+
+  updateMatchingBirds( relatedId ) {
+    console.log("In meteor method updateMatchingBirds");
+    console.log("relatedId is: " + relatedId);
+    // For all birds that have xRelated with this ID, change its confirmRelated to 1
+    Birds.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  },
+
+  reverseMatchingBirds( relatedId ) {
+    console.log("In meteor method reverseMatchingBirds");
+    console.log("relatedId is: " + relatedId);
+    // For all birds that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
+    Birds.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
+      if (err) {
+        return err
+      } else {
+        return null
+      }
+    })
+  },
+
+  checkBirdReport( birdId ) {
+    console.log("In meteor method checkBirdReport");
+    console.log("Id is: " + birdId);
+    Birds.update(
+      { '_id': { $eq: birdId } },
+      { $set: { xChecked: 1 } }, function (err) {
+        if (err){
+          console.log(err);
+          return err
+        } else {
+          console.log("Checked bird, now checking for related! w/id: " + birdId);
+          findRelatedBird(birdId);
+          return null;
+        }
+      }
+    )
+  }
 
 })
 
@@ -100,7 +152,8 @@ function findRelatedBird(newBirdID) {
   let oldBirds = Birds.find({
     //birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') },
     xSightings: { $gte: 1 },
-    _id: { $ne: newBirdID }
+    _id: { $ne: newBirdID },
+    xChecked: 1,
   }, {
     fields: {
       // Date/time
@@ -116,6 +169,8 @@ function findRelatedBird(newBirdID) {
       'Sector': 1,
       'LocationName': 1,
       'LocationNotes': 1,
+      'xLatitude' : 1,
+      'xLongitude': 1,
       // Species
       'BirdType': 1,
       'xRelated': 1,
@@ -124,7 +179,7 @@ function findRelatedBird(newBirdID) {
   }).fetch();
 
   console.log("oldBirds: " + JSON.stringify(oldBirds)); // All of the birds in the collection beside the newly added one
-  let newBird = Birds.find({ '_id': newBirdID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'BirdType': 1, 'xSightings': 1 } }).fetch()[0];
+  let newBird = Birds.find({ '_id': newBirdID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'LocationNotes': 1, 'xLatitude' : 1, 'xLongitude': 1, 'BirdType': 1, 'xSightings': 1 } }).fetch()[0];
 
   // Weights to adjust
   const TIMING_WEIGHT = 0.25;
@@ -134,6 +189,10 @@ function findRelatedBird(newBirdID) {
   const FIRST_TIMING_CUTOFF = 30; // # of mins to have full weight
   const SECOND_TIMING_CUTOFF = 60; // # of mins to have 0.75 weight
   const THIRD_TIMING_CUTOFF = 60; // # of mins to have 0.50 weight
+  // GPS Coordinates: 0.001 degrees = 111 meters = 0.0689722 miles
+  const FIRST_GPS_CUTOFF = 0.001; // Total difference in GPS coordinates to have full weight 
+  const SECOND_GPS_CUTOFF = 0.005; // Total difference in GPS coordinates to have half weight 
+  const THIRD_GPS_CUTOFF = 0.01; // Total difference in GPS coordinates to have quarter weight 
   const CUTOFF_SCORE = 0.75;
 
   let bestMatchScore = 0;
@@ -169,12 +228,30 @@ function findRelatedBird(newBirdID) {
     identifyingCharsScore = identifyingCharsScore / 6;
     console.log("identifyingCharsScore:" + identifyingCharsScore);
 
-    // Check location
+    // Check location: 
     let locationScore = 0;
+    // Sector
     if (newBird.Sector === oldBird.Sector) locationScore++;
-    if (newBird.LocationName === oldBird.LocationName) locationScore++;
-    if (newBird.LocationNotes === oldBird.LocationNotes) locationScore++;
-    locationScore = locationScore / 3;
+    // if (newBird.LocationName === oldBird.LocationName) locationScore++;
+
+    // GPS coordinates
+    let newBirdCoords = Math.abs(newBird.xLatitude + newBird.xLongitude);
+    let oldBirdCoords = Math.abs(oldBird.xLatitude + oldBird.xLongitude);
+    // console.log("newBirdCoords" + newBirdCoords);
+    // console.log("oldBirdCoords" + oldBirdCoords);
+    let difference = Math.abs(newBirdCoords - oldBirdCoords);
+    // console.log("difference: " + difference);
+    // 0.001 degrees = 111 meters = 0.0689722 miles
+    if (difference <= FIRST_GPS_CUTOFF) {
+      locationScore++;
+    } else if (difference <= SECOND_GPS_CUTOFF) {
+      locationScore = locationScore + 0.5;
+    } else if (difference <= THIRD_GPS_CUTOFF) {
+      locationScore = locationScore + 0.25;
+    } else {
+      locationScore =+ 0;
+    }
+    locationScore = locationScore / 2;
     console.log("locationScore: " + locationScore);
 
     // Check species

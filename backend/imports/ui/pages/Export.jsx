@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
+import { Grid, Segment, Text, Header } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
@@ -57,18 +57,18 @@ class Export extends React.Component {
   render() {
     let fRef = null;
     return (
-      <Grid container centered>
-        <Grid.Column>
-          <Sample />
-          <Header as="h2" textAlign="center">Export</Header>
-          Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.
+      <Grid style={{fontFamily: 'Poppins'}} container centered>
+        <Grid.Row style={{marginTop: 20}}>
+        <Sample  />
+
+          </Grid.Row>
+
+          <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Export</Header>
+           <div style={{fontSize: 18, textAlign: 'center'}}>Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.</div>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
-            <Segment>
-              <SubmitField value='Submit' />
+              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Submit' />
               <ErrorsField />
-            </Segment>
           </AutoForm>
-        </Grid.Column>
       </Grid>
     );
   }

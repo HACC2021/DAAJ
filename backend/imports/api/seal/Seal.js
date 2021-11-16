@@ -70,7 +70,7 @@ Meteor.methods({
         return err
       } else {
         console.log("Successfully added a seal");
-        findRelatedSeal(newID);
+        // findRelatedSeal(newID);
         return null;
       }
     })
@@ -92,11 +92,11 @@ Meteor.methods({
     console.log("In meteor method updateMatchingSeals");
     console.log("relatedId is: " + relatedId);
     // For all seals that have xRelated with this ID, change its confirmRelated to 1
-    Seals.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: 1,
-      }
-    }, err => {
+    Seals.update(
+      { 'xRelated': { $eq: relatedId } }, 
+      { $set: { xConfirmRelated: 1 } },
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {
@@ -109,21 +109,36 @@ Meteor.methods({
     console.log("In meteor method reverseMatchingSeals");
     console.log("relatedId is: " + relatedId);
     // For all seals that have xRelated with this ID, change its confirmRelated to "", xRelated to "", xSightings to 1
-    Seals.update({ 'xRelated': relatedId }, {
-      $set: {
-        xConfirmRelated: "",
-        xRelated: "",
-        xSightings: 1,
-      }
-    }, err => {
+    Seals.update(
+      { 'xRelated': { $eq: relatedId } },
+      { $set: { xConfirmRelated: "", xRelated: "", xSightings: 1, } }, 
+      { multi: true },
+      err => {
       if (err) {
         return err
       } else {
         return null
       }
     })
-  }
+  },
 
+  checkSealReport( sealId ) {
+    console.log("In meteor method checkSealReport");
+    console.log("Id is: " + sealId);
+    Seals.update(
+      { '_id': { $eq: sealId } },
+      { $set: { xChecked: 1 } }, function (err) {
+        if (err){
+          console.log(err);
+          return err
+        } else {
+          console.log("Checked seal, now checking for related! w/id: " + sealId);
+          findRelatedSeal(sealId);
+          return null;
+        }
+      }
+    )
+  }
 })
 
 // Publications = will need admin and regular user later?
@@ -143,7 +158,8 @@ function findRelatedSeal(newSealID) {
   let oldSeals = Seals.find({
     //birth: { $gt: new Date('1940-01-01'), $lt: new Date('1960-01-01') },
     xSightings: { $gte: 1 },
-    _id: { $ne: newSealID }
+    _id: { $ne: newSealID },
+    xChecked: 1,
   }, {
     fields: {
       // Date/time
@@ -159,13 +175,15 @@ function findRelatedSeal(newSealID) {
       // Location
       'Sector': 1,
       'LocationName': 1,
+      'xLatitude': 1,
+      'xLongitude': 1,
       'xRelated': 1,
       'xSightings': 1,
     }
   }).fetch();
 
   console.log("oldSeals: " + JSON.stringify(oldSeals)); // All of the seals in the collection beside the newly added one
-  let newSeal = Seals.find({ '_id': newSealID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'xSightings': 1 } }).fetch()[0];
+  let newSeal = Seals.find({ '_id': newSealID }, { fields: { 'DateObjectObserved': 1, 'Sex': 1, 'MainIdentification': 1, 'TagColor': 1, 'xTagYN': 1, 'xBandYN': 1, 'xBleachMarkYN': 1, 'xScarsYN': 1, 'Sector': 1, 'LocationName': 1, 'xLatitude' : 1, 'xLongitude': 1, 'xSightings': 1 } }).fetch()[0];
 
   // Weights to adjust
   const TIMING_WEIGHT = 0.25;
@@ -174,6 +192,10 @@ function findRelatedSeal(newSealID) {
   const FIRST_TIMING_CUTOFF = 30; // # of mins to have full weight
   const SECOND_TIMING_CUTOFF = 60; // # of mins to have 0.75 weight
   const THIRD_TIMING_CUTOFF = 60; // # of mins to have 0.50 weight
+  // GPS Coordinates: 0.001 degrees = 111 meters = 0.0689722 miles
+  const FIRST_GPS_CUTOFF = 0.001; // Total difference in GPS coordinates to have full weight 
+  const SECOND_GPS_CUTOFF = 0.005; // Total difference in GPS coordinates to have half weight 
+  const THIRD_GPS_CUTOFF = 0.01; // Total difference in GPS coordinates to have quarter weight 
   const CUTOFF_SCORE = 0.75;
 
   let bestMatchScore = 0;
@@ -210,10 +232,30 @@ function findRelatedSeal(newSealID) {
     identifyingCharsScore = identifyingCharsScore / 7;
     console.log("identifyingCharsScore:" + identifyingCharsScore);
 
-    // Check location
+    // Check location: 
     let locationScore = 0;
+    // Sector
     if (newSeal.Sector === oldSeal.Sector) locationScore++;
-    if (newSeal.LocationName === oldSeal.LocationName) locationScore++;
+    // if (newSeal.LocationName === oldSeal.LocationName) locationScore++;
+
+    // GPS coordinates
+    let newSealCoords = Math.abs(newSeal.xLatitude + newSeal.xLongitude);
+    let oldSealCoords = Math.abs(oldSeal.xLatitude + oldSeal.xLongitude);
+    // console.log("newSealCoords" + newSealCoords);
+    // console.log("oldSealCoords" + oldSealCoords);
+    let difference = Math.abs(newSealCoords - oldSealCoords);
+    // console.log("difference: " + difference);
+    // 0.001 degrees = 111 meters = 0.0689722 miles
+    if (difference <= FIRST_GPS_CUTOFF) {
+      locationScore++;
+    } else if (difference <= SECOND_GPS_CUTOFF) {
+      locationScore = locationScore + 0.5;
+    } else if (difference <= THIRD_GPS_CUTOFF) {
+      locationScore = locationScore + 0.25;
+    } else {
+      locationScore =+ 0;
+    }
+
     locationScore = locationScore / 2;
     console.log("locationScore: " + locationScore);
 
@@ -257,5 +299,7 @@ function findRelatedSeal(newSealID) {
         xConfirmRelated: 0,
       }
     })
+  } else {
+    console.log("No match!");
   }
 }

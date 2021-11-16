@@ -1,8 +1,19 @@
 # DAAJ
 
-# from rn-test3
- 
- my specs: (I'm using a node version manager [nvm] helps with node versioning errors)
+
+# Deployed app 
+- https://daaj.meteorapp.com/
+  -  This link will lead you to the web application portion of our submission. 
+  -  To sign in, please use the following credentials:
+    -  Email: hmarteam@gmail.com
+    -  Password: changeme
+  - Once signed in, have fun exploring! 
+- Link to video: https://www.youtube.com/watch?v=GasJApIWsFk
+- The mobile app was built with Expo and can be previewed in the video
+
+
+ # In development (To run locally)
+ Specs: (Most of used a node version manager [nvm] to help with node versioning errors)
 - node v16.13.0
 - npm 8.1.2
 - expo  4.12.10

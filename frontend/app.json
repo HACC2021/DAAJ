@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "daaj-team-mobile",
+    "slug": "daaj-team-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mirabela.daaj-team-mobile"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +28,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Made with React Native &  Meteor",
+    "githubUrl": "https://github.com/HACC2021/DAAJ"
   }
 }
