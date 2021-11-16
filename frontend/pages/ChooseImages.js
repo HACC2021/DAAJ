@@ -11,6 +11,7 @@ export class ChooseImages extends React.Component {
     this.state = {
       item: this.props.route.params.item,
       ximages: [],
+      images: [],
     }
   }
 
@@ -23,24 +24,42 @@ export class ChooseImages extends React.Component {
         }
       }
     }
-  
   }
 
   pickImage = async () => {
+    let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/ddaea15dq/upload';
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
 
+    this.state.images.push(result);
     
     if (!result.cancelled) {
-      this.state.ximages.push(result);
       this.setState( { image: result.uri} );
+
+      let base64Img = `data:image/jpg;base64,${result.base64}`;
+
+      let data = {
+        "file": base64Img,
+        "upload_preset": "ezzda215",
+      }
+
+      let url = fetch(CLOUDINARY_URL, {
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+      }).then(async r => {
+        return await r.json();
+      }).catch(err => console.log(err))
+
+      url.then(r => this.state.ximages.push({imageUrl: r.url, key: r.public_id}));
     }
-    console.log("IMAGES: ARRAY OF OBJECTS")
-    console.log(this.state.ximages)
   };
 
 
@@ -66,7 +85,7 @@ export class ChooseImages extends React.Component {
 
         <FlatList
         horizontal={true}
-        data={this.state.ximages}
+        data={this.state.images}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 5
