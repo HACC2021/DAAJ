@@ -36,29 +36,31 @@ export class ChooseImages extends React.Component {
     });
 
     this.state.ximages.push(result);
+    
     if (!result.cancelled) {
+
       this.setState( { image: result.uri} );
+
+      let base64Img = `data:image/jpg;base64,${result.base64}`;
+
+      let data = {
+        "file": base64Img,
+        "upload_preset": "ezzda215",
+      }
+
+      let url = fetch(CLOUDINARY_URL, {
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+      }).then(async r => {
+        return await r.json();
+      }).catch(err => console.log(err))
+
+      url.then(r => this.state.ximages.push({imageUrl: r.url, key: r.public_id}));
     }
-
-    let base64Img = `data:image/jpg;base64,${result.base64}`;
-
-    let data = {
-      "file": base64Img,
-      "upload_preset": "ezzda215",
-    }
-
-    fetch(CLOUDINARY_URL, {
-      body: JSON.stringify(data),
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST',
-    }).then(async r => {
-      let data = await r.json()
-      this.state.ximages.push(data);
-    }).catch(err => console.log(err))
   };
-
 
 
   navigateForm = () => {
