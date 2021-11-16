@@ -11,6 +11,7 @@ export class ChooseImages extends React.Component {
     this.state = {
       item: this.props.route.params.item,
       ximages: [],
+      images: [],
     }
   }
 
@@ -35,7 +36,7 @@ export class ChooseImages extends React.Component {
       base64: true,
     });
 
-    this.state.ximages.push(result);
+    this.state.images.push(result);
     
     if (!result.cancelled) {
 
@@ -85,7 +86,7 @@ export class ChooseImages extends React.Component {
 
         <FlatList
         horizontal={true}
-        data={this.state.ximages}
+        data={this.state.images}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 5
