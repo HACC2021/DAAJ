@@ -1,4 +1,20 @@
 body {
   /* padding: 10px; */
   font-family: 'Poppins', sans-serif;
+  background-blend-mode: overlay;
+  /* background:  url(  https://motionarray.imgix.net/preview-235695-z41HisbTJp-high_0003.jpg) no-repeat center; */
+  
+  /* choice 1 */
+  background:  url(  https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/75dec433-f625-4be0-bece-6aded7e29603/ddfxj52-ea04492b-4cba-419c-b5e4-9d55ba934bb5.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzc1ZGVjNDMzLWY2MjUtNGJlMC1iZWNlLTZhZGVkN2UyOTYwM1wvZGRmeGo1Mi1lYTA0NDkyYi00Y2JhLTQxOWMtYjVlNC05ZDU1YmE5MzRiYjUuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.fSu7gNGuN5ViZHYDHJclgX-CJ38HhzGfFY4M1EseLjI) no-repeat center;
+  /* choice 2 */
+  /* background:  url(  https://i.fbcd.co/products/original/0343a208dc9c26ec73fc069d2299954d4ac85863cde8858e1e4a5fc43118bacc.jpg) no-repeat center; */
+	background-size: cover;
+	/* position: absolute; */
+	width: 100%;
+    top: 0;
+    left: 0;
+	/* overflow-y: scroll ; */
+	height: 100vh;
+  background-attachment: fixed;
 }
+
