@@ -217,7 +217,8 @@ class MapView extends React.Component {
       turtlesFiltered = Turtles.find({
         $and : [
           {'LocationName' : { $in : locationFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
+          {'DateObjectObserved' : { $gte : from, $lte : to }},
+          { 'xChecked' : { $eq: 1 } },
         ]      }).fetch();
     } 
 
@@ -226,7 +227,8 @@ class MapView extends React.Component {
       birdsFiltered = Birds.find({
         $and : [
           {'LocationName' : { $in : locationFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
+          {'DateObjectObserved' : { $gte : from, $lte : to }},
+          { 'xChecked' : { $eq: 1 } },
         ]      }).fetch();
     }
 
@@ -235,7 +237,8 @@ class MapView extends React.Component {
       sealsFiltered = Seals.find({
         $and : [
           {'LocationName' : { $in : locationFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
+          {'DateObjectObserved' : { $gte : from, $lte : to }},
+          { 'xChecked' : { $eq: 1 } },
         ]      }).fetch();
     }
 
@@ -248,7 +251,8 @@ class MapView extends React.Component {
         $and : [
           {'LocationName' : { $in : locationFilter }},
           {'Animal' : { $in : otherAnimalFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
+          {'DateObjectObserved' : { $gte : from, $lte : to }},
+          { 'xChecked' : { $eq: 1 } },
         ]
       }).fetch();
     }
@@ -463,16 +467,16 @@ return distinctLocations;
     const stuffs = Stuffs.collection.find({}).fetch();
     const turtleSubscription = Meteor.subscribe('TurtlesCollection');
     const turtleReady = turtleSubscription.ready();
-    const turtles = Turtles.find({ xSightings: { $gte : 1 } }).fetch();
+    const turtles = Turtles.find({ $and : [{ xSightings: { $gte : 1 } }, { xChecked: { $eq: 1 } } ] }).fetch();
     const birdSubscription = Meteor.subscribe('BirdsCollection');
     const birdReady = birdSubscription.ready();
-    const birds = Birds.find({ xSightings: { $gte : 1 } }).fetch();
+    const birds = Birds.find({ $and : [{ xSightings: { $gte : 1 } }, { xChecked: { $eq: 1 } } ] }).fetch();
     const sealSubscription = Meteor.subscribe('SealsCollection');
     const sealReady = sealSubscription.ready();
-    const seals = Seals.find({ xSightings: { $gte : 1 } }).fetch();
+    const seals = Seals.find({ $and : [{ xSightings: { $gte : 1 } }, { xChecked: { $eq: 1 } } ] }).fetch();
     const otherSubscription = Meteor.subscribe('OthersCollection');
     const otherReady = otherSubscription.ready();
-    const others = Others.find({ xSightings: { $gte : 1 } }).fetch();
+    const others = Others.find({ $and : [{ xSightings: { $gte : 1 } }, { xChecked: { $eq: 1 } } ] }).fetch();
   
     // Find counts of xConfirmRelated that is == to 0:
     let unConfirmedRelated = Seals.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Turtles.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Birds.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count();
