@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Loader, Header, Segment, Image } from 'semantic-ui-react';
+import { Grid, Loader, Header, Segment, Image, Button } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { AutoForm, ErrorsField, HiddenField, NumField, SelectField, SubmitField, TextField } from 'uniforms-semantic';
 import { Meteor } from 'meteor/meteor';
@@ -13,6 +13,7 @@ import { Turtles } from '../../api/turtle/Turtle';
 import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
+import SimpleImageSlider from "react-simple-image-slider";
 
 const sealFormSchema = new SimpleSchema({
   TicketNumber: {type: String, optional: true},
@@ -329,7 +330,9 @@ class EditReport extends React.Component {
     return (
       <Grid container centered>
         <Grid.Column>
-          <Header as="h2" textAlign="center">Edit Report for this {this.props.animal}</Header>
+          <Header as="h1" textAlign="center">Edit the report for:</Header>
+          <Header as="h2" textAlign="center">{this.props.animal}</Header>
+          <Button negative centered onClick={e => {this.findDelete(this.props.doc._id, this.props.animal); document.location.href=''}}>Delete this {this.props.animal}</Button>
           {this.handleImage(this.props.doc.xImages)}
           <AutoForm schema={this.props.bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             {this.segment(this.props.animal)}
@@ -337,6 +340,18 @@ class EditReport extends React.Component {
         </Grid.Column>
       </Grid>
     );
+  }
+
+  findDelete(animalId, animal) {
+    if (animal === "Seal") {
+      Meteor.call('deleteSeal', animalId)
+    } else if (animal === "Bird") {
+      Meteor.call('deleteBird', animalId)
+    } else if (animal === "Turtle") {
+      Meteor.call('deleteTurtle', animalId)
+    } else {
+      Meteor.call('deleteOther', animalId)
+    }
   }
 
   segment(animalType) {
@@ -471,16 +486,30 @@ class EditReport extends React.Component {
   }
 
   handleImage(image) {
-    if (typeof image === 'string') {
-      return <Image src={image} />
-    } else if (image instanceof Array) {
-      for (let i = 0; i < image.length; i++) {
-        return <Image src={image[i]} />
-      }
-    } else {
-      return "Images are not available.";
-    }
+    let images = [];
+    image.forEach(element => {
+      let newObject = {url: element};
+      images.push(newObject);
+    });
+    console.log("huh" + images.length);
+    if (images.length > 1) {
+    return <SimpleImageSlider
+    width={400}
+    height={400}
+    images={images}
+    showBullets={true}
+    showNavs={true}
+    navSize={25}
+    navMargin={20}
+    autoplay={true}
+    navStyle={2}
+    />
+  } else if (images.length == 1) {
+    return <Image centered src={image}/>
+  } else {
+    return "Images are not available.";
   }
+} 
 }
 
 // Require the presence of a Stuff document in the props object. Uniforms adds 'model' to the props, which we use.
