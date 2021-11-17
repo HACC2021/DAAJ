@@ -12,6 +12,7 @@ import { Birds } from '../../api/bird/Bird';
 import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
 import Sample from '../components/Sample';
+import SimpleImageSlider from "react-simple-image-slider";
 
 const mapStyles = {
   height: "100vh",
@@ -55,7 +56,6 @@ class MapView extends React.Component {
   render() {
     return (this.props.ready && this.props.sealReady && this.props.turtleReady && this.props.birdReady && this.props.otherReady) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
-
   // updates user's selected location choices
   handleLocationChange = (e, {value}) => {
     this.setState({ filteredLocationReports: value});
@@ -138,17 +138,31 @@ class MapView extends React.Component {
          console.log("clicked locations: " + this.state.filteredLocationReports);
        }
       
-      handleImage(image) {
-        if (typeof image === 'string') {
-          return  <Image src={image}/>
-        } else if ( image instanceof Array) {
-          for (let i = 0; i < image.length; i++) {
-            return <Image src={image[i]}/>
-          }
-        } else {
-          return "Images are not available.";
-        }
+       handleImage(image) {
+        let images = [];
+        image.forEach(element => {
+          let newObject = {url: element};
+          images.push(newObject);
+        });
+        console.log("huh" + images.length);
+        if (images.length > 1) {
+        return <SimpleImageSlider
+        width={200}
+        height={200}
+        images={images}
+        showBullets={true}
+        showNavs={true}
+        navSize={25}
+        navMargin={20}
+        autoplay={true}
+        navStyle={2}
+        />
+      } else if (images.length == 1) {
+        return <Image centered src={image}/>
+      } else {
+        return "Images are not available.";
       }
+    } 
 
       getType(type) {
         if (type == "Bird") {
@@ -325,7 +339,7 @@ return distinctLocations;
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   renderPage() {
     let fRef = null;
-
+    console.log("hihihihi" + this.state.pin.xImages)
     return (
       <Grid style={{fontFamily: 'Poppins'}}>
         {this.state.pinPressed ?
@@ -341,7 +355,9 @@ return distinctLocations;
           <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Status:</Header> {this.handleFields(this.state.pin.Status, "status")}</Grid.Row>
           <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Size:</Header> {this.handleFields(this.state.pin.Size, "size")}</Grid.Row>
           <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Behavior:</Header> {this.handleFields(this.state.pin.xAnimalBehavior, "animal behavior")}</Grid.Row>
-          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Images</Header> {this.handleImage(this.state.pin.xImages)}</Grid.Row>
+          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Images</Header> <div style={{        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'}}>{this.handleImage(this.state.pin.xImages)}</div></Grid.Row>
         </Grid.Column> :
          <Grid.Column width={4}>
          <Grid.Row> <Image src='/images/logo.jpg' size='medium' rounded /></Grid.Row>

@@ -26,6 +26,7 @@
     "react-google-maps": "^9.4.5",
     "react-router": "^6.0.0",
     "react-router-dom": "^5.3.0",
+    "react-simple-image-slider": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.4",
     "simpl-schema": "^1.12.0",
