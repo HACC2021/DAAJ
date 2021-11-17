@@ -8,7 +8,7 @@ import { Others } from '/imports/api/other/Other';
 import '/imports/startup/server/Accounts';
 import '/imports/startup/server/Publications';
 import '/imports/startup/server/Mongo';
-import { getLocationName } from '../imports/api/maps/Maps';
+import { callGeocode } from '../imports/api/maps/Maps';
 
 
 // int days : the number of days to go forward or back. Positive number for forward; negative for backward
@@ -869,7 +869,15 @@ Meteor.startup(() => {
     // });
   }
 
-  //getLocationName(72.3, 74.3);
-
+  Meteor.call('callGeocode',  "hanauma bay", (err, res) => {
+    if (err) {
+      console.log(err);
+    } else {
+      // the coordinates 
+      let data = res.results[0].geometry.location
+      // store the coordinates in DB
+      console.log(data);
+    }
+  });
 });
 

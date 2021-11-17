@@ -1,24 +1,25 @@
-import axios from 'axios';
+import { Meteor } from 'meteor/meteor';
+import { fetch, Headers } from 'meteor/fetch';
 
 /**
- * Uses Google's Geocoding API to translate coordinates to location names.
- * @param {*} lat the latitude
- * @param {*} lng the longitude
+ * Uses Google's Geocoding API to translate location names to coordinates.
+ * @param {*} query the location name
  */
-export function getLocationName(lat, lng) {
-  // configure axios request
-  var config = {
-    method: 'get',
-    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=' + Meteor.settings.google_api_key,
-    headers: {}
-  };
+async function geocode(query) {
+  // replace spaces with + for request
+  formatted = query.toString().replace(/ /g,"+");
 
-  // make the request
-  axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
+  const response = await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + formatted + '&key=' + Meteor.settings.google_api_key, {
+    headers: new Headers({
+      'content-type': 'application/json'
+    }),
+    method: 'GET',
   });
+  return response.json();
 }
+
+Meteor.methods({
+  'callGeocode'(query) {
+    return geocode(query);
+  }
+});
