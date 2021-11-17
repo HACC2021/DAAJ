@@ -25,7 +25,8 @@ class ReportItem extends React.Component {
       <Table.Row>
         <Table.Cell>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
         <Table.Cell>{new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.props.report.DateObjectObserved)}</Table.Cell>
-        <Table.Cell className="center aligned"><Link to={`/edit/${this.props.report.Animal}/${this.props.report._id}`}>{this.props.report.Animal}</Link></Table.Cell>
+        {this.props.report.xChecked === 1 ? <Table.Cell className="center aligned">{this.props.report.Animal}</Table.Cell>
+         : <Table.Cell className="center aligned"><Link to={`/edit/${this.props.report.Animal}/${this.props.report._id}`}>{this.props.report.Animal}</Link></Table.Cell>}
         <Table.Cell className="center aligned">{this.props.report.Sector}</Table.Cell>
         <Table.Cell className="center aligned">{this.props.report.Island || this.props.report.xIsland}</Table.Cell>
         <Table.Cell className="center aligned">{this.props.report.Size}</Table.Cell>
