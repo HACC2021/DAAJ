@@ -137,7 +137,7 @@ class Export extends React.Component {
       rows[index + 1].push(sealsToExport[index].ObserverType);
       rows[index + 1].push(sealsToExport[index].Sector);
       rows[index + 1].push(sealsToExport[index].LocationName);
-      rows[index + 1].push(this.combine([sealsToExport[index].xLatitude, sealsToExport[index].xLongitude, sealsToExport[index].xIsland], 0));
+      rows[index + 1].push(this.combine([sealsToExport[index].xLatitude, sealsToExport[index].xLongitude, sealsToExport[index].xIsland, 0]));
       rows[index + 1].push(sealsToExport[index].SealPresent);
       rows[index + 1].push(sealsToExport[index].Size);
       rows[index + 1].push(sealsToExport[index].Sex);
@@ -209,7 +209,7 @@ class Export extends React.Component {
     
     // Problems with: "ID Temp (Bleach #)" , "# of Volunteers Engaged"
     // Headers copied from Sightings Data Template
-    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Sector", "Location", "Location Notes", "Type of Bird", "Number of Calls Received", "RelatedID", "Other Notes", "Images"]
+    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Sector", "Location", "Location Notes", "Type of Bird", "Number of Calls Received", "Other Notes", "Images", "Related ID"]
 
     // Get everything in the Seals collection (after filtering)
     let birdsToExport = Birds.find({
@@ -242,9 +242,7 @@ class Export extends React.Component {
       rows[index + 1].push(birdsToExport[index].Sector);
       rows[index + 1].push(birdsToExport[index].LocationName);
       rows[index + 1].push(this.combine([birdsToExport[index].xLatitude, birdsToExport[index].xLongitude, birdsToExport[index].xIsland], 0));
-      rows[index + 1].push(birdsToExport[index].LocationNotes);
       rows[index + 1].push(birdsToExport[index].BirdType);
-      rows[index + 1].push("");
       rows[index + 1].push(birdsToExport[index].xSightings);
 
 
@@ -296,7 +294,7 @@ class Export extends React.Component {
     
     // Problems with: "ID Temp (Bleach #)" , "# of Volunteers Engaged"
     // Headers copied from Sightings Data Template
-    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Island", "Sector", "Location", "Location Notes", "Type of Turtle", "Size", "Status", "Number of Calls Received", "Other Notes", "Images", "RelatedID"]
+    let theHeaders = ["Date", "Time", "Ticket Number", "Hotline Operator Initials", "Ticket Type", "Observer", "Observer Contact Number", "Observer Initials", "Observer Type", "Island", "Sector", "Location", "Location Notes", "Type of Turtle", "Size", "Status", "Number of Calls Recieved", "Other Notes", "Images", "RelatedID"]
 
     // Get everything in the Seals collection (after filtering)
     let turtleToExport = Turtles.find({
@@ -329,12 +327,10 @@ class Export extends React.Component {
       rows[index + 1].push(turtleToExport[index].Island);
       rows[index + 1].push(turtleToExport[index].Sector);
       rows[index + 1].push(turtleToExport[index].LocationName);
-      rows[index + 1].push(this.combine([turtleToExport[index].xLatitude, turtleToExport[index].xLongitude, turtleToExport[index].xIsland], 0));
-      rows[index + 1].push(turtleToExport[index].LocationNotes);
-      rows[index + 1].push(turtleToExport[index].TurtleType);
-      rows[index + 1].push(turtleToExport[index].Size);
-      rows[index + 1].push(turtleToExport[index].Status);
-      rows[index + 1].push("");
+      rows[index + 1].push(this.combine([turtleToExport[index].xLatitude, turtleToExport[index].xLongitude, turtleToExport[index].Island], 0));
+      rows[index + 1].push(turtleToExport[index].TurtleType || "");
+      rows[index + 1].push(turtleToExport[index].Size || "");
+      rows[index + 1].push(turtleToExport[index].Status || "");
       rows[index + 1].push(turtleToExport[index].xSightings);
 
 
