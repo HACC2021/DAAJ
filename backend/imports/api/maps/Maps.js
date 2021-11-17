@@ -2,14 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { fetch, Headers } from 'meteor/fetch';
 
 /**
- * Uses Google's Geocoding API to translate location names to coordinates.
- * @param {*} query the location name
+ * Uses Google's Places API to get location details from coordinates.
+ * @param {*} lat the latitude
+ * @param {*} lng the longitude
  */
-async function geocode(query) {
-  // replace spaces with + for request
-  formatted = query.toString().replace(/ /g,"+");
-
-  const response = await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + formatted + '&key=' + Meteor.settings.google_api_key, {
+async function getLocationDetails(lat, lng) {
+  const response = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + 21.2690 + '%2C' + -157.6938 + '&radius=100&key=' + Meteor.settings.google_api_key, {
     headers: new Headers({
       'content-type': 'application/json'
     }),
@@ -19,7 +17,7 @@ async function geocode(query) {
 }
 
 Meteor.methods({
-  'callGeocode'(query) {
-    return geocode(query);
+  'getLocation'({lat, lng}) {
+    return getLocationDetails(lat, lng);
   }
 });

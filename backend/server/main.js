@@ -8,8 +8,7 @@ import { Others } from '/imports/api/other/Other';
 import '/imports/startup/server/Accounts';
 import '/imports/startup/server/Publications';
 import '/imports/startup/server/Mongo';
-import { callGeocode } from '../imports/api/maps/Maps';
-
+import '/imports/api/maps/Maps';
 
 // int days : the number of days to go forward or back. Positive number for forward; negative for backward
 // int minutes : the number of minutes to go forward or back. Positive number for forward; negative for backward
@@ -80,8 +79,6 @@ function insertOther ({ artificialTime, Animal, TicketNumber,	HotlineOpInitials,
 
   Others.insert({Animal, DateObjectObserved: aDate,	DateObserved: date,	TimeObserved: time, TicketNumber,	HotlineOpInitials,	TicketType,	ObserverName,	ObserverPhone,	ObserverInitials,	ObserverType,	Sector,	Size,	LocationName,	LocationNotes,	NumHundredFt,	xAnimalBehavior,	TagYN,	BandYN,	BandColor,	BleachMarkYN,	BleachMarkNum,	TagNumber,	TagSide,	TagColor,	ScarsYN,	ScarsLocation,	xImages,	Island,	MainIdentification,	OtherNotes,	xSightings,	xLatitude,	xLongitude,	xChecked})
 }
-
-
 
 Meteor.startup(() => {
   // If the Links collection is empty, add some data.
@@ -871,13 +868,15 @@ Meteor.startup(() => {
 
   Meteor.call('callGeocode',  "hanauma bay", (err, res) => {
     if (err) {
-      console.log(err);
-    } else {
-      // the coordinates 
-      let data = res.results[0].geometry.location
-      // store the coordinates in DB
-      console.log(data);
-    }
-  });
+  export function getLocation(lat, lng) {
+    Meteor.call('getLocation', ({ lat, lng }), (err, res) => {
+      if (err) {
+        console.log(err);
+      } else {
+        // the location name, or closest match 
+        return res.results[0].name;
+      }
+    });
+  }
 });
 
