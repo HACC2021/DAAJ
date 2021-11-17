@@ -16,7 +16,7 @@ import { Others } from '../../api/other/Other';
 
 const sealFormSchema = new SimpleSchema({
   TicketNumber: String,
-  HotlineOpInitials:String,
+  HotlineOpInitials: String,
   TicketType: String,
   ObserverName: String,
   ObserverPhone: String,
@@ -83,12 +83,81 @@ const sealFormSchema = new SimpleSchema({
 }, { tracker: Tracker });
 
 const turtleFormSchema = new SimpleSchema({
-  Sector: String,
-  Size: Number,
-  MainIdentification: String,
+  TicketNumber: String,
+  HotlineOpInitials: String,
+  TicketType: String,
+  ObserverName: String,
   ObserverPhone: String,
-  ObserverType: String,
-  Sex: String,
+  ObserverInitials: String,
+  ObserverType: {
+    type: String,
+    allowedValues: ['P', 'V', 'A'],
+  },
+  Sector: {
+    type: String,
+    allowedValues: ['North', 'East', 'West', 'South'],
+  },
+  xIsland: {
+    type: String,
+    allowedValues: ['Oahu', 'Maui', 'Hawaii', 'Kauai', 'Molokai'],
+  },
+  TurtleType: {
+    type: String,
+    allowedValues: ['Cm', 'Ei', 'Unknown'],
+  },
+  Size: String,
+
+  Status: {
+    type: String,
+    allowedValues: ['Deceased', 'Alive', 'Unknown'],
+  },
+  xNumHundredFt: Number,
+  xAnimalBehavior: String,
+  xTagYN: {
+    type: String,
+    allowedValues: ['Y', 'N', ''],
+  },
+  TagNumber: String,
+  TagSide: {
+    type: String,
+    allowedValues: ['L', 'R', 'U'],
+  },
+  TagColor: {
+    type: String,
+    allowedValues: ['R', 'N', 'N/A'],
+  },
+  xNumHundredFt: Number,
+  xAnimalBehavior: String,
+  xBandYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xBandColor: {
+    type: String,
+    allowedValues: ['R', 'N', 'N/A'],
+  },
+  xBleachMarkYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xBleachMarkNum: String,
+  xScarsYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xScarsLocation: String,
+  xAmpFlipper: {
+    type: String,
+    allowedValues: ['Yes', 'No', 'Unknown'],
+  },
+  xWhichFlipper: {
+    type: String,
+    allowedValues: ['Top left', 'Top right', 'Bottom left', 'Bottom right'],
+  },
+  MainIdentification: {
+    type: String,
+    allowedValues: ['T', 'B', 'N', 'A', ''],
+  },
 }, { tracker: Tracker });
 
 const birdFormSchema = new SimpleSchema({
@@ -146,70 +215,99 @@ class EditReport extends React.Component {
     console.log("segment" + animalType);
     if (animalType === "Turtle") {
       return (
-      <Segment>
- 
-        <SubmitField value='Submit'/>
-        <ErrorsField/>
-      </Segment>
+        <Segment>
+          <TextField name='TicketNumber' />
+          <TextField name='HotlineOpInitials' />
+          <TextField name='TicketType' />
+          <TextField name='ObserverName' />
+          <TextField name='ObserverInitials' />
+          <TextField name='ObserverPhone' />
+          <SelectField name='ObserverType' />
+          <SelectField name='Sector' />
+          <SelectField name='xIsland' />
+          <SelectField name='TurtleType' />
+
+          <TextField name='Size' />
+          <SelectField name='Status' />
+
+          <NumField name='xNumHundredFt' decimal={false} />
+          <TextField name='xAnimalBehavior' />
+          <SelectField name='xTagYN' />
+          <TextField name='TagNumber' />
+          <SelectField name='TagSide' />
+          <SelectField name='TagColor' />
+
+          <SelectField name='xBandYN' />
+          <SelectField name='xBandColor' />
+          <SelectField name='xBleachMarkYN' />
+          <TextField name='xBleachMarkNum' />
+          <SelectField name='xScarsYN' />
+          <TextField name='xScarsLocation' />
+          <SelectField name='xAmpFlipper' />
+          <SelectField name='xWhichFlipper' />
+          <SelectField name='MainIdentification' />
+          <SubmitField value='Submit' />
+          <ErrorsField />
+        </Segment>
       );
     } else if (animalType === "Seal") {
       return (
         <Segment>
-          <TextField name='TicketNumber'/>
-          <TextField name='HotlineOpInitials'/>
-          <TextField name='TicketType'/>
-          <TextField name='ObserverName'/>
-          <TextField name='ObserverInitials'/>
-          <TextField name='ObserverPhone'/>
-          <SelectField name='ObserverType'/>
-          <SelectField name='Sector'/>
-          <TextField name='Size'/>
-          <SelectField name='Sex'/>
-          <SelectField name='BeachPosition'/>
-          <SelectField name='MainIdentification'/>
-          <TextField name='BleachNumber'/>
-          <TextField name='TagNumber'/>
-          <SelectField name='TagSide'/>
-          <SelectField name='TagColor'/>
-          <NumField name='xNumHundredFt' decimal={false}/>
-          <TextField name='xAnimalBehavior'/>
-          <SelectField name='xTagYN'/>
-          <SelectField name='xBandYN'/>
-          <SelectField name='xBandColor'/>
-          <SelectField name='xBleachMarkYN'/>
-          <SelectField name='xScarsYN'/>
-          <TextField name='xScarsLocation'/>
-          <SelectField name='xIsland'/>
+          <TextField name='TicketNumber' />
+          <TextField name='HotlineOpInitials' />
+          <TextField name='TicketType' />
+          <TextField name='ObserverName' />
+          <TextField name='ObserverInitials' />
+          <TextField name='ObserverPhone' />
+          <SelectField name='ObserverType' />
+          <SelectField name='Sector' />
+          <TextField name='Size' />
+          <SelectField name='Sex' />
+          <SelectField name='BeachPosition' />
+          <SelectField name='MainIdentification' />
+          <TextField name='BleachNumber' />
+          <TextField name='TagNumber' />
+          <SelectField name='TagSide' />
+          <SelectField name='TagColor' />
+          <NumField name='xNumHundredFt' decimal={false} />
+          <TextField name='xAnimalBehavior' />
+          <SelectField name='xTagYN' />
+          <SelectField name='xBandYN' />
+          <SelectField name='xBandColor' />
+          <SelectField name='xBleachMarkYN' />
+          <SelectField name='xScarsYN' />
+          <TextField name='xScarsLocation' />
+          <SelectField name='xIsland' />
 
-          <SubmitField value='Submit'/>
-          <ErrorsField/>
+          <SubmitField value='Submit' />
+          <ErrorsField />
         </Segment>
-        );
+      );
     } else if (animalType === "Bird") {
       return (
         <Segment>
 
-          <SubmitField value='Submit'/>
-          <ErrorsField/>
+          <SubmitField value='Submit' />
+          <ErrorsField />
         </Segment>
-        );
+      );
     } else {
       return (
         <Segment>
 
-          <SubmitField value='Submit'/>
-          <ErrorsField/>
+          <SubmitField value='Submit' />
+          <ErrorsField />
         </Segment>
-        );
+      );
     }
   }
 
   handleImage(image) {
     if (typeof image === 'string') {
-      return  <Image src={image}/>
-    } else if ( image instanceof Array) {
+      return <Image src={image} />
+    } else if (image instanceof Array) {
       for (let i = 0; i < image.length; i++) {
-        return <Image src={image[i]}/>
+        return <Image src={image[i]} />
       }
     } else {
       return "Images are not available.";
@@ -225,7 +323,7 @@ EditReport.propTypes = {
   turtleReady: PropTypes.bool.isRequired,
   birdReady: PropTypes.bool.isRequired,
   otherReady: PropTypes.bool.isRequired,
-  
+
   animal: PropTypes.string.isRequired,
 };
 
