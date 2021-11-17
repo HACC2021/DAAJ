@@ -161,21 +161,120 @@ const turtleFormSchema = new SimpleSchema({
 }, { tracker: Tracker });
 
 const birdFormSchema = new SimpleSchema({
-  Sector: String,
-  Size: Number,
-  MainIdentification: String,
+  TicketNumber: String,
+  HotlineOpInitials: String,
+  TicketType: String,
+  ObserverName: String,
   ObserverPhone: String,
-  ObserverType: String,
-  Sex: String,
+  ObserverInitials: String,
+  ObserverType: {
+    type: String,
+    allowedValues: ['P', 'V', 'A'],
+  },
+  Sector: {
+    type: String,
+    allowedValues: ['North', 'East', 'West', 'South'],
+  },
+  BirdType: String, // change to choices after
+  xNumHundredFt: Number,
+  xAnimalBehavior: String,
+  xTagYN: {
+    type: String,
+    allowedValues: ['Y', 'N', ''],
+  },
+  TagNumber: String,
+  TagSide: {
+    type: String,
+    allowedValues: ['L', 'R', 'U'],
+  },
+  TagColor: {
+    type: String,
+    allowedValues: ['R', 'N', 'N/A'],
+  },
+  xBandYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xBandColor: {
+    type: String,
+    allowedValues: ['R', 'N', 'N/A'],
+  },
+  xBleachMarkYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xBleachMarkNum: String,
+  xScarsYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xScarsLocation: String,
+  MainIdentification: {
+    type: String,
+    allowedValues: ['T', 'B', 'N', 'A', ''],
+  },
+  xIsland: {
+    type: String,
+    allowedValues: ['Oahu', 'Maui', 'Hawaii', 'Kauai', 'Molokai'],
+  },
 }, { tracker: Tracker });
 
 const otherFormSchema = new SimpleSchema({
-  Sector: String,
-  Size: Number,
-  MainIdentification: String,
+  TicketNumber: String,
+  HotlineOpInitials: String,
+  TicketType: String,
+  ObserverName: String,
   ObserverPhone: String,
-  ObserverType: String,
-  Sex: String,
+  ObserverInitials: String,
+  ObserverType: {
+    type: String,
+    allowedValues: ['P', 'V', 'A'],
+  },
+  Sector: {
+    type: String,
+    allowedValues: ['North', 'East', 'West', 'South'],
+  },
+  xNumHundredFt: Number,
+  xAnimalBehavior: String,
+  xTagYN: {
+    type: String,
+    allowedValues: ['Y', 'N', ''],
+  },
+  TagNumber: String,
+  TagSide: {
+    type: String,
+    allowedValues: ['L', 'R', 'U'],
+  },
+  TagColor: {
+    type: String,
+    allowedValues: ['R', 'N', 'N/A'],
+  },
+  xBandYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xBandColor: {
+    type: String,
+    allowedValues: ['R', 'N', 'N/A'],
+  },
+  xBleachMarkYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xBleachMarkNum: String,
+  xScarsYN: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+  },
+  xScarsLocation: String,
+  MainIdentification: {
+    type: String,
+    allowedValues: ['T', 'B', 'N', 'A', ''],
+  },
+  xIsland: {
+    type: String,
+    allowedValues: ['Oahu', 'Maui', 'Hawaii', 'Kauai', 'Molokai'],
+  },
 }, { tracker: Tracker });
 
 /** Renders the Page for editing a single document. */
@@ -226,17 +325,14 @@ class EditReport extends React.Component {
           <SelectField name='Sector' />
           <SelectField name='xIsland' />
           <SelectField name='TurtleType' />
-
           <TextField name='Size' />
           <SelectField name='Status' />
-
           <NumField name='xNumHundredFt' decimal={false} />
           <TextField name='xAnimalBehavior' />
           <SelectField name='xTagYN' />
           <TextField name='TagNumber' />
           <SelectField name='TagSide' />
           <SelectField name='TagColor' />
-
           <SelectField name='xBandYN' />
           <SelectField name='xBandColor' />
           <SelectField name='xBleachMarkYN' />
@@ -286,7 +382,29 @@ class EditReport extends React.Component {
     } else if (animalType === "Bird") {
       return (
         <Segment>
-
+          <TextField name='TicketNumber' />
+          <TextField name='HotlineOpInitials' />
+          <TextField name='TicketType' />
+          <TextField name='ObserverName' />
+          <TextField name='ObserverInitials' />
+          <TextField name='ObserverPhone' />
+          <SelectField name='ObserverType' />
+          <SelectField name='Sector' />
+          <TextField name='BirdType' /> {/* change to choices after*/}
+          <NumField name='xNumHundredFt' decimal={false} />
+          <TextField name='xAnimalBehavior' />
+          <SelectField name='xTagYN' />
+          <TextField name='TagNumber' />
+          <SelectField name='TagSide' />
+          <SelectField name='TagColor' />
+          <SelectField name='xBandYN' />
+          <SelectField name='xBandColor' />
+          <SelectField name='xBleachMarkYN' />
+          <TextField name='xBleachMarkNum' />
+          <SelectField name='xScarsYN' />
+          <TextField name='xScarsLocation' />
+          <SelectField name='MainIdentification' />
+          <SelectField name='xIsland' />
           <SubmitField value='Submit' />
           <ErrorsField />
         </Segment>
@@ -294,7 +412,28 @@ class EditReport extends React.Component {
     } else {
       return (
         <Segment>
-
+          <TextField name='TicketNumber' />
+          <TextField name='HotlineOpInitials' />
+          <TextField name='TicketType' />
+          <TextField name='ObserverName' />
+          <TextField name='ObserverInitials' />
+          <TextField name='ObserverPhone' />
+          <SelectField name='ObserverType' />
+          <SelectField name='Sector' />
+          <NumField name='xNumHundredFt' decimal={false} />
+          <TextField name='xAnimalBehavior' />
+          <SelectField name='xTagYN' />
+          <TextField name='TagNumber' />
+          <SelectField name='TagSide' />
+          <SelectField name='TagColor' />
+          <SelectField name='xBandYN' />
+          <SelectField name='xBandColor' />
+          <SelectField name='xBleachMarkYN' />
+          <TextField name='xBleachMarkNum' />
+          <SelectField name='xScarsYN' />
+          <TextField name='xScarsLocation' />
+          <SelectField name='MainIdentification' />
+          <SelectField name='xIsland' />
           <SubmitField value='Submit' />
           <ErrorsField />
         </Segment>
