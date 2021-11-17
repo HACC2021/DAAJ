@@ -105,7 +105,7 @@ const FormTurtle3 = (props) => {
         }}
         keyExtractor={item => item.uri}
         renderItem={ ({item, index}) => (
-          <Image
+          <Image key={index}
             style={{
               width: 100, height: 100,
               marginRight: 10,
