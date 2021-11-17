@@ -64,19 +64,67 @@ class Export extends React.Component {
           </Grid.Row>
 
           <Header as="h2" style={{fontFamily: 'Poppins'}} textAlign="center">Export</Header>
-           <div style={{fontSize: 18, textAlign: 'center'}}>Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.</div>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
-              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Export Seal Data' />
+           <div style={{fontSize: 18, textAlign: 'center', marginBottom: '30px'}}>Choose which animal sightings you would like to export. Once you click on the button, a file with the data will be downloaded.</div>
+
+        
+        <Segment attached>
+          <Header>Seals</Header>
+          <Grid.Row>
+            <img src="../images/seal.png" />
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)}>
+              <SubmitField style={{ fontFamily: 'Poppins', background: '#2185D0', marginTop: '10px', color: 'white' }} value='Export' />
               <ErrorsField />
-          </AutoForm>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportBirdData(data, fRef)} >
-              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Export Sea Bird Data' />
+            </AutoForm>
+          </Grid.Row>
+
+          <Grid.Row>
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
+              <SubmitField style={{ fontFamily: 'Poppins', background: '#2185D0', marginTop: '10px', color: 'white' }} value='Export (NOAA)' />
               <ErrorsField />
-          </AutoForm>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportTurtleData(data, fRef)} >
-              <SubmitField style={{fontFamily: 'Poppins', marginTop: 20}} value='Export Turtle Data' />
+            </AutoForm>
+          </Grid.Row>
+        </Segment>
+
+        <Grid.Row>
+          <Segment attached>
+          <Header>Sea Birds</Header>
+            <img src="../images/hummingbird.png" />
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportBirdData(data, fRef)} >
+              <SubmitField style={{ fontFamily: 'Poppins', background: '#2185D0', color: 'white' }} value='Export' />
               <ErrorsField />
-          </AutoForm>
+            </AutoForm>
+          </Segment>
+        </Grid.Row>
+
+          
+        <Grid.Row>
+          <Segment attached>
+          <Header>Turtles</Header>
+            <img src="../images/tortoise.png" />
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportTurtleData(data, fRef)} >
+              <SubmitField style={{ fontFamily: 'Poppins', background: '#2185D0', color: 'white' }} value='Export' />
+              <ErrorsField />
+            </AutoForm>
+          </Segment>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Segment attached>
+          <Header>Others</Header>
+            <img src="../images/more.png" />
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.exportSealData(data, fRef)} >
+              <SubmitField style={{ fontFamily: 'Poppins', background: '#2185D0', color: 'white' }} value='Export' />
+              <ErrorsField />
+            </AutoForm>
+          </Segment>
+        </Grid.Row>
+
+        <div style={{ fontSize: 10 }}>
+          Icons made by
+          <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons"> Flat Icons </a>
+          from
+          <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com </a>
+        </div>
       </Grid>
     );
   }
