@@ -15,12 +15,12 @@ import { Seals } from '../../api/seal/Seal';
 import { Others } from '../../api/other/Other';
 
 const sealFormSchema = new SimpleSchema({
-  TicketNumber: String,
-  HotlineOpInitials: String,
-  TicketType: String,
-  ObserverName: String,
-  ObserverPhone: String,
-  ObserverInitials: String,
+  TicketNumber: {type: String, optional: true},
+  HotlineOpInitials: {type: String, optional: true},
+  TicketType: {type: String, optional: true},
+  ObserverName: {type: String, optional: true},
+  ObserverPhone: {type: String, optional: true},
+  ObserverInitials: {type: String, optional: true},
   ObserverType: {
     type: String,
     allowedValues: ['P', 'V', 'A'],
@@ -29,21 +29,23 @@ const sealFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['North', 'East', 'West', 'South'],
   },
-  Size: String,
+  Size: {type: String, optional: true},
   Sex: {
     type: String,
+    optional: true,
     allowedValues: ['M', 'F', 'U'],
   },
   BeachPosition: {
     type: String,
+    optional: true,
     allowedValues: ['On the sand', 'In the water', 'Along the shore'],
   },
   MainIdentification: {
     type: String,
     allowedValues: ['T', 'B', 'N', 'A', ''],
   },
-  BleachNumber: String,
-  TagNumber: String,
+  BleachNumber: {type: String, optional: true},
+  TagNumber: {type: String, optional: true},
   TagSide: {
     type: String,
     allowedValues: ['L', 'R', 'U'],
@@ -52,8 +54,8 @@ const sealFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['R', 'N', 'N/A'],
   },
-  xNumHundredFt: Number,
-  xAnimalBehavior: String,
+  xNumHundredFt: {type: Number, optional: true},
+  xAnimalBehavior: {type: String, optional: true},
   xTagYN: {
     type: String,
     allowedValues: ['Y', 'N', ''],
@@ -74,7 +76,7 @@ const sealFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['Y', 'N'],
   },
-  xScarsLocation: String,
+  xScarsLocation: {type: String, optional: true},
 
   xIsland: {
     type: String,
@@ -83,12 +85,12 @@ const sealFormSchema = new SimpleSchema({
 }, { tracker: Tracker });
 
 const turtleFormSchema = new SimpleSchema({
-  TicketNumber: String,
-  HotlineOpInitials: String,
-  TicketType: String,
-  ObserverName: String,
-  ObserverPhone: String,
-  ObserverInitials: String,
+  TicketNumber: {type: String, optional: true},
+  HotlineOpInitials: {type: String, optional: true},
+  TicketType: {type: String, optional: true},
+  ObserverName: {type: String, optional: true},
+  ObserverPhone: {type: String, optional: true},
+  ObserverInitials: {type: String, optional: true},
   ObserverType: {
     type: String,
     allowedValues: ['P', 'V', 'A'],
@@ -105,29 +107,30 @@ const turtleFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['Cm', 'Ei', 'Unknown'],
   },
-  Size: String,
+  Size: {type: String, optional: true},
 
   Status: {
     type: String,
     allowedValues: ['Deceased', 'Alive', 'Unknown'],
   },
-  xNumHundredFt: Number,
-  xAnimalBehavior: String,
+  xNumHundredFt: {type: Number, optional: true},
+  xAnimalBehavior: {type: String, optional: true},
   xTagYN: {
     type: String,
     allowedValues: ['Y', 'N', ''],
   },
-  TagNumber: String,
+  TagNumber: {type: String, optional: true},
   TagSide: {
     type: String,
     allowedValues: ['L', 'R', 'U'],
   },
   TagColor: {
     type: String,
+    optional: true,
     allowedValues: ['R', 'N', 'N/A'],
   },
-  xNumHundredFt: Number,
-  xAnimalBehavior: String,
+  xNumHundredFt: {type: Number, optional: true},
+  xAnimalBehavior: {type: String, optional: true},
   xBandYN: {
     type: String,
     allowedValues: ['Y', 'N'],
@@ -140,18 +143,19 @@ const turtleFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['Y', 'N'],
   },
-  xBleachMarkNum: String,
+  xBleachMarkNum: {type: String, optional: true},
   xScarsYN: {
     type: String,
     allowedValues: ['Y', 'N'],
   },
-  xScarsLocation: String,
+  xScarsLocation: {type: String, optional: true},
   xAmpFlipper: {
     type: String,
     allowedValues: ['Yes', 'No', 'Unknown'],
   },
   xWhichFlipper: {
     type: String,
+    optional: true,
     allowedValues: ['Top left', 'Top right', 'Bottom left', 'Bottom right'],
   },
   MainIdentification: {
@@ -161,12 +165,12 @@ const turtleFormSchema = new SimpleSchema({
 }, { tracker: Tracker });
 
 const birdFormSchema = new SimpleSchema({
-  TicketNumber: String,
-  HotlineOpInitials: String,
-  TicketType: String,
-  ObserverName: String,
-  ObserverPhone: String,
-  ObserverInitials: String,
+  TicketNumber: {type: String, optional: true},
+  HotlineOpInitials: {type: String, optional: true},
+  TicketType: {type: String, optional: true},
+  ObserverName: {type: String, optional: true},
+  ObserverPhone: {type: String, optional: true},
+  ObserverInitials: {type: String, optional: true},
   ObserverType: {
     type: String,
     allowedValues: ['P', 'V', 'A'],
@@ -176,13 +180,13 @@ const birdFormSchema = new SimpleSchema({
     allowedValues: ['North', 'East', 'West', 'South'],
   },
   BirdType: String, // change to choices after
-  xNumHundredFt: Number,
-  xAnimalBehavior: String,
+  xNumHundredFt: {type: Number, optional: true},
+  xAnimalBehavior: {type: String, optional: true},
   xTagYN: {
     type: String,
     allowedValues: ['Y', 'N', ''],
   },
-  TagNumber: String,
+  TagNumber: {type: String, optional: true},
   TagSide: {
     type: String,
     allowedValues: ['L', 'R', 'U'],
@@ -203,12 +207,12 @@ const birdFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['Y', 'N'],
   },
-  xBleachMarkNum: String,
+  xBleachMarkNum: {type: String, optional: true},
   xScarsYN: {
     type: String,
     allowedValues: ['Y', 'N'],
   },
-  xScarsLocation: String,
+  xScarsLocation: {type: String, optional: true},
   MainIdentification: {
     type: String,
     allowedValues: ['T', 'B', 'N', 'A', ''],
@@ -220,12 +224,12 @@ const birdFormSchema = new SimpleSchema({
 }, { tracker: Tracker });
 
 const otherFormSchema = new SimpleSchema({
-  TicketNumber: String,
-  HotlineOpInitials: String,
-  TicketType: String,
-  ObserverName: String,
-  ObserverPhone: String,
-  ObserverInitials: String,
+  TicketNumber: {type: String, optional: true},
+  HotlineOpInitials: {type: String, optional: true},
+  TicketType: {type: String, optional: true},
+  ObserverName: {type: String, optional: true},
+  ObserverPhone: {type: String, optional: true},
+  ObserverInitials: {type: String, optional: true},
   ObserverType: {
     type: String,
     allowedValues: ['P', 'V', 'A'],
@@ -234,13 +238,13 @@ const otherFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['North', 'East', 'West', 'South'],
   },
-  xNumHundredFt: Number,
-  xAnimalBehavior: String,
+  xNumHundredFt: {type: Number, optional: true},
+  xAnimalBehavior: {type: String, optional: true},
   xTagYN: {
     type: String,
     allowedValues: ['Y', 'N', ''],
   },
-  TagNumber: String,
+  TagNumber: {type: String, optional: true},
   TagSide: {
     type: String,
     allowedValues: ['L', 'R', 'U'],
@@ -261,12 +265,12 @@ const otherFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['Y', 'N'],
   },
-  xBleachMarkNum: String,
+  xBleachMarkNum: {type: String, optional: true},
   xScarsYN: {
     type: String,
     allowedValues: ['Y', 'N'],
   },
-  xScarsLocation: String,
+  xScarsLocation: {type: String, optional: true},
   MainIdentification: {
     type: String,
     allowedValues: ['T', 'B', 'N', 'A', ''],
