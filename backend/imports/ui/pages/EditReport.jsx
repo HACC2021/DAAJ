@@ -99,7 +99,7 @@ const turtleFormSchema = new SimpleSchema({
     type: String,
     allowedValues: ['North', 'East', 'West', 'South'],
   },
-  xIsland: {
+  Island: {
     type: String,
     allowedValues: ['Oahu', 'Maui', 'Hawaii', 'Kauai', 'Molokai'],
   },
@@ -286,12 +286,37 @@ class EditReport extends React.Component {
 
   // On successful submit, insert the data.
   submit(data) {
-    const { name, quantity, condition, _id } = data;
+    if (this.props.animal === "Turtle") {
+      const { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, Island, TurtleType, Size, Status, xAnimalBehavior, xTagYN, TagNumber, TagSide, TagColor, xNumHundredFt, xBandYN, xBandColor, xBleachMarkYN, xBleachMarkNum, xScarsYN, xScarsLocation, xAmpFlipper, xWhichFlipper, MainIdentification, _id } = data;
+      
+      // Figure out which document to update
+      Turtles.update(_id, { $set: { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, Island, TurtleType, Size, Status, xAnimalBehavior, xTagYN, TagNumber, TagSide, TagColor, xNumHundredFt, xBandYN, xBandColor, xBleachMarkYN, xBleachMarkNum, xScarsYN, xScarsLocation, xAmpFlipper, xWhichFlipper, MainIdentification } }, (error) => (error ?
+        swal('Error', error.message, 'error') :
+        swal('Success', 'Item updated successfully', 'success')));
+    } else if (this.props.animal === "Seal") {
+      const { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, Size, Sex, BeachPosition, MainIdentification, BleachNumber, TagNumber, TagSide, TagColor, xNumHundredFt, xAnimalBehavior, xTagYN, xBandYN, xBandColor, xBleachMarkYN, xScarsYN, xScarsLocation, xIsland, _id } = data;
+      // Figure out which document to update
+      Seals.update(_id, { $set: { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, Size, Sex, BeachPosition, MainIdentification, BleachNumber, TagNumber, TagSide, TagColor, xNumHundredFt, xAnimalBehavior, xTagYN, xBandYN, xBandColor, xBleachMarkYN, xScarsYN, xScarsLocation, xIsland } }, (error) => (error ?
+        swal('Error', error.message, 'error') :
+        swal('Success', 'Item updated successfully', 'success')));
 
-    // Figure out which collection to update
-    Stuffs.collection.update(_id, { $set: { name, quantity, condition } }, (error) => (error ?
-      swal('Error', error.message, 'error') :
-      swal('Success', 'Item updated successfully', 'success')));
+    } else if (this.props.animal === "Bird") {
+      const { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, BirdType, xNumHundredFt, xAnimalBehavior, xTagYN, TagNumber, TagSide, TagColor, xBandYN, xBandColor, xBleachMarkYN, xBleachMarkNum, xScarsYN, xScarsLocation, MainIdentification, xIsland, _id } = data;
+      // Figure out which document to update
+      Birds.update(_id, { $set: { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, BirdType, xNumHundredFt, xAnimalBehavior, xTagYN, TagNumber, TagSide, TagColor, xBandYN, xBandColor, xBleachMarkYN, xBleachMarkNum, xScarsYN, xScarsLocation, MainIdentification, xIsland } }, (error) => (error ?
+        swal('Error', error.message, 'error') :
+        swal('Success', 'Item updated successfully', 'success')));
+
+    } else {
+      const { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, xNumHundredFt, xAnimalBehavior, xTagYN, TagNumber, TagSide, TagColor, xBandYN, xBandColor, xBleachMarkYN, xBleachMarkNum, xScarsYN, xScarsLocation, MainIdentification, xIsland, _id } = data;
+      // Figure out which document to update
+      Others.update(_id, { $set: { TicketNumber, HotlineOpInitials, TicketType, ObserverName, ObserverPhone, ObserverInitials, ObserverType, Sector, xNumHundredFt, xAnimalBehavior, xTagYN, TagNumber, TagSide, TagColor, xBandYN, xBandColor, xBleachMarkYN, xBleachMarkNum, xScarsYN, xScarsLocation, MainIdentification, xIsland } }, (error) => (error ?
+        swal('Error', error.message, 'error') :
+        swal('Success', 'Item updated successfully', 'success')));
+    }
+   
+
+    
   }
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
@@ -327,7 +352,7 @@ class EditReport extends React.Component {
           <TextField name='ObserverPhone' />
           <SelectField name='ObserverType' />
           <SelectField name='Sector' />
-          <SelectField name='xIsland' />
+          <SelectField name='Island' />
           <SelectField name='TurtleType' />
           <TextField name='Size' />
           <SelectField name='Status' />
