@@ -19,7 +19,7 @@ class NavBar extends React.Component {
           [<Menu.Item as={NavLink} activeClassName="active" exact to="/list" key='list'>All Reports</Menu.Item>,
           <Menu.Item as={NavLink} activeClassName="active" exact to="/listrelated" key='listrelated'>Confirm Related</Menu.Item>,
           <Menu.Item as={NavLink} activeClassName="active" exact to="/mapview" key='mapview'>Map View</Menu.Item>,
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/chartview" key='chartview'>Charts</Menu.Item>,
+            // <Menu.Item as={NavLink} activeClassName="active" exact to="/chartview" key='chartview'>Charts</Menu.Item>,
             <Menu.Item as={NavLink} activeClassName="active" exact to="/export" key='export'>Export</Menu.Item>
           ]
         ) : ''}

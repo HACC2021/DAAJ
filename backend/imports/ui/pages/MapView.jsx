@@ -348,7 +348,6 @@ return distinctLocations;
       <Grid style={{fontFamily: 'Poppins'}}>
         {this.state.pinPressed ?
         <Grid.Column textAlign='center' width={4}>
-          <Grid.Row> <Image src='/images/logo.jpg' size='medium' rounded /></Grid.Row>
           <Grid.Row> <Header style={{fontFamily: 'Poppins'}} textAlign='center' as='h1'>{this.handleFields(this.state.pin.Animal, "animal")}</Header> </Grid.Row>
           <Grid.Row> <Header style={{ fontFamily: 'Poppins', paddingTop: 20}} as='h3'>Observed:</Header> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(this.state.pin.DateObjectObserved)} 
           {" "} {new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', timeZone: 'HST' }).format(this.state.pin.DateObjectObserved)} HST </Grid.Row>

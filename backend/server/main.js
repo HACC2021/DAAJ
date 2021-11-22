@@ -866,17 +866,17 @@ Meteor.startup(() => {
     // });
   }
 
-  Meteor.call('callGeocode',  "hanauma bay", (err, res) => {
-    if (err) {
-  export function getLocation(lat, lng) {
-    Meteor.call('getLocation', ({ lat, lng }), (err, res) => {
-      if (err) {
-        console.log(err);
-      } else {
-        // the location name, or closest match 
-        return res.results[0].name;
-      }
-    });
-  }
+  // Meteor.call('callGeocode',  "hanauma bay", (err, res) => {
+  //   if (err) {
+  // export function getLocation(lat, lng) {
+  //   Meteor.call('getLocation', ({ lat, lng }), (err, res) => {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       // the location name, or closest match 
+  //       return res.results[0].name;
+  //     }
+  //   });
+  // }
 });
 
