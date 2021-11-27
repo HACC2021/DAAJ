@@ -42,7 +42,7 @@ class Landing extends React.Component {
       <Grid id='landing-page' verticalAlign='middle' textAlign='center' container>
         <Grid.Row>
         <Grid.Column width={6}>
-          <Image size='huge' circular src="/images/logo.jpg"/>
+          <Image size='huge' circular src="/images/logotransparent.png"/>
         </Grid.Column>
         <Grid.Column width={8}>
           <h1 style={{fontFamily: 'Poppins'}}>E komo mai!</h1>

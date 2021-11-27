@@ -24,82 +24,82 @@ class ListReports extends React.Component {
   }
 
   getInitialState = () => ({
-      results: [],
-      filteredAnimalReports: [],
-      searchPressed: false,
-      filteredLocationReports: [], //the locations user chooses
-      noResults: false,
-   })
+    results: [],
+    filteredAnimalReports: [],
+    searchPressed: false,
+    filteredLocationReports: [], //the locations user chooses
+    noResults: false,
+  })
 
-   resetState = () => {
+  resetState = () => {
     this.setState(this.getInitialState());
- }
+  }
 
   // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
     return (this.props.ready && this.props.sealReady && this.props.turtleReady && this.props.birdReady && this.props.otherReady) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-    // updates user's selected location choices
-    handleLocationChange = (e, {value}) => {
-      this.setState({ filteredLocationReports: value});
-      console.log("clicked locations: " + this.state.filteredLocationReports);
-    }
+  // updates user's selected location choices
+  handleLocationChange = (e, { value }) => {
+    this.setState({ filteredLocationReports: value });
+    console.log("clicked locations: " + this.state.filteredLocationReports);
+  }
 
 
-    // updates user's selected location choices
-    handleAnimalChange = (e, {value}) => {
-    this.setState({ filteredAnimalReports: value});
+  // updates user's selected location choices
+  handleAnimalChange = (e, { value }) => {
+    this.setState({ filteredAnimalReports: value });
     console.log("clicked animals: " + this.state.filteredAnimalReports);
   }
-  
+
   getReports() {
-/*
-    console.log("turtles");
-    console.log(this.props.turtles);
-    console.log("birds");
-    console.log(this.props.birds);
-    console.log("seals");
-    console.log(this.props.seals);
-    console.log("others");
-    console.log(this.props.others);
-    */
+    /*
+        console.log("turtles");
+        console.log(this.props.turtles);
+        console.log("birds");
+        console.log(this.props.birds);
+        console.log("seals");
+        console.log(this.props.seals);
+        console.log("others");
+        console.log(this.props.others);
+        */
     // adding fields to each array to indicate the animal of the report
     //const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
-    const turtles = this.props.turtles.map(report => ({...report, type: "Turtle"}));
-    const birds = this.props.birds.map(report => ({...report, type: "Bird"}));
-    const seals = this.props.seals.map(report => ({...report, type: "Seal"}));
-    const others = this.props.others.map(report => ({...report, type: "Other"}));
-   
+    const turtles = this.props.turtles.map(report => ({ ...report, type: "Turtle" }));
+    const birds = this.props.birds.map(report => ({ ...report, type: "Bird" }));
+    const seals = this.props.seals.map(report => ({ ...report, type: "Seal" }));
+    const others = this.props.others.map(report => ({ ...report, type: "Other" }));
+
     console.log([...turtles, ...birds, ...seals, ...others]);
 
     // stitching arrays of objects of reports for each animal type together, to map it to ReportItem
-    return [...turtles, ...birds, ...seals, ...others].sort(function(a,b){
+    return [...turtles, ...birds, ...seals, ...others].sort(function (a, b) {
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
       return new Date(b.DateObjectObserved) - new Date(a.DateObjectObserved);
-    }).sort((a,b) => (a.xChecked > b.xChecked) ? 1 : ((b.xChecked > a.xChecked) ? -1 : 0));
+    }).sort((a, b) => (a.xChecked > b.xChecked) ? 1 : ((b.xChecked > a.xChecked) ? -1 : 0));
     ;
   }
 
   findDistinctAnimals() {
-      // Find distinct animals:
-  let distinctAnimals = ["Seal", "Turtle", "Bird"];
-  let otherAnimals = Others.find({}, { fields: { 'Animal': 1 } }).fetch();
-  
-  otherAnimals.forEach(report => {
-    distinctAnimals.push(report.Animal);
-  });
+    // Find distinct animals:
+    let distinctAnimals = ["Seal", "Turtle", "Bird"];
+    let otherAnimals = Others.find({}, { fields: { 'Animal': 1 } }).fetch();
 
-  // Use a set to get rid of duplicate animals
-  distinctAnimals = [... new Set(distinctAnimals)];
+    otherAnimals.forEach(report => {
+      distinctAnimals.push(report.Animal);
+    });
 
-  // Remove null
-  distinctAnimals = distinctAnimals.filter(function (el) {
-    return el != null;
-  });
+    // Use a set to get rid of duplicate animals
+    distinctAnimals = [... new Set(distinctAnimals)];
 
-return distinctAnimals;
+    // Remove null
+    distinctAnimals = distinctAnimals.filter(function (el) {
+      return el != null;
+    });
+
+    return distinctAnimals;
   }
 
   findDistinctLocations() {
@@ -107,36 +107,36 @@ return distinctAnimals;
     let turtleLocations = Turtles.find({}, { fields: { 'LocationName': 1 } }).fetch();
     let birdLocations = Birds.find({}, { fields: { 'LocationName': 1 } }).fetch();
     let otherLocations = Others.find({}, { fields: { 'LocationName': 1 } }).fetch();
-  
-      // Combine all of the report objects into one array
-  let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
 
-  // For each report object, get the text in the locationName field
-  let distinctLocations = [];
-  allLocations.forEach(report => {
-    distinctLocations.push(report.LocationName);
-  });
+    // Combine all of the report objects into one array
+    let allLocations = sealLocations.concat(turtleLocations, birdLocations, otherLocations);
 
-  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
-  // Use a set to get rid of duplicate locations
-  distinctLocations = [... new Set(distinctLocations)];
+    // For each report object, get the text in the locationName field
+    let distinctLocations = [];
+    allLocations.forEach(report => {
+      distinctLocations.push(report.LocationName);
+    });
 
-  // https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
-  // Remove null (May keep replace with no location)
-  distinctLocations = distinctLocations.filter(function (el) {
-    return el != null;
-  });
-  return distinctLocations;
+    // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+    // Use a set to get rid of duplicate locations
+    distinctLocations = [... new Set(distinctLocations)];
+
+    // https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#:~:text=For%20example%2C%20if%20you%20want,null%3B%20%7D)%3B%20console.
+    // Remove null (May keep replace with no location)
+    distinctLocations = distinctLocations.filter(function (el) {
+      return el != null;
+    });
+    return distinctLocations;
 
   }
 
   handleReset() {
-    this.setState({results: this.getReports()});
+    this.setState({ results: this.getReports() });
     this.resetState();
   }
 
   handleClick() {
-    this.setState({searchPressed: true, results: this.filter(this.state.filteredLocationReports, this.state.filteredAnimalReports)});
+    this.setState({ searchPressed: true, results: this.filter(this.state.filteredLocationReports, this.state.filteredAnimalReports) });
     console.log(this.state.results);
   }
 
@@ -148,9 +148,9 @@ return distinctAnimals;
     let from = new Date(inputGroups[0].innerHTML.split('"')[11]);
     let to = new Date(inputGroups[1].innerHTML.split('"')[11]);
 
-     console.log("from: " + from);
-     console.log("to: " + to);
-    
+    console.log("from: " + from);
+    console.log("to: " + to);
+
     return [from, to];
   }
 
@@ -179,40 +179,43 @@ return distinctAnimals;
     let sealsFiltered = [];
     let othersFiltered = [];
 
-    
-    if (animalFilter.length == 0 ) {
-      animalFilter = this.findDistinctAnimals();
-   }
 
-   if (locationFilter.length == 0) {
-     locationFilter = this.findDistinctLocations();
-   }
+    if (animalFilter.length == 0) {
+      animalFilter = this.findDistinctAnimals();
+    }
+
+    if (locationFilter.length == 0) {
+      locationFilter = this.findDistinctLocations();
+    }
 
     // Turtle filtering
     if (animalFilter.includes("Turtle")) {
       turtlesFiltered = Turtles.find({
-        $and : [
-          {'LocationName' : { $in : locationFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
-        ]      }).fetch();
-    } 
+        $and: [
+          { 'LocationName': { $in: locationFilter } },
+          { 'DateObjectObserved': { $gte: from, $lte: to } }
+        ]
+      }).fetch();
+    }
 
     // Bird filtering
     if (animalFilter.includes("Bird")) {
       birdsFiltered = Birds.find({
-        $and : [
-          {'LocationName' : { $in : locationFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
-        ]      }).fetch();
+        $and: [
+          { 'LocationName': { $in: locationFilter } },
+          { 'DateObjectObserved': { $gte: from, $lte: to } }
+        ]
+      }).fetch();
     }
 
     // Seal filtering
     if (animalFilter.includes("Seal")) {
       sealsFiltered = Seals.find({
-        $and : [
-          {'LocationName' : { $in : locationFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
-        ]      }).fetch();
+        $and: [
+          { 'LocationName': { $in: locationFilter } },
+          { 'DateObjectObserved': { $gte: from, $lte: to } }
+        ]
+      }).fetch();
     }
 
     // Others filtering
@@ -221,10 +224,10 @@ return distinctAnimals;
     });
     if (otherAnimalFilter.length > 0) {
       othersFiltered = Others.find({
-        $and : [
-          {'LocationName' : { $in : locationFilter }},
-          {'Animal' : { $in : otherAnimalFilter }},
-          {'DateObjectObserved' : { $gte : from, $lte : to }}
+        $and: [
+          { 'LocationName': { $in: locationFilter } },
+          { 'Animal': { $in: otherAnimalFilter } },
+          { 'DateObjectObserved': { $gte: from, $lte: to } }
         ]
       }).fetch();
     }
@@ -234,7 +237,7 @@ return distinctAnimals;
     console.log("filteredResults: " + JSON.stringify(filteredResults));
 
     if (filteredResults.length == 0) {
-      this.setState({noResults: true});
+      this.setState({ noResults: true });
     }
 
     return filteredResults;
@@ -246,90 +249,90 @@ return distinctAnimals;
   renderPage() {
     console.log("WAAAA" + this.state.filteredAnimalReports);
     return (
-        <Container style={{fontFamily: 'Poppins'}}>      
+      <Container style={{ fontFamily: 'Poppins' }}>
 
-       <Header style={{fontFamily: 'Poppins', marginTop: 20}} as="h2" textAlign="center">Latest Reports</Header>
+        <Header style={{ fontFamily: 'Poppins', marginTop: 20 }} as="h2" textAlign="center">Latest Reports</Header>
         <Grid columns={4} >
-        <Grid.Row>
-          <Grid.Column width={8}>
-                <Dropdown
-            placeholder='Location'
-            floated
-            multiple
-            style={{marginRight: 20}}
-            defaultValue={this.state.filteredLocationReports}
-            search
-            onChange={this.handleLocationChange.bind(this)}
-            options={this.findDistinctLocations().map(location =>({key: location, text:location, value: location }))}
-            selection
-          />
+          <Grid.Row>
+            <Grid.Column width={8}>
+              <Dropdown
+                placeholder='Location'
+                floated
+                multiple
+                style={{ marginRight: 20 }}
+                defaultValue={this.state.filteredLocationReports}
+                search
+                onChange={this.handleLocationChange.bind(this)}
+                options={this.findDistinctLocations().map(location => ({ key: location, text: location, value: location }))}
+                selection
+              />
 
-          <Dropdown
-            placeholder='Animal'
-            floated
-            multiple
-            search
-            onChange={this.handleAnimalChange.bind(this)}
-            options={this.findDistinctAnimals().map(location =>({key: location, text:location, value: location }))}
-            selection
-          />
-          </Grid.Column>
-                    <Grid.Column width={8}>
-         <Sample/>
-         </Grid.Column>
-         </Grid.Row>
-         <Grid.Row>
-         <Grid.Column floated='left' width={8}>
-         <Button 
-          onClick={() => this.handleClick()}
-          style={{fontFamily: 'Poppins'}}
-          primary>Search</Button>
-       <Button 
-       negative
-       style={{fontFamily: 'Poppins'}}
-          onClick={() => this.handleReset()}
-          primary>Reset</Button>
-          </Grid.Column>
-          <Grid.Column floated='right' width={8}>
-      <Link to="/listRelated">
-         <Button
-          color='blue'
-          content='Related Sightings'
-          icon='bell'
-          style={{ fontFamily: 'Poppins'}}
-          label={{ basic: true, color: 'blue', pointing: 'left', content: this.props.unConfirmedRelated }}
-        />      
-        </Link>
-         </Grid.Column>
-         </Grid.Row>
-         </Grid>
-                   
-                    {this.state.noResults ? 
-        <Header as="h1"> No results found. </Header> :
-        <Table celled striped>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Date of Sighting</Table.HeaderCell>
-              <Table.HeaderCell>Time</Table.HeaderCell>
-              <Table.HeaderCell>Animal</Table.HeaderCell>
-              <Table.HeaderCell>Sector</Table.HeaderCell>
-              <Table.HeaderCell>Island</Table.HeaderCell>
-              <Table.HeaderCell>Size</Table.HeaderCell>
-              <Table.HeaderCell>Main</Table.HeaderCell>
-              <Table.HeaderCell>Animal Behavior</Table.HeaderCell>
-              <Table.HeaderCell>#Reports</Table.HeaderCell>
-              <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
-              <Table.HeaderCell>Checked</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-          {!this.state.searchPressed ? 
-            (this.getReports().map((report) => <ReportItem key={report._id} report={report} />))
-                      :
-            (this.state.results.map((report) => <ReportItem key={report._id} report={report} />))
-          }
-          </Table.Body>
-        </Table>}
+              <Dropdown
+                placeholder='Animal'
+                floated
+                multiple
+                search
+                onChange={this.handleAnimalChange.bind(this)}
+                options={this.findDistinctAnimals().map(location => ({ key: location, text: location, value: location }))}
+                selection
+              />
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <Sample />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column floated='left' width={8}>
+              <Button
+                onClick={() => this.handleClick()}
+                style={{ fontFamily: 'Poppins' }}
+                primary>Search</Button>
+              <Button
+                negative
+                style={{ fontFamily: 'Poppins' }}
+                onClick={() => this.handleReset()}
+                primary>Reset</Button>
+            </Grid.Column>
+            <Grid.Column floated='left' width={8}>
+              <Link to="/listRelated">
+                <Button
+                  color='teal'
+                  content='Related Sightings'
+                  icon='bell'
+                  style={{ fontFamily: 'Poppins' }}
+                  label={{ basic: true, color: 'blue', pointing: 'left', content: this.props.unConfirmedRelated }}
+                />
+              </Link>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
+        {this.state.noResults ?
+          <Header as="h1"> No results found. </Header> :
+          <Table color='blue' celled striped>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Date of Sighting</Table.HeaderCell>
+                <Table.HeaderCell>Time</Table.HeaderCell>
+                <Table.HeaderCell>Animal</Table.HeaderCell>
+                <Table.HeaderCell>Sector</Table.HeaderCell>
+                <Table.HeaderCell>Island</Table.HeaderCell>
+                <Table.HeaderCell>Size</Table.HeaderCell>
+                <Table.HeaderCell>Main</Table.HeaderCell>
+                <Table.HeaderCell>Animal Behavior</Table.HeaderCell>
+                <Table.HeaderCell>#Reports</Table.HeaderCell>
+                <Table.HeaderCell>Reporter phone #</Table.HeaderCell>
+                <Table.HeaderCell>Checked</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {!this.state.searchPressed ?
+                (this.getReports().map((report) => <ReportItem key={report._id} report={report} />))
+                :
+                (this.state.results.map((report) => <ReportItem key={report._id} report={report} />))
+              }
+            </Table.Body>
+          </Table>}
       </Container>
     );
   }
@@ -365,21 +368,21 @@ export default withTracker(() => {
   const stuffs = Stuffs.collection.find({}).fetch();
   const turtleSubscription = Meteor.subscribe('TurtlesCollection');
   const turtleReady = turtleSubscription.ready();
-  const turtles = Turtles.find({ xSightings: { $gte : 1 } }).fetch();
+  const turtles = Turtles.find({ xSightings: { $gte: 1 } }).fetch();
   const birdSubscription = Meteor.subscribe('BirdsCollection');
   const birdReady = birdSubscription.ready();
-  const birds = Birds.find({ xSightings: { $gte : 1 } }).fetch();
+  const birds = Birds.find({ xSightings: { $gte: 1 } }).fetch();
   const sealSubscription = Meteor.subscribe('SealsCollection');
   const sealReady = sealSubscription.ready();
-  const seals = Seals.find({ xSightings: { $gte : 1 } }).fetch();
+  const seals = Seals.find({ xSightings: { $gte: 1 } }).fetch();
   const otherSubscription = Meteor.subscribe('OthersCollection');
   const otherReady = otherSubscription.ready();
-  const others = Others.find({ xSightings: { $gte : 1 } }).fetch();
+  const others = Others.find({ xSightings: { $gte: 1 } }).fetch();
 
   // Find counts of xConfirmRelated that is == to 0:
-  let unConfirmedRelated = Seals.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Turtles.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count() + Birds.find({xConfirmRelated : {$eq : 0 }}, { fields: { 'xConfirmRelated': 1 } }).count();
+  let unConfirmedRelated = Seals.find({ xConfirmRelated: { $eq: 0 } }, { fields: { 'xConfirmRelated': 1 } }).count() + Turtles.find({ xConfirmRelated: { $eq: 0 } }, { fields: { 'xConfirmRelated': 1 } }).count() + Birds.find({ xConfirmRelated: { $eq: 0 } }, { fields: { 'xConfirmRelated': 1 } }).count();
   console.log("unConfirmedRelated:" + unConfirmedRelated);
-  
+
   // Find distinct locations:
   let sealLocations = Seals.find({}, { fields: { 'LocationName': 1 } }).fetch();
   let turtleLocations = Turtles.find({}, { fields: { 'LocationName': 1 } }).fetch();
@@ -410,7 +413,7 @@ export default withTracker(() => {
   // Find distinct animals:
   let distinctAnimals = ["Seal", "Turtle", "Bird"];
   let otherAnimals = Others.find({}, { fields: { 'Animal': 1 } }).fetch();
-  
+
   otherAnimals.forEach(report => {
     distinctAnimals.push(report.Animal);
   });

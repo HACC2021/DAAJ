@@ -363,7 +363,7 @@ return distinctLocations;
         alignItems: 'center'}}>{this.handleImage(this.state.pin.xImages)}</div></Grid.Row>
         </Grid.Column> :
          <Grid.Column width={4}>
-         <Grid.Row> <Image src='/images/logo.jpg' size='medium' rounded /></Grid.Row>
+         <Grid.Row> <Image src='/images/logotransparent.png' size='medium' rounded /></Grid.Row>
          <Grid.Row> <Header style={{fontFamily: 'Poppins', paddingTop: 20}} textAlign='center' as='h2'>Click on a pin to get started! </Header> </Grid.Row>
         </Grid.Column>
          }
